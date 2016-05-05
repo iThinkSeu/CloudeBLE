@@ -315,6 +315,8 @@ int id home_img_show 0x7f0a0050
 int id icon 0x7f0a002a
 int id ifRoom 0x7f0a0011
 int id image 0x7f0a0027
+int id lastDrinkWater 0x7f0a0058
+int id lastDropWater 0x7f0a0059
 int id listMode 0x7f0a0006
 int id list_item 0x7f0a0029
 int id login_button_login 0x7f0a003f
@@ -323,11 +325,12 @@ int id login_edit_text_user 0x7f0a003d
 int id login_input 0x7f0a003c
 int id login_text_view_register 0x7f0a0040
 int id mainImageView 0x7f0a004a
-int id menu_connect 0x7f0a0057
-int id menu_disconnect 0x7f0a0058
-int id menu_refresh 0x7f0a005b
-int id menu_scan 0x7f0a0059
-int id menu_stop 0x7f0a005a
+int id measureVolumn 0x7f0a0057
+int id menu_connect 0x7f0a005a
+int id menu_disconnect 0x7f0a005b
+int id menu_refresh 0x7f0a005e
+int id menu_scan 0x7f0a005c
+int id menu_stop 0x7f0a005d
 int id middle 0x7f0a0018
 int id never 0x7f0a0012
 int id none 0x7f0a0019
@@ -393,7 +396,8 @@ int layout gatt_services_characteristics 0x7f04001c
 int layout listitem_device 0x7f04001d
 int layout main 0x7f04001e
 int layout measurement 0x7f04001f
-int layout support_simple_spinner_dropdown_item 0x7f040020
+int layout newmeasurement 0x7f040020
+int layout support_simple_spinner_dropdown_item 0x7f040021
 int menu gatt_services 0x7f0d0000
 int menu main 0x7f0d0001
 int mipmap login_background 0x7f030000

@@ -29,6 +29,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -36,6 +43,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 
@@ -69,6 +77,12 @@ public class MeasureActivity extends Activity {
 	// Code to manage Service lifecycle.
 	private Button btnSend;
 	private Button btnReturn;
+	
+	//电压实时测量
+	private int currentV;
+	private Paint mPaint;
+	private Paint paint;
+	
 	private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
 		@Override
@@ -160,7 +174,7 @@ public class MeasureActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.measurement);
+		setContentView(R.layout.newmeasurement);
 		
 		final Intent intent = getIntent();
 		// mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
@@ -173,8 +187,12 @@ public class MeasureActivity extends Activity {
 		// findViewById(R.id.gatt_services_list);
 		// mGattServicesList.setOnChildClickListener(servicesListClickListner);
 		System.out.println("Create measure");
-		mDataField = (TextView) findViewById(R.id.Tempture);
+		mDataField = (TextView) findViewById(R.id.lastDrinkWater);
+		
+		DrawVolumn(0);
+		/*
 		btnReturn = (Button) findViewById(R.id.MesureReturn);
+		
 		btnReturn.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
@@ -201,12 +219,89 @@ public class MeasureActivity extends Activity {
 				}
 			}
 		});
+		*/
 		Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
 		// startService(gattServiceIntent);
 		bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
 
 	}
 
+	private void DrawVolumn(int volumn) {
+		currentV = volumn;
+		int offset = 50;
+		int color = 0;
+		if (volumn > 600) {
+			color = Color.rgb(0x19, 0x19, 0x70);
+		} else if (volumn > 400) {
+			color = Color.rgb(0x00, 0x00, 0xff);
+		} else if (volumn > 30) {
+			color = Color.rgb(0x41, 0x69, 0xE1);
+		} else if (volumn > 200) {
+			color = Color.rgb(0x87, 0xCe, 0xeb);
+		} else if (volumn > 100) {
+			color = (Color.rgb(0xb0, 0xe0, 0xe6));
+		} else if (volumn > 50) {
+			color = (Color.WHITE);
+		} else {
+			color = (Color.WHITE);
+		}
+		ImageView iv = (ImageView) findViewById(R.id.measureVolumn);
+		iv.clearAnimation();
+		// iv.setBackground(Color.rgb(37, 3d, 49));
+		// System.out.println("imageview width" + iv.getWidth());
+		mPaint = new Paint();
+		Canvas canvas = new Canvas();
+		// 创建一张空白图片
+		Bitmap baseBitmap = Bitmap.createBitmap(480, 500,
+				Bitmap.Config.ARGB_8888);
+		// 创建一张画布
+		canvas = new Canvas(baseBitmap);
+		// 画布背景为灰色
+		// canvas.drawColor(Color.WHITE);
+		// 创建画笔
+		paint = new Paint();
+		// 画笔颜色为红色
+		paint.setColor(Color.RED);
+		// 宽度5个像素
+		paint.setStrokeWidth(5);
+		// 先将灰色背景画上
+		canvas.drawBitmap(baseBitmap, new Matrix(), paint);
+		iv.setImageBitmap(baseBitmap);
+		int centre = 400 / 2; // 获取圆心的x坐标
+		int mCircleWidth = 30;
+		int radius = centre - mCircleWidth / 2;// 半径
+		paint.setStrokeWidth(mCircleWidth); // 设置圆环的宽度
+		paint.setAntiAlias(true); // 消除锯齿
+		paint.setStyle(Paint.Style.STROKE); // 设置空心
+		RectF oval = new RectF(centre - radius + 50, centre - radius + offset,
+				centre + radius + 50, centre + radius + offset); // 用于定义的圆弧的形状和大小的界限
+		paint.setColor(Color.LTGRAY); // 设置圆环的颜色
+		canvas.drawCircle(centre + 50, centre + offset, radius, paint); // 画出圆环
+		// paint.setColor(Color.rgb(0x6d, 0xce, 0x3f)); // 设置圆环的颜色
+		paint.setColor(color);
+		canvas.drawArc(oval, -90, (int) (volumn * 1.0 / 800 * 360), false,
+				paint); // 根据进度画圆弧
+		Paint fontPaint = new Paint();
+		String familyName = "宋体";
+		Typeface font = Typeface.create(familyName, Typeface.BOLD);
+		fontPaint.setColor(Color.DKGRAY);
+		fontPaint.setTextSize(30);
+		canvas.drawText("电压", 10, 50, fontPaint);
+		fontPaint.setColor(Color.rgb(0x07, 0xaF, 0xd9));
+		fontPaint.setTypeface(font);
+		if (volumn >= 1000) {
+			fontPaint.setTextSize(90);
+			canvas.drawText(volumn + "", 130, 300, fontPaint);
+			fontPaint.setTextSize(30);
+			canvas.drawText("V", 350, 300, fontPaint);
+		} else if (volumn < 1000) {
+			fontPaint.setTextSize(90);
+			canvas.drawText(volumn + "", 160, 300, fontPaint);
+			fontPaint.setTextSize(30);
+			canvas.drawText("V", 320, 300, fontPaint);
+		}
+		iv.setImageBitmap(baseBitmap);
+	}
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -231,10 +326,59 @@ public class MeasureActivity extends Activity {
 		mBluetoothLeService = null;
 	}
 
-	private void displayData(String data) {
+	/*显示的变量定义*/
+	private int recSize = 0;
+
+	private String recData = "";
+	private int dataType = 0;// 0 温度；1体积
+	private int dataNum = 0;
+	private String dataSave = "";
+	
+	private void displayData(String data) 
+	{
+		dataSave += data;
+		System.out.println("receive raw data " + data);
+		System.out.println("receive raw dataSave " + dataSave);
+		
+		if (dataSave.equals("\0")) {
+			if (data.length() == 1)
+				System.out.println("remove data 0" + data);
+			return;
+		}
+		
+		if (dataSave != null)
+		{
+			// System.out.println(dataSave);
+			dataSave.trim();
+			recSize += dataSave.length();
+			System.out.println(recSize);
+			//mDataField.setText(data);
+			recData = "";
+			String convertData = "";
+			for (int i = 0; i < dataSave.indexOf("\n"); i++) 
+			{
+				recData += dataSave.charAt(i);
+			}
+			
+			System.out.println("receive raw recData " + recData);
+			if (recData.contains("t") || recData.contains("T")) {// 温度
+				for (int i = 0; i < recData.length(); i++) {
+					if (recData.charAt(i) >= 48 && recData.charAt(i) <= 57) {
+						convertData += dataSave.charAt(i);
+					}
+				}
+				Log.d("ithinker","receive 温度 data" + convertData);
+				mDataField.setText("高压表电流值 "+convertData);
+				DrawVolumn(Integer.parseInt(convertData));
+				
+			} 
+		}	
+      
+		/*
 		if (data != null) {
 			mDataField.setText(data);
 		}
+		*/
 	}
 
 	// Demonstrates how to iterate through the supported GATT

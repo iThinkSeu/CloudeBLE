@@ -1153,6 +1153,8 @@ containing a value of this type.
         public static final int icon=0x7f0a002a;
         public static final int ifRoom=0x7f0a0011;
         public static final int image=0x7f0a0027;
+        public static final int lastDrinkWater=0x7f0a0058;
+        public static final int lastDropWater=0x7f0a0059;
         public static final int listMode=0x7f0a0006;
         public static final int list_item=0x7f0a0029;
         public static final int login_button_login=0x7f0a003f;
@@ -1161,11 +1163,12 @@ containing a value of this type.
         public static final int login_input=0x7f0a003c;
         public static final int login_text_view_register=0x7f0a0040;
         public static final int mainImageView=0x7f0a004a;
-        public static final int menu_connect=0x7f0a0057;
-        public static final int menu_disconnect=0x7f0a0058;
-        public static final int menu_refresh=0x7f0a005b;
-        public static final int menu_scan=0x7f0a0059;
-        public static final int menu_stop=0x7f0a005a;
+        public static final int measureVolumn=0x7f0a0057;
+        public static final int menu_connect=0x7f0a005a;
+        public static final int menu_disconnect=0x7f0a005b;
+        public static final int menu_refresh=0x7f0a005e;
+        public static final int menu_scan=0x7f0a005c;
+        public static final int menu_stop=0x7f0a005d;
         public static final int middle=0x7f0a0018;
         public static final int never=0x7f0a0012;
         public static final int none=0x7f0a0019;
@@ -1257,7 +1260,8 @@ containing a value of this type.
         public static final int listitem_device=0x7f04001d;
         public static final int main=0x7f04001e;
         public static final int measurement=0x7f04001f;
-        public static final int support_simple_spinner_dropdown_item=0x7f040020;
+        public static final int newmeasurement=0x7f040020;
+        public static final int support_simple_spinner_dropdown_item=0x7f040021;
     }
     public static final class menu {
         public static final int gatt_services=0x7f0d0000;

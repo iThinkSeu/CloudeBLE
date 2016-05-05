@@ -4,8 +4,12 @@ import com.example.learn.DeviceScanActivity;
 import com.example.learn.MainActivity;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +21,8 @@ public class MainActivity extends Activity {
 
 	private ImageView imageviewTop;
 	private RelativeLayout searchLayout, measureLayout, chartLayout,settingLayout;
+
+
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +53,12 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				System.out.println("MeasureActivity click");
+				Log.d("ithinker", "test log.d");
 				Intent intent = new Intent();
 				intent.setClass(MainActivity.this, MeasureActivity.class);
 				startActivity(intent);
 			}
 		});
     }
+  
 }
