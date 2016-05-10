@@ -119,6 +119,23 @@ public class XYChartBuilder extends Activity {
         mChartView.repaint();
       }
     });
+    
+    String seriesTitle = "Series " + (mDataset.getSeriesCount() + 1);
+    // create a new series of data
+    XYSeries series = new XYSeries(seriesTitle);
+    mDataset.addSeries(series);
+    mCurrentSeries = series;
+    // create a new renderer for the new series
+    XYSeriesRenderer renderer = new XYSeriesRenderer();
+    mRenderer.addSeriesRenderer(renderer);
+    // set some renderer properties
+    renderer.setPointStyle(PointStyle.CIRCLE);
+    renderer.setFillPoints(true);
+    renderer.setDisplayChartValues(true);
+    renderer.setDisplayChartValuesDistance(10);
+    mCurrentRenderer = renderer;
+
+    
 
     mAdd.setOnClickListener(new View.OnClickListener() {
       public void onClick(View v) {
@@ -145,6 +162,45 @@ public class XYChartBuilder extends Activity {
         mChartView.repaint();
       }
     });
+    
+    mCurrentSeries.add(0.0, 2.0);
+    mCurrentSeries.add(2.0, 6.0);
+    mCurrentSeries.add(4.0, 7.0);
+    if (mChartView == null) {
+        LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
+        mChartView = ChartFactory.getLineChartView(this, mDataset, mRenderer);
+        // enable the chart click events
+        mRenderer.setClickEnabled(true);
+        mRenderer.setSelectableBuffer(10);
+      
+        mChartView.setOnClickListener(new View.OnClickListener() {
+          public void onClick(View v) {
+            // handle the click event on the chart
+            SeriesSelection seriesSelection = mChartView.getCurrentSeriesAndPoint();
+            if (seriesSelection == null) {
+              //Toast.makeText(XYChartBuilder.this, "No chart element", Toast.LENGTH_SHORT).show();
+            } else {
+              // display information of the clicked point
+              Toast.makeText(
+                  XYChartBuilder.this,
+                  "Chart element in series index " + seriesSelection.getSeriesIndex()
+                      + " data point index " + seriesSelection.getPointIndex() + " was clicked"
+                      + " closest point value X=" + seriesSelection.getXValue() + ", Y="
+                      + seriesSelection.getValue(), Toast.LENGTH_SHORT).show();
+            }
+          }
+        });
+        
+        layout.addView(mChartView, new LayoutParams(LayoutParams.FILL_PARENT,
+            LayoutParams.FILL_PARENT));
+        boolean enabled = mDataset.getSeriesCount() > 0;
+        setSeriesWidgetsEnabled(enabled);
+      } else {
+       
+        mChartView.repaint();
+      }
+    
+      mChartView.repaint();
   }
 
   @Override
@@ -178,6 +234,7 @@ public class XYChartBuilder extends Activity {
       boolean enabled = mDataset.getSeriesCount() > 0;
       setSeriesWidgetsEnabled(enabled);
     } else {
+     
       mChartView.repaint();
     }
   }
