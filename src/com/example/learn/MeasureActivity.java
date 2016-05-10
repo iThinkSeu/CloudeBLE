@@ -20,6 +20,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.achartengine.ChartFactory;
+import org.achartengine.GraphicalView;
+import org.achartengine.chart.PointStyle;
+import org.achartengine.model.SeriesSelection;
+import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
+import org.achartengine.renderer.XYSeriesRenderer;
+
 import android.app.Activity;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
@@ -41,11 +50,14 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * For a given BLE device, this Activity provides the user interface to connect,
@@ -83,6 +95,18 @@ public class MeasureActivity extends Activity {
 	private Paint mPaint;
 	private Paint paint;
 	
+	//曲线
+    /** The main dataset that includes all the series that go into a chart. */
+    private XYMultipleSeriesDataset mDataset = new XYMultipleSeriesDataset();
+    /** The main renderer that includes all the renderers customizing a chart. */
+    private XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
+    /** The most recently added series. */
+    private XYSeries mCurrentSeries;
+    /** The most recently created renderer, customizing the current series. */
+    private XYSeriesRenderer mCurrentRenderer;
+    /** The chart view that displays the data. */
+    private GraphicalView mChartView;
+    
 	private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
 		@Override
@@ -187,7 +211,7 @@ public class MeasureActivity extends Activity {
 		// findViewById(R.id.gatt_services_list);
 		// mGattServicesList.setOnChildClickListener(servicesListClickListner);
 		System.out.println("Create measure");
-		mDataField = (TextView) findViewById(R.id.lastDrinkWater);
+		//mDataField = (TextView) findViewById(R.id.lastDrinkWater);
 		
 		DrawVolumn(0);
 		/*
@@ -223,12 +247,27 @@ public class MeasureActivity extends Activity {
 		Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
 		// startService(gattServiceIntent);
 		bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+		
+		//画曲线
+		// set some properties on the main renderer
+	    mRenderer.setApplyBackgroundColor(true);
+	    mRenderer.setBackgroundColor(Color.argb(100, 50, 50, 50));
+	    mRenderer.setAxisTitleTextSize(16);
+	    mRenderer.setChartTitleTextSize(20);
+	    mRenderer.setLabelsTextSize(15);
+	    mRenderer.setLegendTextSize(15);
+	    mRenderer.setMargins(new int[] { 20, 30, 15, 0 });
+	    mRenderer.setZoomButtonsVisible(true);
+	    mRenderer.setPointSize(5);
+	    
 
 	}
+	
+
 
 	private void DrawVolumn(int volumn) {
 		currentV = volumn;
-		int offset = 50;
+		int offset = 120;//50
 		int color = 0;
 		if (volumn > 600) {
 			color = Color.rgb(0x19, 0x19, 0x70);
@@ -268,16 +307,16 @@ public class MeasureActivity extends Activity {
 		canvas.drawBitmap(baseBitmap, new Matrix(), paint);
 		iv.setImageBitmap(baseBitmap);
 		int centre = 400 / 2; // 获取圆心的x坐标
-		int mCircleWidth = 30;
-		int radius = centre - mCircleWidth / 2;// 半径
+		int mCircleWidth = 15;
+		int radius = centre - mCircleWidth / 2-60;// 半径
 		paint.setStrokeWidth(mCircleWidth); // 设置圆环的宽度
 		paint.setAntiAlias(true); // 消除锯齿
 		paint.setStyle(Paint.Style.STROKE); // 设置空心
-		RectF oval = new RectF(centre - radius + 50, centre - radius + offset,
-				centre + radius + 50, centre + radius + offset); // 用于定义的圆弧的形状和大小的界限
+		RectF oval = new RectF(centre - radius + 50, centre - radius + 60,
+				centre + radius + 50, centre + radius + 60); // 用于定义的圆弧的形状和大小的界限
 		paint.setColor(Color.LTGRAY); // 设置圆环的颜色
-		canvas.drawCircle(centre + 50, centre + offset, radius, paint); // 画出圆环
-		// paint.setColor(Color.rgb(0x6d, 0xce, 0x3f)); // 设置圆环的颜色
+		canvas.drawCircle(centre + 20, centre + 20, radius, paint); // 画出圆环
+	    paint.setColor(Color.rgb(0x6d, 0xce, 0x3f)); // 设置圆环的颜色
 		paint.setColor(color);
 		canvas.drawArc(oval, -90, (int) (volumn * 1.0 / 800 * 360), false,
 				paint); // 根据进度画圆弧
@@ -286,19 +325,19 @@ public class MeasureActivity extends Activity {
 		Typeface font = Typeface.create(familyName, Typeface.BOLD);
 		fontPaint.setColor(Color.DKGRAY);
 		fontPaint.setTextSize(30);
-		canvas.drawText("电压", 10, 50, fontPaint);
+		canvas.drawText("直流电压", 160, 50, fontPaint);
 		fontPaint.setColor(Color.rgb(0x07, 0xaF, 0xd9));
 		fontPaint.setTypeface(font);
 		if (volumn >= 1000) {
 			fontPaint.setTextSize(90);
-			canvas.drawText(volumn + "", 130, 300, fontPaint);
+			canvas.drawText(volumn + "", 130, 200, fontPaint);
 			fontPaint.setTextSize(30);
-			canvas.drawText("V", 350, 300, fontPaint);
+			canvas.drawText("V", 300, 200, fontPaint);
 		} else if (volumn < 1000) {
 			fontPaint.setTextSize(90);
-			canvas.drawText(volumn + "", 160, 300, fontPaint);
+			canvas.drawText(volumn + "", 130, 250, fontPaint);
 			fontPaint.setTextSize(30);
-			canvas.drawText("V", 320, 300, fontPaint);
+			canvas.drawText("V", 300, 250, fontPaint);
 		}
 		iv.setImageBitmap(baseBitmap);
 	}
@@ -311,6 +350,54 @@ public class MeasureActivity extends Activity {
 			// mBluetoothLeService.connect(mDeviceAddress);
 			// Log.d(TAG, "Connect request result=" + result);
 		}
+		 Log.d("ithinker","mChartView2");
+		 if (mChartView == null) {
+			 Log.d("ithinker","mChartView");
+		      LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
+		      mChartView = ChartFactory.getLineChartView(this, mDataset, mRenderer);
+		      // enable the chart click events
+		      mRenderer.setClickEnabled(true);
+		      mRenderer.setSelectableBuffer(10);
+		      mChartView.setOnClickListener(new View.OnClickListener() {
+		        public void onClick(View v) {
+		          // handle the click event on the chart
+		          SeriesSelection seriesSelection = mChartView.getCurrentSeriesAndPoint();
+		          if (seriesSelection == null) {
+		            Toast.makeText(MeasureActivity.this, "No chart element", Toast.LENGTH_SHORT).show();
+		          } else {
+		            // display information of the clicked point
+		            Toast.makeText(
+		            		MeasureActivity.this,
+		                "Chart element in series index " + seriesSelection.getSeriesIndex()
+		                    + " data point index " + seriesSelection.getPointIndex() + " was clicked"
+		                    + " closest point value X=" + seriesSelection.getXValue() + ", Y="
+		                    + seriesSelection.getValue(), Toast.LENGTH_SHORT).show();
+		          }
+		        }
+		      });
+		      layout.addView(mChartView, new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
+		 }else{
+			 
+			  //Create a series of data creation
+		      String seriesTitle = "Series " + (mDataset.getSeriesCount() + 1);
+		      // create a new series of data
+	          XYSeries series = new XYSeries(seriesTitle);
+	          mDataset.addSeries(series);
+	          mCurrentSeries = series;
+	          // create a new renderer for the new series
+	          XYSeriesRenderer renderer = new XYSeriesRenderer();
+	          mRenderer.addSeriesRenderer(renderer);
+	          // set some renderer properties
+	          renderer.setPointStyle(PointStyle.CIRCLE);
+	          renderer.setFillPoints(true);
+	          renderer.setDisplayChartValues(true);
+	          renderer.setDisplayChartValuesDistance(10);
+	          mCurrentRenderer = renderer;
+	          mCurrentSeries.add(0.0, 0.0);
+	          mCurrentSeries.add(5.0, 7.0);
+	          mCurrentSeries.add(10.0, 8.0);
+	          mChartView.repaint();
+		 }
 	}
 
 	@Override

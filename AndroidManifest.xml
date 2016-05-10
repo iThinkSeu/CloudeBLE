@@ -16,6 +16,8 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+ 
     
     <application
         android:allowBackup="true"
@@ -43,6 +45,12 @@
         />
         <activity android:name=".DeviceControlActivity"/>
         <service android:name=".BluetoothLeService" android:enabled="true"/>
+        <activity android:name="org.achartengine.chartdemo.demo.chart.XYChartBuilder" />
+        <activity android:name="org.achartengine.chartdemo.demo.chart.PieChartBuilder" />
+        <activity android:name="org.achartengine.GraphicalActivity" />
+        <activity android:name="com.example.learn.DrawChartActivity" />
+        <activity android:name="com.example.learn.BarChartBuilder"/>
+        <activity android:name="com.example.learn.XYChartBuilder"/>
     </application>
 
 </manifest>

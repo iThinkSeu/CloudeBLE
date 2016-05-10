@@ -11,29 +11,34 @@
        	  android:layout_weight="1"
         />
      
-      <LinearLayout 
-       android:orientation="horizontal"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-        android:layout_weight="1">
-		<TextView
-		  android:id="@+id/lastDrinkWater"
-             android:text="    高压表电流值     0.5A"
-             android:layout_alignParentLeft="true"
-             android:layout_width="wrap_content"
-       	  android:layout_height="wrap_content"
-       	  android:layout_weight="1"
-         />
+     
+     <LinearLayout android:id="@+id/chart" android:orientation="horizontal"
+                   android:layout_width="fill_parent" android:layout_height="0dip" android:layout_weight="1"/>
+     <!-- 
+     <LinearLayout 
+     android:orientation="horizontal"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:layout_weight="1">
+     
+	<TextView
+  	android:id="@+id/lastDrinkWater"
+           android:text="    高压表电流值     0.5A"
+           android:layout_alignParentLeft="true"
+           android:layout_width="wrap_content"
+     	   android:layout_height="wrap_content"
+     	   android:layout_weight="1"
+          />
 
 
-		<TextView
-		  android:id="@+id/lastDropWater"
-             android:text="     电流表电压值  5000V"
-             android:layout_alignParentRight="true"
-             android:layout_width="wrap_content"
-       	  android:layout_height="wrap_content"
-       	  android:layout_weight="1"
-         />
-     </LinearLayout>
-
+	<TextView
+    android:id="@+id/lastDropWater"
+           android:text="     电流表电压值  5000V"
+           android:layout_alignParentRight="true"
+           android:layout_width="wrap_content"
+     	   android:layout_height="wrap_content"
+     	   android:layout_weight="1"
+           />
+    </LinearLayout>
+    -->
 </LinearLayout>

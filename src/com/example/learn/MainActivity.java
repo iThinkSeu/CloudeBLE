@@ -59,6 +59,31 @@ public class MainActivity extends Activity {
 				startActivity(intent);
 			}
 		});
+		chartLayout = (RelativeLayout) findViewById(R.id.ChartLayout);
+		chartLayout.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Log.d("ithinker", "chart log.d");
+				Intent intent = new Intent();
+				intent = (new SensorValuesChart()).execute(getBaseContext());
+				startActivity(intent);
+			}
+		});
+		
+		settingLayout = (RelativeLayout) findViewById(R.id.settingLayout);
+		settingLayout.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent();
+				// intent = (new SensorValuesChart()).execute(getBaseContext());
+				intent.setClass(MainActivity.this, XYChartBuilder.class);
+				startActivity(intent);
+			}
+		});
     }
   
 }
