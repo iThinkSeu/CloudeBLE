@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">learn</string>
+    <string name="app_name">SmartVoltage</string>
     <string name="hello_world">Hello world!</string>
 	<string name="login">登录</string>
     <string name="login_weme_user">注册 云端账户</string>
@@ -37,9 +37,11 @@
 	<string name="new_series">New series</string> 
 	
 	<!-- measure manage list -->
-	<string name="time_task">定时任务</string>
-    <string name="history">历史记录</string>
-    <string name="info">详细信息</string>
-    <string name="delete">删除</string>
+	<string name="DCvoltage">直流电压</string>
+    <string name="ACvoltage">交流电压</string>
+    <string name="DCcurrent">直流电流</string>
+    <string name="ACcurrent">交流电流</string>
+    <string name="DCtime">直流时间</string>
+    <string name="ACtime">交流时间</string>
 	
 </resources>

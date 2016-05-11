@@ -7,7 +7,7 @@
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:orientation="horizontal"
-      android:layout_weight="2"
+      android:layout_weight="2.2"
       android:layout_centerInParent="true">
       <LinearLayout
 	       android:layout_width="wrap_content"
@@ -80,11 +80,11 @@
         <LinearLayout 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_centerInParent="true">
 			<TextView
 			  android:id="@+id/deta_out2"
-              android:text="Δ： 3.20%    Error：0.01KV"
+              android:text=" 分选：开                      标称值:12.0KV"
               android:layout_centerInParent="true"
               android:layout_width="wrap_content"
         	  android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
               />
 			<TextView
 			  android:id="@+id/Downlimit"
-              android:text="下限值： 0.1%"
+              android:text="上限值:12.0KV         下限值:10KV"
               android:layout_centerInParent="true"
               android:layout_width="wrap_content"
         	  android:layout_height="wrap_content"
@@ -109,7 +109,7 @@
      
 	   <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="150dp">
         <TableRow
             android:layout_weight="1">
             <RelativeLayout
@@ -131,7 +131,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/history"
+                        android:text="@string/DCvoltage"
                         android:textSize="14sp"/>
                 </LinearLayout>
             </RelativeLayout>
@@ -155,7 +155,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/time_task"
+                        android:text="@string/ACvoltage"
                         android:textSize="14sp"/>
                 </LinearLayout>
 
@@ -179,12 +179,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/info"
+                        android:text="@string/DCcurrent"
                         android:textSize="14sp"/>
                 </LinearLayout>
             </RelativeLayout>
         </TableRow>
-        <!--  
         <TableRow
             android:layout_weight="1">
             <RelativeLayout
@@ -206,7 +205,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/delete"
+                        android:text="@string/ACcurrent"
                         android:layout_gravity="center_horizontal"
                         android:textSize="14sp"/>
                 </LinearLayout>
@@ -217,6 +216,23 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/grid_bg">
+                <LinearLayout
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:layout_centerInParent="true">
+                  <Button
+                      android:id="@+id/measure_dctime_button"
+                      android:layout_width="@dimen/grid_button_width"
+                      android:layout_height="@dimen/grid_button_height"
+                      android:layout_gravity="center_horizontal"
+                      android:background="@mipmap/info"/>
+                  <TextView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="@string/DCtime"
+                      android:textSize="14sp"/>
+            	</LinearLayout>
             </RelativeLayout>
 
             <RelativeLayout
@@ -224,9 +240,25 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/grid_bg">
+                <LinearLayout
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:layout_centerInParent="true">
+                  <Button
+                      android:id="@+id/measure_actime_button"
+                      android:layout_width="@dimen/grid_button_width"
+                      android:layout_height="@dimen/grid_button_height"
+                      android:layout_gravity="center_horizontal"
+                      android:background="@mipmap/history"/>
+                  <TextView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="@string/ACtime"
+                      android:textSize="14sp"/>
+            	</LinearLayout>
             </RelativeLayout>
         </TableRow>
-        -->
 	 </TableLayout>
 
   

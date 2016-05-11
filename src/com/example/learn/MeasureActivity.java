@@ -431,24 +431,24 @@ public class MeasureActivity extends Activity {
 		canvas.drawArc(oval, -90, (int) (volumn * 1.0 / 800 * 360), false,
 				paint); // 根据进度画圆弧
 		Paint fontPaint = new Paint();
-		String familyName = "宋体";
+		String familyName = "微软雅黑";
 		Typeface font = Typeface.create(familyName, Typeface.BOLD);
 		fontPaint.setColor(Color.DKGRAY);
-		fontPaint.setTextSize(30);
-		canvas.drawText("直流电压", 160, 50, fontPaint);
+		fontPaint.setTextSize(52);
+		canvas.drawText("直流电压", 150, 50, fontPaint);
 		fontPaint.setColor(Color.rgb(0x07, 0xaF, 0xd9));
 		fontPaint.setTypeface(font);
 		if (volumn >= 1000) {
 			fontPaint.setTextSize(90);
-			canvas.drawText(volumn + "", 130, 200, fontPaint);
+			canvas.drawText(volumn/100 + ".00", 130, 300, fontPaint);
 			fontPaint.setTextSize(30);
-			canvas.drawText("V", 300, 200, fontPaint);
+			canvas.drawText("KV", 300, 350, fontPaint);
 		} else if (volumn < 1000) {
 			fontPaint.setTextSize(90);
-			canvas.drawText(volumn + "", 130, 250, fontPaint);
+			canvas.drawText(volumn/100 + ".00", 130, 300, fontPaint);
 			fontPaint.setTextSize(30);
-			canvas.drawText("V", 300, 250, fontPaint);
-		}
+			canvas.drawText("KV", 300, 350, fontPaint);
+		} 
 		iv.setImageBitmap(baseBitmap);
 	}
 	@Override

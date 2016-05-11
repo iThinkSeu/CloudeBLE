@@ -2,8 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item 
         android:id = "@+id/measure_item1"
-        android:title="直流电压"/>
+        android:title="分选开关"/>
     <item 
         android:id = "@+id/measure_item2"
-        android:title="交流电压"/>    
+        android:title="上下限设置"/>   
+    <item 
+        android:id = "@+id/measure_item3"
+        android:title="标称值设置"/>  
+    <item 
+        android:id = "@+id/measure_item4"
+        android:title="同步到云端"/>    
 </menu>

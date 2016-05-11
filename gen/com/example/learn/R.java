@@ -1106,13 +1106,14 @@ containing a value of this type.
         public static final int home_index_btn_d=0x7f02005f;
         public static final int home_select_list_style=0x7f020060;
         public static final int ic_launcher=0x7f020061;
-        public static final int index_browse=0x7f020062;
-        public static final int index_looks=0x7f020063;
-        public static final int index_search=0x7f020064;
-        public static final int index_show=0x7f020065;
-        public static final int login_background=0x7f020066;
-        public static final int voltage=0x7f020067;
-        public static final int voltagebai=0x7f020068;
+        public static final int icon72=0x7f020062;
+        public static final int index_browse=0x7f020063;
+        public static final int index_looks=0x7f020064;
+        public static final int index_search=0x7f020065;
+        public static final int index_show=0x7f020066;
+        public static final int login_background=0x7f020067;
+        public static final int voltage=0x7f020068;
+        public static final int voltagebai=0x7f020069;
     }
     public static final class id {
         public static final int ChartLayout=0x7f0a004f;
@@ -1137,8 +1138,9 @@ containing a value of this type.
         public static final int action_menu_presenter=0x7f0a0003;
         public static final int action_mode_close_button=0x7f0a0024;
         public static final int activity_chooser_view_content=0x7f0a0025;
-        public static final int add=0x7f0a0064;
+        public static final int add=0x7f0a0067;
         public static final int always=0x7f0a000f;
+        public static final int aty_device_delete_button=0x7f0a0062;
         public static final int aty_device_history_button=0x7f0a005f;
         public static final int aty_device_info_button=0x7f0a0061;
         public static final int aty_device_time_task_button=0x7f0a0060;
@@ -1182,16 +1184,20 @@ containing a value of this type.
         public static final int login_text_view_register=0x7f0a0040;
         public static final int mainImageView=0x7f0a004a;
         public static final int measureVolumn=0x7f0a0059;
-        public static final int measure_item1=0x7f0a006b;
-        public static final int measure_item2=0x7f0a006c;
-        public static final int menu_connect=0x7f0a0066;
-        public static final int menu_disconnect=0x7f0a0067;
-        public static final int menu_refresh=0x7f0a006a;
-        public static final int menu_scan=0x7f0a0068;
-        public static final int menu_stop=0x7f0a0069;
+        public static final int measure_actime_button=0x7f0a0064;
+        public static final int measure_dctime_button=0x7f0a0063;
+        public static final int measure_item1=0x7f0a006e;
+        public static final int measure_item2=0x7f0a006f;
+        public static final int measure_item3=0x7f0a0070;
+        public static final int measure_item4=0x7f0a0071;
+        public static final int menu_connect=0x7f0a0069;
+        public static final int menu_disconnect=0x7f0a006a;
+        public static final int menu_refresh=0x7f0a006d;
+        public static final int menu_scan=0x7f0a006b;
+        public static final int menu_stop=0x7f0a006c;
         public static final int middle=0x7f0a0018;
         public static final int never=0x7f0a0012;
-        public static final int new_series=0x7f0a0065;
+        public static final int new_series=0x7f0a0068;
         public static final int none=0x7f0a0019;
         public static final int normal=0x7f0a0007;
         public static final int progress_circular=0x7f0a0004;
@@ -1222,8 +1228,8 @@ containing a value of this type.
         public static final int up=0x7f0a0021;
         public static final int useLogo=0x7f0a000e;
         public static final int withText=0x7f0a0013;
-        public static final int xValue=0x7f0a0062;
-        public static final int yValue=0x7f0a0063;
+        public static final int xValue=0x7f0a0065;
+        public static final int yValue=0x7f0a0066;
     }
     public static final class integer {
         /**  The maximum number of action buttons that should be permitted within
@@ -1302,6 +1308,14 @@ containing a value of this type.
         public static final int user=0x7f030006;
     }
     public static final class string {
+        public static final int ACcurrent=0x7f0b002d;
+        public static final int ACtime=0x7f0b002f;
+        public static final int ACvoltage=0x7f0b002b;
+        public static final int DCcurrent=0x7f0b002c;
+        public static final int DCtime=0x7f0b002e;
+        /**  measure manage list 
+         */
+        public static final int DCvoltage=0x7f0b002a;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abc_action_bar_home_description=0x7f0b0001;
@@ -1348,12 +1362,9 @@ containing a value of this type.
         public static final int app_name=0x7f0b000d;
         public static final int ble_not_supported=0x7f0b0014;
         public static final int connected=0x7f0b0019;
-        public static final int delete=0x7f0b002d;
         public static final int disconnected=0x7f0b001a;
         public static final int error_bluetooth_not_supported=0x7f0b001c;
         public static final int hello_world=0x7f0b000e;
-        public static final int history=0x7f0b002b;
-        public static final int info=0x7f0b002c;
         public static final int label_data=0x7f0b0015;
         public static final int label_device_address=0x7f0b0016;
         public static final int label_state=0x7f0b0017;
@@ -1370,9 +1381,6 @@ containing a value of this type.
         public static final int menu_stop=0x7f0b0023;
         public static final int new_series=0x7f0b0029;
         public static final int no_data=0x7f0b0018;
-        /**  measure manage list 
-         */
-        public static final int time_task=0x7f0b002a;
         public static final int title_devices=0x7f0b001b;
         public static final int unknown_characteristic=0x7f0b001e;
         public static final int unknown_device=0x7f0b001d;
@@ -1384,6 +1392,9 @@ containing a value of this type.
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.Theme.AppCompat.Light
+    
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+    </style>
     
 
             Theme customizations available in newer API levels can go in
