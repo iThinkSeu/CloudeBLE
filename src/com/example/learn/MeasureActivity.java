@@ -50,6 +50,8 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -200,7 +202,26 @@ public class MeasureActivity extends Activity {
 		mGattServicesList.setAdapter((SimpleExpandableListAdapter) null);
 		mDataField.setText(R.string.no_data);
 	}
-
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.measuremenu, menu);
+		return true;
+		}
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) 
+	{
+		switch (item.getItemId()) {
+			case R.id.measure_item1:
+				Toast.makeText(this, "You clicked measure item 1", Toast.LENGTH_SHORT).show();
+				break;
+			case R.id.measure_item2:
+				Toast.makeText(this, "You clicked measure item 2", Toast.LENGTH_SHORT).show();
+				break;
+			default:
+			}
+		return true;
+	}
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -256,17 +277,32 @@ public class MeasureActivity extends Activity {
 		
 		//画曲线
 		// set some properties on the main renderer
+		mRenderer.setYLabels(15);
 	    mRenderer.setApplyBackgroundColor(true);
+	    mRenderer.setBackgroundColor(Color.rgb(0x37, 0x3d, 0x49));
 	    //mRenderer.setBackgroundColor(Color.argb(100, 50, 50, 50));
-	    mRenderer.setBackgroundColor(Color.rgb(0xF2, 0xF2, 0xF2));
+	    //mRenderer.setBackgroundColor(Color.rgb(0xF2, 0xF2, 0xF2));
 	    mRenderer.setAxisTitleTextSize(16);
 	    mRenderer.setChartTitleTextSize(20);
 	    mRenderer.setLabelsTextSize(15);
 	    mRenderer.setLegendTextSize(15);
+	    mRenderer.setMarginsColor(Color.rgb(0x8c, 0x8c, 0x8c));
 	    //mRenderer.setMargins(new int[] { 20, 30, 15, 0 });
-	    mRenderer.setMarginsColor(Color.rgb(0xea, 0xea, 0xea));
-	    mRenderer.setZoomButtonsVisible(true);
+	    //mRenderer.setMarginsColor(Color.rgb(0xea, 0xea, 0xea));
+	    //mRenderer.setZoomButtonsVisible(true);
 	    mRenderer.setPointSize(5);
+
+	    mRenderer.setShowLegend(true);
+	    mRenderer.setChartTitle("战绩分析");  
+	    mRenderer.setXTitle("横坐标");  
+	    mRenderer.setYTitle("纵坐标");  
+	    mRenderer.setXLabels(10);
+	    mRenderer.setXLabelsColor(Color.WHITE);
+	    mRenderer.setYLabels(12);
+	    mRenderer.setYLabelsColor(0, Color.WHITE);
+	    mRenderer.setShowGrid(true);
+	    //mRenderer.setAxesColor(Color.CYAN); ，坐标轴颜色
+	    
 	    
 	    String seriesTitle = "Series " + (mDataset.getSeriesCount() + 1);
 	    // create a new series of data
@@ -279,6 +315,7 @@ public class MeasureActivity extends Activity {
 	    mRenderer.addSeriesRenderer(renderer);
 	    // set some renderer properties
 	    renderer.setPointStyle(PointStyle.CIRCLE);
+	    renderer.setColor(Color.CYAN);
 	    renderer.setFillPoints(true);
 	    renderer.setDisplayChartValues(true);
 	    renderer.setDisplayChartValuesDistance(10);
@@ -286,16 +323,17 @@ public class MeasureActivity extends Activity {
 	    
 	    
 	    long now = Math.round(new Date().getTime());
-	    Date[] dates = new Date[3];
-	    for(int j=0;j<3;j++)
+	    Date[] dates = new Date[4];
+	    for(int j=0;j<4;j++)
 	    {
-	    	dates[j] = new Date(now - (3 - j) * HOUR);
+	    	dates[j] = new Date(now - (4 - j) * HOUR);
 	    }
 	    
 	    
-	    //mCurrentSeries.add(dates[0], 2.0);
-	    //mCurrentSeries.add(dates[1], 6.0);
-	    //mCurrentSeries.add(dates[2], 7.0);
+	    mCurrentSeries.add(dates[0], 2.0);
+	    mCurrentSeries.add(dates[1], 6.0);
+	    mCurrentSeries.add(dates[2], 7.0);
+	    mCurrentSeries.add(dates[3], 7.05);
 	    
 	    if (mChartView == null) {
 	        LinearLayout layout = (LinearLayout) findViewById(R.id.chart);

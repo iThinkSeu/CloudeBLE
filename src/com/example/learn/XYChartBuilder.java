@@ -87,14 +87,15 @@ public class XYChartBuilder extends Activity {
     mAdd = (Button) findViewById(R.id.add);
 
     // set some properties on the main renderer
+    mRenderer.setYLabels(12);
     mRenderer.setApplyBackgroundColor(true);
     mRenderer.setBackgroundColor(Color.argb(100, 50, 50, 50));
     mRenderer.setAxisTitleTextSize(16);
     mRenderer.setChartTitleTextSize(20);
     mRenderer.setLabelsTextSize(15);
     mRenderer.setLegendTextSize(15);
-    mRenderer.setMargins(new int[] { 20, 30, 15, 0 });
-    mRenderer.setZoomButtonsVisible(true);
+    //mRenderer.setMargins(new int[] { 20, 30, 15, 0 });
+    //mRenderer.setZoomButtonsVisible(true);
     mRenderer.setPointSize(5);
 
     // the button that handles the new series of data creation
