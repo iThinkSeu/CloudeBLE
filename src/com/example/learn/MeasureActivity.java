@@ -17,6 +17,7 @@
 package com.example.learn;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,6 +25,7 @@ import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.PointStyle;
 import org.achartengine.model.SeriesSelection;
+import org.achartengine.model.TimeSeries;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
@@ -101,11 +103,15 @@ public class MeasureActivity extends Activity {
     /** The main renderer that includes all the renderers customizing a chart. */
     private XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
     /** The most recently added series. */
-    private XYSeries mCurrentSeries;
+    private TimeSeries mCurrentSeries;
     /** The most recently created renderer, customizing the current series. */
     private XYSeriesRenderer mCurrentRenderer;
     /** The chart view that displays the data. */
     private GraphicalView mChartView;
+    
+    private static final long HOUR = 3600 * 1000;
+
+    private static final long DAY = HOUR * 24;
     
 	private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
@@ -213,7 +219,7 @@ public class MeasureActivity extends Activity {
 		System.out.println("Create measure");
 		//mDataField = (TextView) findViewById(R.id.lastDrinkWater);
 		
-		DrawVolumn(0);
+		DrawVolumn(10);
 		/*
 		btnReturn = (Button) findViewById(R.id.MesureReturn);
 		
@@ -245,20 +251,86 @@ public class MeasureActivity extends Activity {
 		});
 		*/
 		Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
-		// startService(gattServiceIntent);
+		startService(gattServiceIntent);
 		bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
 		
 		//画曲线
 		// set some properties on the main renderer
 	    mRenderer.setApplyBackgroundColor(true);
-	    mRenderer.setBackgroundColor(Color.argb(100, 50, 50, 50));
+	    //mRenderer.setBackgroundColor(Color.argb(100, 50, 50, 50));
+	    mRenderer.setBackgroundColor(Color.rgb(0xF2, 0xF2, 0xF2));
 	    mRenderer.setAxisTitleTextSize(16);
 	    mRenderer.setChartTitleTextSize(20);
 	    mRenderer.setLabelsTextSize(15);
 	    mRenderer.setLegendTextSize(15);
-	    mRenderer.setMargins(new int[] { 20, 30, 15, 0 });
+	    //mRenderer.setMargins(new int[] { 20, 30, 15, 0 });
+	    mRenderer.setMarginsColor(Color.rgb(0xea, 0xea, 0xea));
 	    mRenderer.setZoomButtonsVisible(true);
 	    mRenderer.setPointSize(5);
+	    
+	    String seriesTitle = "Series " + (mDataset.getSeriesCount() + 1);
+	    // create a new series of data
+	    TimeSeries series = new TimeSeries(seriesTitle);
+
+	    mDataset.addSeries(series);
+	    mCurrentSeries = series;
+	    // create a new renderer for the new series
+	    XYSeriesRenderer renderer = new XYSeriesRenderer();
+	    mRenderer.addSeriesRenderer(renderer);
+	    // set some renderer properties
+	    renderer.setPointStyle(PointStyle.CIRCLE);
+	    renderer.setFillPoints(true);
+	    renderer.setDisplayChartValues(true);
+	    renderer.setDisplayChartValuesDistance(10);
+	    mCurrentRenderer = renderer;
+	    
+	    
+	    long now = Math.round(new Date().getTime());
+	    Date[] dates = new Date[3];
+	    for(int j=0;j<3;j++)
+	    {
+	    	dates[j] = new Date(now - (3 - j) * HOUR);
+	    }
+	    
+	    
+	    //mCurrentSeries.add(dates[0], 2.0);
+	    //mCurrentSeries.add(dates[1], 6.0);
+	    //mCurrentSeries.add(dates[2], 7.0);
+	    
+	    if (mChartView == null) {
+	        LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
+	        //mChartView = ChartFactory.getLineChartView(this, mDataset, mRenderer);
+	        mChartView = ChartFactory.getTimeChartView(this, mDataset, mRenderer, "M/d HH:mm a");
+	        // enable the chart click events
+	        mRenderer.setClickEnabled(true);
+	        mRenderer.setSelectableBuffer(10);
+	      
+	        mChartView.setOnClickListener(new View.OnClickListener() {
+	          public void onClick(View v) {
+	            // handle the click event on the chart
+	            SeriesSelection seriesSelection = mChartView.getCurrentSeriesAndPoint();
+	            if (seriesSelection == null) {
+	              //Toast.makeText(XYChartBuilder.this, "No chart element", Toast.LENGTH_SHORT).show();
+	            } else {
+	              // display information of the clicked point
+	              Toast.makeText(
+	                  MeasureActivity.this,
+	                  "Chart element in series index " + seriesSelection.getSeriesIndex()
+	                      + " data point index " + seriesSelection.getPointIndex() + " was clicked"
+	                      + " closest point value X=" + seriesSelection.getXValue() + ", Y="
+	                      + seriesSelection.getValue(), Toast.LENGTH_SHORT).show();
+	            }
+	          }
+	        });
+	        
+	        layout.addView(mChartView, new LayoutParams(LayoutParams.FILL_PARENT,
+	            LayoutParams.FILL_PARENT));
+	      } else {
+	       
+	        mChartView.repaint();
+	      }
+	    
+	      mChartView.repaint();
 	    
 
 	}
@@ -308,14 +380,14 @@ public class MeasureActivity extends Activity {
 		iv.setImageBitmap(baseBitmap);
 		int centre = 400 / 2; // 获取圆心的x坐标
 		int mCircleWidth = 15;
-		int radius = centre - mCircleWidth / 2-60;// 半径
+		int radius = centre - mCircleWidth / 2-30;// 半径
 		paint.setStrokeWidth(mCircleWidth); // 设置圆环的宽度
 		paint.setAntiAlias(true); // 消除锯齿
 		paint.setStyle(Paint.Style.STROKE); // 设置空心
 		RectF oval = new RectF(centre - radius + 50, centre - radius + 60,
 				centre + radius + 50, centre + radius + 60); // 用于定义的圆弧的形状和大小的界限
 		paint.setColor(Color.LTGRAY); // 设置圆环的颜色
-		canvas.drawCircle(centre + 20, centre + 20, radius, paint); // 画出圆环
+		canvas.drawCircle(centre + 50, centre + 60, radius, paint); // 画出圆环
 	    paint.setColor(Color.rgb(0x6d, 0xce, 0x3f)); // 设置圆环的颜色
 		paint.setColor(color);
 		canvas.drawArc(oval, -90, (int) (volumn * 1.0 / 800 * 360), false,
@@ -377,25 +449,6 @@ public class MeasureActivity extends Activity {
 		      });
 		      layout.addView(mChartView, new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
 		 }else{
-			 
-			  //Create a series of data creation
-		      String seriesTitle = "Series " + (mDataset.getSeriesCount() + 1);
-		      // create a new series of data
-	          XYSeries series = new XYSeries(seriesTitle);
-	          mDataset.addSeries(series);
-	          mCurrentSeries = series;
-	          // create a new renderer for the new series
-	          XYSeriesRenderer renderer = new XYSeriesRenderer();
-	          mRenderer.addSeriesRenderer(renderer);
-	          // set some renderer properties
-	          renderer.setPointStyle(PointStyle.CIRCLE);
-	          renderer.setFillPoints(true);
-	          renderer.setDisplayChartValues(true);
-	          renderer.setDisplayChartValuesDistance(10);
-	          mCurrentRenderer = renderer;
-	          mCurrentSeries.add(0.0, 0.0);
-	          mCurrentSeries.add(5.0, 7.0);
-	          mCurrentSeries.add(10.0, 8.0);
 	          mChartView.repaint();
 		 }
 	}
@@ -423,6 +476,7 @@ public class MeasureActivity extends Activity {
 	
 	private void displayData(String data) 
 	{
+		dataSave = "";
 		dataSave += data;
 		System.out.println("receive raw data " + data);
 		System.out.println("receive raw dataSave " + dataSave);
@@ -455,9 +509,13 @@ public class MeasureActivity extends Activity {
 					}
 				}
 				Log.d("ithinker","receive 温度 data" + convertData);
-				mDataField.setText("高压表电流值 "+convertData);
+				//mDataField.setText("高压表电流值 "+convertData);
 				DrawVolumn(Integer.parseInt(convertData));
 				
+			    long now = Math.round(new Date().getTime()/DAY)*DAY;
+			    Log.d("ithinker","time"+now);
+			    mCurrentSeries.add(now, (float)Integer.parseInt(convertData));
+			    mChartView.repaint();
 			} 
 		}	
       

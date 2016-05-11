@@ -1125,15 +1125,16 @@ containing a value of this type.
         public static final int action_menu_presenter=0x7f0a0003;
         public static final int action_mode_close_button=0x7f0a0024;
         public static final int activity_chooser_view_content=0x7f0a0025;
-        public static final int add=0x7f0a005b;
+        public static final int add=0x7f0a005d;
         public static final int always=0x7f0a000f;
         public static final int beginning=0x7f0a0016;
-        public static final int chart=0x7f0a0058;
+        public static final int chart=0x7f0a0059;
         public static final int checkbox=0x7f0a002d;
         public static final int collapseActionView=0x7f0a0010;
         public static final int connection_state=0x7f0a0046;
         public static final int data_value=0x7f0a0047;
         public static final int default_activity_button=0x7f0a0028;
+        public static final int deta_out=0x7f0a0058;
         public static final int device_address=0x7f0a0045;
         public static final int device_name=0x7f0a0049;
         public static final int dialog=0x7f0a0014;
@@ -1155,6 +1156,7 @@ containing a value of this type.
         public static final int icon=0x7f0a002a;
         public static final int ifRoom=0x7f0a0011;
         public static final int image=0x7f0a0027;
+        public static final int lastDrinkWater=0x7f0a005a;
         public static final int listMode=0x7f0a0006;
         public static final int list_item=0x7f0a0029;
         public static final int login_button_login=0x7f0a003f;
@@ -1164,14 +1166,14 @@ containing a value of this type.
         public static final int login_text_view_register=0x7f0a0040;
         public static final int mainImageView=0x7f0a004a;
         public static final int measureVolumn=0x7f0a0057;
-        public static final int menu_connect=0x7f0a005d;
-        public static final int menu_disconnect=0x7f0a005e;
-        public static final int menu_refresh=0x7f0a0061;
-        public static final int menu_scan=0x7f0a005f;
-        public static final int menu_stop=0x7f0a0060;
+        public static final int menu_connect=0x7f0a005f;
+        public static final int menu_disconnect=0x7f0a0060;
+        public static final int menu_refresh=0x7f0a0063;
+        public static final int menu_scan=0x7f0a0061;
+        public static final int menu_stop=0x7f0a0062;
         public static final int middle=0x7f0a0018;
         public static final int never=0x7f0a0012;
-        public static final int new_series=0x7f0a005c;
+        public static final int new_series=0x7f0a005e;
         public static final int none=0x7f0a0019;
         public static final int normal=0x7f0a0007;
         public static final int progress_circular=0x7f0a0004;
@@ -1202,8 +1204,8 @@ containing a value of this type.
         public static final int up=0x7f0a0021;
         public static final int useLogo=0x7f0a000e;
         public static final int withText=0x7f0a0013;
-        public static final int xValue=0x7f0a0059;
-        public static final int yValue=0x7f0a005a;
+        public static final int xValue=0x7f0a005b;
+        public static final int yValue=0x7f0a005c;
     }
     public static final class integer {
         /**  The maximum number of action buttons that should be permitted within

@@ -5,40 +5,46 @@
     android:orientation="vertical" >
      <ImageView
              android:id="@+id/measureVolumn"
-             android:layout_alignParentTop="true"
+             android:layout_gravity="center"
+             android:gravity="center"
              android:layout_width="match_parent"
-       	  android:layout_height="match_parent"
-       	  android:layout_weight="1"
+       	     android:layout_height="0dp"
+       	     android:layout_weight="2"
         />
+    
+
+     <RelativeLayout 
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:layout_height="0dp"
+        android:layout_centerInParent = "true"
+        android:layout_weight="0.5">
+			<TextView
+			  android:id="@+id/deta_out"
+              android:text="Δ： 3.20%    Error：0.01KV"
+              android:layout_centerInParent="true"
+              android:layout_width="wrap_content"
+        	  android:layout_height="wrap_content"
+        	  android:layout_weight="1"
+              />
+
+      </RelativeLayout>
+	
+      
+     
+      <LinearLayout android:id="@+id/chart" android:orientation="horizontal"
+                   android:layout_width="wrap_content" android:layout_height="0dp" android:layout_weight="3"/>
      
      
-     <LinearLayout android:id="@+id/chart" android:orientation="horizontal"
-                   android:layout_width="fill_parent" android:layout_height="0dip" android:layout_weight="1"/>
-     <!-- 
-     <LinearLayout 
-     android:orientation="horizontal"
-     android:layout_width="match_parent"
-     android:layout_height="match_parent"
-     android:layout_weight="1">
-     
-	<TextView
-  	android:id="@+id/lastDrinkWater"
+	  <TextView
+  	       android:id="@+id/lastDrinkWater"
            android:text="    高压表电流值     0.5A"
-           android:layout_alignParentLeft="true"
            android:layout_width="wrap_content"
-     	   android:layout_height="wrap_content"
-     	   android:layout_weight="1"
-          />
-
-
-	<TextView
-    android:id="@+id/lastDropWater"
-           android:text="     电流表电压值  5000V"
-           android:layout_alignParentRight="true"
-           android:layout_width="wrap_content"
-     	   android:layout_height="wrap_content"
-     	   android:layout_weight="1"
+     	   android:layout_height="0dp"
+     	   android:layout_weight="1.2"
            />
-    </LinearLayout>
-    -->
+
+  
 </LinearLayout>
