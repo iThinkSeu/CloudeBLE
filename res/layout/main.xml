@@ -147,6 +147,51 @@
             android:src="@drawable/home_index_arrow"/>
     </RelativeLayout>
     
+    <!-- 参数校正 -->
+    <RelativeLayout 
+        android:id="@+id/correctionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="61dip"
+        android:clickable="true"
+        android:background="@drawable/home_select_list_style">
+        <ImageView 
+            android:id="@+id/home_img_correction"
+            android:layout_width="31dip"
+            android:layout_height="31dip"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dip"
+            android:background="@drawable/index_browse"/>
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/home_img_correction"
+            android:layout_marginLeft="5dip"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="参数校正"
+                android:textSize="18dip"
+                android:textColor="@android:color/secondary_text_light"
+                android:textStyle="bold"/>
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="系统参数校正"
+                android:textColor="@android:color/secondary_text_light"
+                android:textSize="14dip"/>
+        </LinearLayout>
+        <ImageView 
+            android:layout_width="6dip"
+            android:layout_height="12dip"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dip"
+            android:layout_centerVertical="true"
+            android:src="@drawable/home_index_arrow"/>
+    </RelativeLayout>
+    
     <!-- 系统设置 -->
     <RelativeLayout 
         android:id="@+id/settingLayout"

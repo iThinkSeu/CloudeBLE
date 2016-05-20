@@ -293,7 +293,7 @@ public class MeasureActivity extends Activity {
 	    mRenderer.setPointSize(5);
 
 	    mRenderer.setShowLegend(true);
-	    mRenderer.setChartTitle("战绩分析");  
+	    mRenderer.setChartTitle("实时曲线");  
 	    mRenderer.setXTitle("横坐标");  
 	    mRenderer.setYTitle("纵坐标");  
 	    mRenderer.setXLabels(10);
@@ -321,7 +321,7 @@ public class MeasureActivity extends Activity {
 	    renderer.setDisplayChartValuesDistance(10);
 	    mCurrentRenderer = renderer;
 	    
-	    
+	    /*
 	    long now = Math.round(new Date().getTime());
 	    Date[] dates = new Date[4];
 	    for(int j=0;j<4;j++)
@@ -334,6 +334,7 @@ public class MeasureActivity extends Activity {
 	    mCurrentSeries.add(dates[1], 6.0);
 	    mCurrentSeries.add(dates[2], 7.0);
 	    mCurrentSeries.add(dates[3], 7.05);
+	    */
 	    
 	    if (mChartView == null) {
 	        LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
@@ -347,26 +348,34 @@ public class MeasureActivity extends Activity {
 	          public void onClick(View v) {
 	            // handle the click event on the chart
 	            SeriesSelection seriesSelection = mChartView.getCurrentSeriesAndPoint();
-	            if (seriesSelection == null) {
-	              //Toast.makeText(XYChartBuilder.this, "No chart element", Toast.LENGTH_SHORT).show();
-	            } else {
-	              // display information of the clicked point
-	              Toast.makeText(
-	                  MeasureActivity.this,
-	                  "Chart element in series index " + seriesSelection.getSeriesIndex()
-	                      + " data point index " + seriesSelection.getPointIndex() + " was clicked"
-	                      + " closest point value X=" + seriesSelection.getXValue() + ", Y="
-	                      + seriesSelection.getValue(), Toast.LENGTH_SHORT).show();
-	            }
+	            Toast.makeText(MeasureActivity.this, "You clicked measure item 1", Toast.LENGTH_SHORT).show();
+	            Intent intent = new Intent();
+				// intent = (new SensorValuesChart()).execute(getBaseContext());
+				intent.setClass(MeasureActivity.this, FrequenceMeasureActivity.class);
+				startActivity(intent);
 	          }
 	        });
 	        
 	        layout.addView(mChartView, new LayoutParams(LayoutParams.FILL_PARENT,
 	            LayoutParams.FILL_PARENT));
+	        layout.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Toast.makeText(MeasureActivity.this, "You clicked measure item 1", Toast.LENGTH_SHORT).show();
+					Intent intent = new Intent();
+					// intent = (new SensorValuesChart()).execute(getBaseContext());
+					intent.setClass(MeasureActivity.this, FrequenceMeasureActivity.class);
+					startActivity(intent);
+					
+				}
+			});
 	      } else {
 	       
 	        mChartView.repaint();
 	      }
+	  
 	    
 	      mChartView.repaint();
 	    

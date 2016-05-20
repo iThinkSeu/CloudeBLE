@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">SmartVoltage</string>
+    <string name="app_name">CS9002</string>
     <string name="hello_world">Hello world!</string>
 	<string name="login">登录</string>
     <string name="login_weme_user">注册 云端账户</string>

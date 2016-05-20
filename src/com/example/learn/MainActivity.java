@@ -80,7 +80,7 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent();
 				// intent = (new SensorValuesChart()).execute(getBaseContext());
-				intent.setClass(MainActivity.this, XYChartBuilder.class);
+				intent.setClass(MainActivity.this, BarChartBuilder.class);
 				startActivity(intent);
 			}
 		});

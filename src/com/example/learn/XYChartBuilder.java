@@ -79,7 +79,7 @@ public class XYChartBuilder extends Activity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.xy_chart);
+    setContentView(R.layout.frequency_domain);
 
     // the top part of the UI components for adding new data points
     mX = (EditText) findViewById(R.id.xValue);
@@ -168,7 +168,7 @@ public class XYChartBuilder extends Activity {
     mCurrentSeries.add(2.0, 6.0);
     mCurrentSeries.add(4.0, 7.0);
     if (mChartView == null) {
-        LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
+        LinearLayout layout = (LinearLayout) findViewById(R.id.time_chart);
         mChartView = ChartFactory.getLineChartView(this, mDataset, mRenderer);
         // enable the chart click events
         mRenderer.setClickEnabled(true);
