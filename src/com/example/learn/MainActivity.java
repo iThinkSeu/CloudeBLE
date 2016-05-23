@@ -1,5 +1,8 @@
 package com.example.learn;
 
+import statisticscharline.testTableViewActivity;
+import statisticscharline.twobarchart;
+
 import com.example.learn.DeviceScanActivity;
 import com.example.learn.MainActivity;
 
@@ -65,9 +68,14 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Log.d("ithinker", "chart log.d");
+				Log.d("ithinker", "intent to two bar chart");
+				/*
 				Intent intent = new Intent();
 				intent = (new SensorValuesChart()).execute(getBaseContext());
+				startActivity(intent);
+				*/
+				Intent intent = new Intent();
+				intent.setClass(MainActivity.this, twobarchart.class);
 				startActivity(intent);
 			}
 		});
@@ -80,7 +88,7 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent();
 				// intent = (new SensorValuesChart()).execute(getBaseContext());
-				intent.setClass(MainActivity.this, BarChartBuilder.class);
+				intent.setClass(MainActivity.this, testTableViewActivity.class);
 				startActivity(intent);
 			}
 		});

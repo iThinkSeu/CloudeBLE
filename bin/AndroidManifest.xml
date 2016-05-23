@@ -53,6 +53,9 @@
         <activity android:name="com.example.learn.BarChartBuilder"/>
         <activity android:name="com.example.learn.XYChartBuilder"/>
         <activity android:name=".FrequenceMeasureActivity"/>
+        <!-- fenxuantongji分选统计 -->
+        <activity android:name="statisticscharline.twobarchart"/>
+        <activity android:name="statisticscharline.testTableViewActivity"/>
     </application>
 
 </manifest>
