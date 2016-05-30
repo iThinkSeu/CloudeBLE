@@ -1,5 +1,6 @@
 package com.example.learn;
 
+import measurepack.NewMeasureActivity;
 import statisticscharline.testTableViewActivity;
 import statisticscharline.twobarchart;
 
@@ -88,7 +89,7 @@ public class MainActivity extends Activity {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent();
 				// intent = (new SensorValuesChart()).execute(getBaseContext());
-				intent.setClass(MainActivity.this, testTableViewActivity.class);
+				intent.setClass(MainActivity.this, NewMeasureActivity.class);
 				startActivity(intent);
 			}
 		});

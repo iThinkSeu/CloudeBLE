@@ -23,7 +23,7 @@
         android:allowBackup="true"
         android:icon="@drawable/power"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/title_bg" >
         
         <activity android:name=".DeviceScanActivity"
                   android:label="@string/app_name"> 
@@ -56,6 +56,9 @@
         <!-- fenxuantongji分选统计 -->
         <activity android:name="statisticscharline.twobarchart"/>
         <activity android:name="statisticscharline.testTableViewActivity"/>
+         <activity android:name="measurepack.NewMeasureActivity"/>
+    
+        <!-- 新测量界面 -->
     </application>
 
 </manifest>

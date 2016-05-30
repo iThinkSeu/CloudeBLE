@@ -19,5 +19,11 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
-
+    
+	<style name="title_bg" parent="AppBaseTheme">
+        <item name="android:windowTitleBackgroundStyle">@style/Titleground</item>
+    </style>
+    <style name="Titleground">  
+        <item name="android:background">#2975E8</item>  
+    </style>  
 </resources>

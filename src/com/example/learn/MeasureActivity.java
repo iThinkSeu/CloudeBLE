@@ -55,6 +55,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -225,6 +226,7 @@ public class MeasureActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.newmeasurement);
 		
 		final Intent intent = getIntent();
@@ -279,14 +281,15 @@ public class MeasureActivity extends Activity {
 		// set some properties on the main renderer
 		mRenderer.setYLabels(15);
 	    mRenderer.setApplyBackgroundColor(true);
-	    mRenderer.setBackgroundColor(Color.rgb(0x37, 0x3d, 0x49));
+	    //mRenderer.setBackgroundColor(Color.rgb(0x37, 0x3d, 0x49));
 	    //mRenderer.setBackgroundColor(Color.argb(100, 50, 50, 50));
-	    //mRenderer.setBackgroundColor(Color.rgb(0xF2, 0xF2, 0xF2));
+	    mRenderer.setBackgroundColor(Color.rgb(0xF2, 0xF2, 0xF2));
 	    mRenderer.setAxisTitleTextSize(16);
 	    mRenderer.setChartTitleTextSize(20);
 	    mRenderer.setLabelsTextSize(15);
 	    mRenderer.setLegendTextSize(15);
-	    mRenderer.setMarginsColor(Color.rgb(0x8c, 0x8c, 0x8c));
+	    //mRenderer.setMarginsColor(Color.rgb(0x8c, 0x8c, 0x8c));
+		mRenderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01, 0x01));
 	    //mRenderer.setMargins(new int[] { 20, 30, 15, 0 });
 	    //mRenderer.setMarginsColor(Color.rgb(0xea, 0xea, 0xea));
 	    //mRenderer.setZoomButtonsVisible(true);
@@ -297,9 +300,9 @@ public class MeasureActivity extends Activity {
 	    mRenderer.setXTitle("ºá×ø±ê");  
 	    mRenderer.setYTitle("×Ý×ø±ê");  
 	    mRenderer.setXLabels(10);
-	    mRenderer.setXLabelsColor(Color.WHITE);
+	    mRenderer.setXLabelsColor(Color.BLACK);
 	    mRenderer.setYLabels(12);
-	    mRenderer.setYLabelsColor(0, Color.WHITE);
+	    mRenderer.setYLabelsColor(0, Color.BLACK);
 	    mRenderer.setShowGrid(true);
 	    //mRenderer.setAxesColor(Color.CYAN); £¬×ø±êÖáÑÕÉ«
 	    
@@ -315,27 +318,27 @@ public class MeasureActivity extends Activity {
 	    mRenderer.addSeriesRenderer(renderer);
 	    // set some renderer properties
 	    renderer.setPointStyle(PointStyle.CIRCLE);
-	    renderer.setColor(Color.CYAN);
+	    renderer.setColor(Color.BLACK);
 	    renderer.setFillPoints(true);
 	    renderer.setDisplayChartValues(true);
 	    renderer.setDisplayChartValuesDistance(10);
 	    mCurrentRenderer = renderer;
 	    
-	    /*
+	    
 	    long now = Math.round(new Date().getTime());
 	    Date[] dates = new Date[4];
 	    for(int j=0;j<4;j++)
 	    {
 	    	dates[j] = new Date(now - (4 - j) * HOUR);
 	    }
-	    
+	    /*
 	    
 	    mCurrentSeries.add(dates[0], 2.0);
 	    mCurrentSeries.add(dates[1], 6.0);
 	    mCurrentSeries.add(dates[2], 7.0);
 	    mCurrentSeries.add(dates[3], 7.05);
-	    */
 	    
+	    */
 	    if (mChartView == null) {
 	        LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
 	        //mChartView = ChartFactory.getLineChartView(this, mDataset, mRenderer);
