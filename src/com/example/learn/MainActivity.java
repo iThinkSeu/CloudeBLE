@@ -1,5 +1,6 @@
 package com.example.learn;
 
+import mainactivity.newMainActivity;
 import measurepack.NewMeasureActivity;
 import statisticscharline.testTableViewActivity;
 import statisticscharline.twobarchart;
@@ -76,7 +77,8 @@ public class MainActivity extends Activity {
 				startActivity(intent);
 				*/
 				Intent intent = new Intent();
-				intent.setClass(MainActivity.this, twobarchart.class);
+				//intent.setClass(MainActivity.this, twobarchart.class);
+				intent.setClass(MainActivity.this, newMainActivity.class);
 				startActivity(intent);
 			}
 		});

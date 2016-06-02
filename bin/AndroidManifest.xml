@@ -56,8 +56,9 @@
         <!-- fenxuantongji分选统计 -->
         <activity android:name="statisticscharline.twobarchart"/>
         <activity android:name="statisticscharline.testTableViewActivity"/>
-         <activity android:name="measurepack.NewMeasureActivity"/>
-    
+        <activity android:name="measurepack.NewMeasureActivity"/>
+        <activity android:name="mainactivity.newMainActivity"/>
+         <activity android:name=".testMeasureActivity"/>
         <!-- 新测量界面 -->
     </application>
 

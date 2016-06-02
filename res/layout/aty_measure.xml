@@ -24,7 +24,7 @@
 		       android:orientation="vertical">
 		       <TextView
 				  	android:id="@+id/RHD"
-		            android:text="RHD"
+		            android:text="THD"
 		            android:layout_gravity="center"
 		            android:gravity="center"
 		            android:layout_width="wrap_content"
@@ -59,7 +59,7 @@
 		            />
 		       <TextView
 				  	android:id="@+id/deta_value"
-		            android:text="12.00V"
+		            android:text="3.2﹪"
 		            android:layout_gravity="center"
 		            android:gravity="center"
 		            android:layout_width="wrap_content"
@@ -84,7 +84,7 @@
 		            />
 		       <TextView
 				  	android:id="@+id/error_value"
-		            android:text="12.00V"
+		            android:text="0.18KV"
 		            android:layout_gravity="center"
 		            android:gravity="center"
 		            android:layout_width="wrap_content"
@@ -151,7 +151,7 @@
 		            />
 		       <TextView
 				  	android:id="@+id/downlimit_value"
-		            android:text="12.00V"
+		            android:text="9.00KV"
 		            android:layout_gravity="center"
 		            android:gravity="center"
 		            android:layout_width="wrap_content"
@@ -176,7 +176,7 @@
 		            />
 		       <TextView
 				  	android:id="@+id/rating_value"
-		            android:text="12.00V"
+		            android:text="10.00KV"
 		            android:layout_gravity="center"
 		            android:gravity="center"
 		            android:layout_width="wrap_content"
