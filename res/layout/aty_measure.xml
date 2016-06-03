@@ -214,10 +214,11 @@
            android:layout_weight="1">
            <RelativeLayout
                android:id="@+id/dcvoltage_relativelayout"
+               android:clickable="true" 
                android:layout_weight="1"
                android:layout_width="0dp"
                android:layout_height="match_parent"
-               android:background="@drawable/grid_bg">
+               android:background="@drawable/grid_button_press">
                <LinearLayout
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
@@ -239,10 +240,11 @@
 
            <RelativeLayout
                android:id="@+id/acvoltage_relativelayout"
+               android:clickable="true" 
                android:layout_weight="1"
                android:layout_width="0dp"
                android:layout_height="match_parent"
-               android:background="@drawable/grid_bg">
+               android:background="@drawable/grid_button_press">
                <LinearLayout
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
@@ -264,10 +266,11 @@
            </RelativeLayout>
            <RelativeLayout
                android:id="@+id/dccurrent_relativelayout"
+               android:clickable="true" 
                android:layout_weight="1"
                android:layout_width="0dp"
                android:layout_height="match_parent"
-               android:background="@drawable/grid_bg">
+               android:background="@drawable/grid_button_press">
                <LinearLayout
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
@@ -291,10 +294,11 @@
            android:layout_weight="1">
            <RelativeLayout
                android:id="@+id/accurrent_relativelayout"
+               android:clickable="true" 
                android:layout_weight="1"
                android:layout_width="0dp"
                android:layout_height="match_parent"
-               android:background="@drawable/grid_bg">
+               android:background="@drawable/grid_button_press">
                <LinearLayout
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
@@ -317,10 +321,11 @@
 
            <RelativeLayout
                android:id="@+id/dctime_relativelayout"
+               android:clickable="true" 
                android:layout_weight="1"
                android:layout_width="0dp"
                android:layout_height="match_parent"
-               android:background="@drawable/grid_bg">
+               android:background="@drawable/grid_button_press">
                <LinearLayout
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
@@ -342,10 +347,11 @@
 
            <RelativeLayout
                android:id="@+id/actime_relativelayout"
+               android:clickable="true" 
                android:layout_weight="1"
                android:layout_width="0dp"
                android:layout_height="match_parent"
-               android:background="@drawable/grid_bg">
+               android:background="@drawable/grid_button_press">
                <LinearLayout
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
@@ -366,6 +372,4 @@
            </RelativeLayout>
        </TableRow>
  </TableLayout>
-   
-
 </LinearLayout>

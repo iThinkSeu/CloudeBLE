@@ -59,6 +59,7 @@
         <activity android:name="measurepack.NewMeasureActivity"/>
         <activity android:name="mainactivity.newMainActivity"/>
          <activity android:name=".testMeasureActivity"/>
+          <activity android:name=".MeasureTestActivityNew"/>
         <!-- 新测量界面 -->
     </application>
 

@@ -8,14 +8,18 @@ import java.util.List;
 import iThinkerChartFactory.CreateLineChart;
 import iThinkerChartFactory.circleFactory;
 
+import mainactivity.newMainActivity;
+
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.model.SeriesSelection;
 
 import com.example.learn.BluetoothLeService;
 import com.example.learn.MeasureActivity;
+import com.example.learn.MeasureTestActivityNew;
 import com.example.learn.R;
 import com.example.learn.XYChartBuilder;
+import com.example.learn.testMeasureActivity;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -138,8 +142,8 @@ public class NewMeasureActivity  extends Activity{
 				displayGattServices(mBluetoothLeService
 						.getSupportedGattServices());
 			} else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
-				displayData(intent
-						.getStringExtra(BluetoothLeService.EXTRA_DATA));
+				//displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
+				ResponseDisplay(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
 			}
 		}
 	};
@@ -211,68 +215,72 @@ public class NewMeasureActivity  extends Activity{
 	    
 	    //按键绑定事件  
 	    //直流电压
-	    dcvoltage_button = (Button) findViewById(R.id.dcvoltage_button);
-	    dcvoltage_button.setOnClickListener(new OnClickListener(){
+	    //dcvoltage_button = (Button) findViewById(R.id.dcvoltage_button);
+	    dcvoltage_gridbg.setOnClickListener(new OnClickListener(){
 	    	@Override
 	    	public void onClick(View v)
 	    	{
 	    		//myLineChart.addSeriesData(100);
 	    		//mChartView.repaint();
-	    		set_selectbutton_bg(1);
+	    		//set_selectbutton_bg(1);
 	    	}
 	    });
 	    //交流电压
-	    acvoltage_button = (Button) findViewById(R.id.acvoltage_button);
-	    acvoltage_button.setOnClickListener(new OnClickListener(){
+	    //acvoltage_button = (Button) findViewById(R.id.acvoltage_button);
+	    acvoltage_gridbg.setOnClickListener(new OnClickListener(){
 	    	@Override
 	    	public void onClick(View v)
 	    	{
 	    		myLineChart.clearSeriesData();
 	    		mChartView.repaint();
-	    		set_selectbutton_bg(2);
+	    		//set_selectbutton_bg(2);
 	    	}
 	    });
 	    //直流电流
-	    dccurrent_button = (Button) findViewById(R.id.dccurrent_button);
-	    dccurrent_button.setOnClickListener(new OnClickListener(){
+	    //dccurrent_button = (Button) findViewById(R.id.dccurrent_button);
+	    dccurrent_gridbg.setOnClickListener(new OnClickListener(){
 	    	@Override
 	    	public void onClick(View v)
 	    	{
 
-	    		set_selectbutton_bg(3);
+	    		//set_selectbutton_bg(3);
 	    	}
 	    });
 	    //交流电流
-	    accurrent_button = (Button)findViewById(R.id.accurrent_button);
-	    accurrent_button.setOnClickListener(new OnClickListener(){
+	    //accurrent_button = (Button)findViewById(R.id.accurrent_button);
+	    accurrent_gridbg.setOnClickListener(new OnClickListener(){
 	    	@Override
 	    	public void onClick(View v)
 	    	{
 	    	
-	    		set_selectbutton_bg(4);
+	    		//set_selectbutton_bg(4);
 	    	}
 	    	
 	    });
 	    
 	    //直流时间
-	    dctime_button = (Button)findViewById(R.id.dctime_button);
-	    dctime_button.setOnClickListener(new OnClickListener(){
+	    //dctime_button = (Button)findViewById(R.id.dctime_button);
+	    dctime_gridbg.setOnClickListener(new OnClickListener(){
 	    	@Override
 	    	public void onClick(View v)
 	    	{
 	    	
-	    		set_selectbutton_bg(5);
+	    		//set_selectbutton_bg(5);
 	    	}
 	    	
 	    });
 	    //交流时间
-	    actime_button = (Button)findViewById(R.id.actime_button);
-	    actime_button.setOnClickListener(new OnClickListener(){
+	    //actime_button = (Button)findViewById(R.id.actime_button);
+	    actime_gridbg.setOnClickListener(new OnClickListener(){
 	    	@Override
 	    	public void onClick(View v)
 	    	{
 	    	
-	    		set_selectbutton_bg(6);
+				Intent intent = new Intent();
+				intent.setClass(NewMeasureActivity.this, MeasureTestActivityNew.class);
+				startActivity(intent);
+				
+	    		//set_selectbutton_bg(6);
 	    	}
 	    	
 	    });     
@@ -397,6 +405,8 @@ public class NewMeasureActivity  extends Activity{
 			dataSave += data;
 			System.out.println("receive raw data " + data);
 			System.out.println("receive raw dataSave " + dataSave);
+			Log.d("ithinker","receive raw data " + data);
+			Log.d("ithinker","receive raw dataSave " + dataSave);
 			
 			if (dataSave.equals("\0")) {
 				if (data.length() == 1)
@@ -410,6 +420,7 @@ public class NewMeasureActivity  extends Activity{
 				dataSave.trim();
 				recSize += dataSave.length();
 				System.out.println(recSize);
+				Log.d("ithinker","receive raw dataSave2 " + dataSave);
 				//mDataField.setText(data);
 				recData = "";
 				String convertData = "";
@@ -417,7 +428,7 @@ public class NewMeasureActivity  extends Activity{
 				{
 					recData += dataSave.charAt(i);
 				}
-				
+				Log.d("ithinker","receive raw recData " + recData);
 				System.out.println("receive raw recData " + recData);
 				if (recData.contains("t") || recData.contains("T")) {// 温度
 					for (int i = 0; i < recData.length(); i++) {
@@ -438,6 +449,50 @@ public class NewMeasureActivity  extends Activity{
 				mDataField.setText(data);
 			}
 			*/
+		}
+		
+		private String recFrame = "";
+		
+		private void ResponseDisplay(String response)
+		{
+			recFrame = response;
+			String sub;
+			
+			Log.d("ithinker", "recFrame in "+recFrame);
+			Log.d("ithinker", "recTrue"+(recFrame.contains("<")&&recFrame.contains(">")));
+			
+			if(recFrame.contains("<")&&recFrame.contains(">"))
+			{
+				sub = recFrame.substring(recFrame.indexOf("<") + 1, recFrame.indexOf(">"));
+				String[] sArray = sub.split("#");
+				
+				Log.d("ithinker", "recFrame NEW"+recFrame);
+				Log.d("ithinker", "sub"+sub);
+				Log.d("ithinker", "s0="+sArray[0]+" s1="+sArray[1]+ " s2="+sArray[2]);
+				
+				if(sArray[0].equals("data"))
+				{
+					if(sArray[1].equals("VDC"))
+					{
+						Log.d("ithinker", "VDC"+sArray[2]);
+						myCircle.DrawVolumn(iv, (float) Float.parseFloat(sArray[2]));
+						//myLineChart.addSeriesData((float) Float.parseFloat(sArray[2]));
+			    		//mChartView.repaint();
+						
+						
+					}else if(sArray[1].equals("VAC"))
+					{
+						Log.d("ithinker", "VAC"+sArray[2]);
+						myLineChart.addSeriesData((float) Float.parseFloat(sArray[2]));
+			    		mChartView.repaint();
+					}
+					
+				}
+				
+				//清空接收字符串
+				recFrame = "";
+				//Log.d("ithinker", "clear recFrame");
+			}
 		}
 
 		// Demonstrates how to iterate through the supported GATT

@@ -151,8 +151,8 @@ public class BluetoothLeService extends Service {
 						data.length);
 				for (byte byteChar : data)
 					stringBuilder.append(String.format("%02X ", byteChar));
-				intent.putExtra(EXTRA_DATA, new String(data) + "\n"
-						+ stringBuilder.toString());
+				//intent.putExtra(EXTRA_DATA, new String(data) + "\n"+ stringBuilder.toString());
+				intent.putExtra(EXTRA_DATA, new String(data));
 			}
 		}
 		sendBroadcast(intent);
@@ -223,6 +223,8 @@ public class BluetoothLeService extends Service {
 
 		return true;
 	}
+	
+	
 
 	/**
 	 * Connects to the GATT server hosted on the Bluetooth LE device.
@@ -271,7 +273,7 @@ public class BluetoothLeService extends Service {
 		mConnectionState = STATE_CONNECTING;
 		return true;
 	}
-
+	
 	/**
 	 * Disconnects an existing connection or cancel a pending connection. The
 	 * disconnection result is reported asynchronously through the

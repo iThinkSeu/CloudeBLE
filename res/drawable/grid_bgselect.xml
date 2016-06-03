@@ -3,6 +3,9 @@
     <stroke
         android:width="0.5dp"
         android:color="@color/grey_gap"
+        android:background="#036495ED"
         />
-    <solid android:color="@color/black"></solid>
+    <solid android:color="#33000000"
+           android:background="#03d2d4d3"
+        ></solid>
 </shape>

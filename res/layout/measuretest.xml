@@ -1,0 +1,80 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:orientation="vertical" 
+    android:windowSoftInputMode="adjustPan|adjustResize|stateHidden"
+    android:focusable="true"  
+   	android:focusableInTouchMode="true">
+   	 <LinearLayout
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+   		android:orientation="horizontal" 
+        >
+         <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="连接状态：" />
+        <TextView
+        android:id="@+id/testConnect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="连接" />
+    </LinearLayout>   
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="接收" />
+   ·<TextView
+        android:id="@+id/editRecev"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+         android:scrollbars="vertical" 
+         android:singleLine="false"
+         android:clickable="false"  
+         android:maxLines="30"   />
+
+    <Button
+        android:id="@+id/btnClear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:text="清除" />
+
+	<TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="发送" />
+	
+    <EditText
+        android:id="@+id/editSend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         />
+
+    <Button
+        android:id="@+id/btnTestSend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="发送" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+    	android:layout_height="wrap_content"
+    	android:orientation="horizontal" 
+        >
+     <Button
+        android:id="@+id/btnTestConnect"
+        android:layout_width="250px"
+        android:layout_height="wrap_content"
+         android:layout_gravity="left"
+        android:text="连接" />
+      <Button
+        android:id="@+id/btnTestDisConnect"
+        android:layout_width="250px"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/btnTestConnect"
+        android:text="断开连接" />
+      </LinearLayout>
+
+</LinearLayout>
