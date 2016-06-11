@@ -30,7 +30,7 @@
                                
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="mainactivity.newMainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,9 +57,17 @@
         <activity android:name="statisticscharline.twobarchart"/>
         <activity android:name="statisticscharline.testTableViewActivity"/>
         <activity android:name="measurepack.NewMeasureActivity"/>
-        <activity android:name="mainactivity.newMainActivity"/>
-         <activity android:name=".testMeasureActivity"/>
-          <activity android:name=".MeasureTestActivityNew"/>
+        <!--<activity android:name="mainactivity.newMainActivity"/>-->
+        <activity android:name=".testMeasureActivity"/>
+        <activity android:name=".MeasureTestActivityNew"/>
+        <activity android:name="mainactivity.LoginActivity"/>
+        <activity android:name="mainactivity.SelectStatisticActivity"/>
+        <activity android:name="mainactivity.SelectReportActivity"/>
+        <activity android:name="mainactivity.piechartActivity"/>
+        <activity android:name="mainactivity.barchartActivity"/>
+        <activity android:name="mainactivity.proDistributionActivity"/>
+        <activity android:name="mainactivity.systemSettingActivity"/>
+        <activity android:name="mainactivity.paraCorrectionActivity"/>
         <!-- 新测量界面 -->
     </application>
 

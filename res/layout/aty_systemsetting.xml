@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+        
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="23dp"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        android:text="系统设置" />
+   <LinearLayout android:orientation="horizontal"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content">
+        <TextView android:layout_width="wrap_content" 
+            	  android:layout_height="wrap_content"
+                  android:text="声音" 
+                  android:padding="5dip"/>
+        <EditText android:id="@+id/soundValue" 
+            	  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" 
+                  android:text="开"
+                  android:layout_weight="1"/>
+        <TextView android:layout_width="wrap_content" 
+            	  android:layout_height="wrap_content"
+                  android:text="触发模式"
+                  android:padding="5dip"/>
+        <EditText android:id="@+id/yValue" 
+                  android:layout_width="wrap_content"
+                  android:inputType="textFilter"
+                  android:layout_height="wrap_content"
+                  android:text="内触发" 
+                  android:layout_weight="1" 
+                  android:enabled="true"/>
+    </LinearLayout>
+   <LinearLayout android:orientation="horizontal"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content">
+        <TextView android:layout_width="wrap_content" 
+            	  android:layout_height="wrap_content"
+                  android:text="日期" 
+                  android:padding="5dip"/>
+        <EditText android:id="@+id/dateValue" 
+            	  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" 
+                  android:inputType="datetime"
+                  android:text="2016-6-10"
+                  android:layout_weight="1"/>
+        <TextView android:layout_width="wrap_content" 
+            	  android:layout_height="wrap_content"
+                  android:text="仪表地址"
+                  android:padding="5dip"/>
+        <EditText android:id="@+id/addressValue" 
+                  android:layout_width="wrap_content"
+                  android:inputType="number"
+                  android:layout_height="wrap_content"
+                  android:text="01" 
+                  android:layout_weight="1" 
+                  android:enabled="true"/>
+    </LinearLayout>
+    
+    <LinearLayout android:orientation="horizontal"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content">
+        <TextView android:layout_width="wrap_content" 
+            	  android:layout_height="wrap_content"
+                  android:text="时间" 
+                  android:padding="5dip"/>
+        <EditText android:id="@+id/timeValue" 
+            	  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" 
+                  android:inputType="time"
+                  android:text="08:40:30"
+                  android:layout_weight="1"/>
+        <TextView android:layout_width="wrap_content" 
+            	  android:layout_height="wrap_content"
+                  android:text="LAN IP"
+                  android:padding="5dip"/>
+        <EditText android:id="@+id/LANIPValue" 
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" 
+                  android:layout_weight="1"
+                  android:text="192.256.01.1"
+                  android:enabled="true"/>
+    </LinearLayout>
+    
+    <LinearLayout android:orientation="horizontal"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content">
+        <TextView android:layout_width="wrap_content" 
+            	  android:layout_height="wrap_content"
+                  android:text="屏幕亮度" 
+                  android:padding="5dip"/>
+        <EditText android:id="@+id/BrightnessValue" 
+            	  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="50%" 
+                  android:layout_weight="1"/>
+        <TextView android:layout_width="wrap_content" 
+            	  android:layout_height="wrap_content"
+                  android:text="波特率"
+                  android:padding="5dip"/>
+        <EditText android:id="@+id/baudrateValue" 
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" 
+                  android:layout_weight="1" 
+                  android:text = "115200bps"
+                  android:enabled="true"/>
+    </LinearLayout>
+        
+    <LinearLayout android:orientation="horizontal"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content">
+        <TextView android:layout_width="wrap_content" 
+            	  android:layout_height="wrap_content"
+                  android:text="仪器 密码" 
+                  android:padding="5dip"/>
+        <EditText android:id="@+id/passwordValue" 
+            	  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text = "******" 
+                  android:layout_weight="1"/>
+        <TextView android:layout_width="wrap_content" 
+            	  android:layout_height="wrap_content"
+                  android:text="RS232设置"
+                  android:padding="5dip"/>
+        <EditText android:id="@+id/RS232settingValue" 
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content" 
+                  android:layout_weight="1"
+                  android:text="8/1/1" 
+                  android:enabled="true"/>
+    </LinearLayout>
+    
+    <LinearLayout android:orientation="horizontal"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content">
+        <TextView android:layout_width="wrap_content" 
+            	  android:layout_height="wrap_content"
+                  android:text="语言" 
+                  android:padding="5dip"/>
+        <EditText android:id="@+id/languageValue" 
+            	  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="中文" 
+                  android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <Button android:id="@+id/settingButton" 
+        	android:text="确定设置"
+            android:layout_width="match_parent" 
+            android:layout_height="wrap_content"/>
+</LinearLayout>

@@ -14,6 +14,8 @@ import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.model.SeriesSelection;
 
+import util.DimensionUtils;
+
 import com.example.learn.BluetoothLeService;
 import com.example.learn.MeasureActivity;
 import com.example.learn.MeasureTestActivityNew;
@@ -22,6 +24,7 @@ import com.example.learn.XYChartBuilder;
 import com.example.learn.testMeasureActivity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.BroadcastReceiver;
@@ -34,10 +37,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
@@ -93,6 +99,9 @@ public class NewMeasureActivity  extends Activity{
 	private CreateLineChart myLineChart = new CreateLineChart();
 	private GraphicalView mChartView;
 	
+	//设置按键
+	private ImageView moreSetting;
+	LinearLayout mLinear;
 	private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
 		@Override
@@ -187,7 +196,7 @@ public class NewMeasureActivity  extends Activity{
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.aty_measure);
-		LinearLayout mLinear = (LinearLayout) findViewById(R.id.MeasureLayout);
+		mLinear = (LinearLayout) findViewById(R.id.MeasureLayout);
 		mLinear.setBackgroundResource(R.drawable.cup5);
    
 		LinearLayout meaLinear = (LinearLayout) findViewById(R.id.chart);
@@ -213,6 +222,38 @@ public class NewMeasureActivity  extends Activity{
 	    acvoltage_gridbg = (RelativeLayout) findViewById(R.id.acvoltage_relativelayout);
 	    dcvoltage_gridbg = (RelativeLayout) findViewById(R.id.dcvoltage_relativelayout);
 	    
+	    //按键设置
+	    moreSetting = (ImageView)findViewById(R.id.aty_info_more);
+	    
+	    moreSetting.setOnClickListener(new OnClickListener(){
+	    	@Override
+	    	public void onClick(View v)
+	    	{
+	    		final Dialog dialog = new Dialog(NewMeasureActivity.this,R.style.DialogSlideAnim);
+                View content = LayoutInflater.from(NewMeasureActivity.this).inflate(R.layout.aty_info_option,mLinear,false);
+                View.OnClickListener listener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(v.getId() == R.id.aty_info_option_edit_info){
+                            Intent i = new Intent(NewMeasureActivity.this, newMainActivity.class);
+                            startActivity(i);
+                        	
+                        }
+                        dialog.dismiss();
+                    }
+                };
+                content.findViewById(R.id.aty_info_option_cancel).setOnClickListener(listener);
+                content.findViewById(R.id.aty_info_option_edit_info).setOnClickListener(listener);
+                dialog.setContentView(content);
+
+                WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
+                wmlp.gravity = Gravity.BOTTOM | Gravity.START;
+                wmlp.x = 0;   //x position
+                wmlp.y = 0;   //y position
+                wmlp.width = DimensionUtils.getDisplay(NewMeasureActivity.this).widthPixels;
+                dialog.show();
+	    	}
+	    });
 	    //按键绑定事件  
 	    //直流电压
 	    //dcvoltage_button = (Button) findViewById(R.id.dcvoltage_button);
@@ -284,6 +325,8 @@ public class NewMeasureActivity  extends Activity{
 	    	}
 	    	
 	    });     
+	    
+	    
 	}
 	 
 	  private void set_selectbutton_bg(int select_int)
@@ -455,7 +498,7 @@ public class NewMeasureActivity  extends Activity{
 		
 		private void ResponseDisplay(String response)
 		{
-			recFrame = response;
+			recFrame += response;
 			String sub;
 			
 			Log.d("ithinker", "recFrame in "+recFrame);
@@ -488,7 +531,6 @@ public class NewMeasureActivity  extends Activity{
 					}
 					
 				}
-				
 				//清空接收字符串
 				recFrame = "";
 				//Log.d("ithinker", "clear recFrame");
@@ -536,8 +578,7 @@ public class NewMeasureActivity  extends Activity{
 							WriteBytes[2] = '\0';
 							gattCharacteristic.setValue(WriteBytes);
 
-							mBluetoothLeService
-									.writeCharacteristic(gattCharacteristic);
+							mBluetoothLeService.writeCharacteristic(gattCharacteristic);
 						}
 					}
 				}

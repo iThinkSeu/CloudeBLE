@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<LinearLayout  
+  xmlns:android="http://schemas.android.com/apk/res/android"  
+  android:layout_width="match_parent"  
+  android:layout_height="match_parent"  
+  android:orientation="horizontal"  
+  android:paddingTop="5px"  
+  >  
+ 
+  <TextView android:id="@+id/txmeasure_model"   
+       android:layout_width="0dp"   
+       android:layout_height="wrap_content"  
+       android:paddingTop="5px"  
+       android:paddingBottom="5px"  
+       android:paddingLeft="5px"  
+       android:textColor="@android:color/primary_text_light"
+       android:layout_weight ="1"   
+       android:textSize="18dp">      
+		</TextView>  
+   <TextView android:id="@+id/txnopass"   
+       android:layout_width="0dp"   
+       android:layout_height="wrap_content"  
+       android:paddingTop="5px"  
+       android:paddingBottom="5px"  
+       android:paddingLeft="5px"  
+       android:textColor="@android:color/primary_text_light"
+       android:layout_weight ="1"    
+       android:textSize="18dp">     
+		</TextView>  
+   <TextView android:id="@+id/txpass"   
+      android:layout_width="0dp"   
+      android:layout_height="wrap_content"  
+      android:paddingTop="5px"  
+      android:paddingBottom="5px"  
+      android:paddingLeft="5px"  
+      android:textColor="@android:color/primary_text_light"
+      android:layout_weight ="1"    
+      android:textSize="18dp">     
+      </TextView>  
+</LinearLayout>  

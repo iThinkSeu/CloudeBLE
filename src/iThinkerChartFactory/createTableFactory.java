@@ -52,17 +52,17 @@ public class createTableFactory {
 		return list;
 	}
 	
-	public List<Map<String, Object>> getTableData() {
+	public List<Map<String, Object>> getTableList() {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		// ImageView imgA = (ImageView) findViewById(R.id.imgDrawChart);
 		Map<String, Object> map = new HashMap<String, Object>();
 		// imgA.setScaleType(ImageView.ScaleType.CENTER_CROP);
 		// imgA.setImageResource(R.drawable.icon72);
-		map.put("id","序号");
-		map.put("type","模式");
-		map.put("value","结果");
-		map.put("select","分选");
-		list.add(map);
+	    //map.put("id","序号");
+		//map.put("type","模式");
+		//map.put("value","结果");
+		//map.put("select","分选");
+		//list.add(map);
 		/*
 		map = new HashMap<String, Object>();
 		map.put("id","1");

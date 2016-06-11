@@ -24,7 +24,7 @@ public class testTableViewActivity extends Activity{
         ListView lv = (ListView) findViewById(R.id.drawListView);
         
         createTableFactory myTable = new createTableFactory();
-		list = myTable.getTableData();
+		list = myTable.getTableList();
 		SimpleAdapter adapter = new SimpleAdapter(this,
 				list, R.layout.list_item, new String[] {
 						"id", "type","value","select"}, new int[] { R.id.txid,
@@ -41,5 +41,5 @@ public class testTableViewActivity extends Activity{
 		    list.add(map);
 		}
 		//adapter.notifyDataSetChanged();
- }	
+    }	
 }

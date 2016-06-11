@@ -1,5 +1,6 @@
 package mainactivity;
 
+import statisticscharline.twobarchart;
 import measurepack.NewMeasureActivity;
 
 import com.example.learn.DeviceScanActivity;
@@ -46,6 +47,7 @@ public class newMainActivity extends Activity{
 		paraCorrection = (ImageView)findViewById(R.id.canshujiaozheng);
 		systemSetting = (ImageView)findViewById(R.id.xitongshezhi);
 		
+		
 		BLEsearch.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -65,7 +67,7 @@ public class newMainActivity extends Activity{
 				// TODO Auto-generated method stub
 				System.out.println("SearchLayout click");
 				Intent intent = new Intent();
-				intent.setClass(newMainActivity.this, DeviceScanActivity.class);
+				intent.setClass(newMainActivity.this, LoginActivity.class);
 				startActivity(intent);
 			}
 		});
@@ -77,7 +79,7 @@ public class newMainActivity extends Activity{
 				// TODO Auto-generated method stub
 				System.out.println("SearchLayout click");
 				Intent intent = new Intent();
-				intent.setClass(newMainActivity.this, testMeasureActivity.class);
+				intent.setClass(newMainActivity.this, SelectStatisticActivity.class);
 				startActivity(intent);
 			}
 		});
@@ -94,7 +96,29 @@ public class newMainActivity extends Activity{
 			}
 		});
 		
+		systemSetting.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				System.out.println("systemSetting click");
+				Intent intent = new Intent();
+				intent.setClass(newMainActivity.this, systemSettingActivity.class);
+				startActivity(intent);
+			}
+		});
 		
+		paraCorrection.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				System.out.println("paraCorrection click");
+				Intent intent = new Intent();
+				intent.setClass(newMainActivity.this, paraCorrectionActivity.class);
+				startActivity(intent);
+			}
+		});
 	 }
 	
 

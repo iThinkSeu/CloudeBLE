@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textSize="23dp"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        android:text="历史数据" />
+      <LinearLayout
+	       android:layout_width="wrap_content"
+	       android:layout_height="400dp"
+	       android:layout_margin="5dp"
+	       android:orientation="vertical">
+	       <ListView   
+			    android:id="@+id/ListViewTitle"  
+			   	android:layout_height="wrap_content"
+			    android:layout_width="fill_parent"  
+			    android:fastScrollEnabled="true"  
+			    android:background="#e1e1e1"
+			    > 
+			</ListView> 
+			<ListView   
+			    android:id="@+id/drawListView"  
+			   	android:layout_height="0dp"
+	            android:layout_weight="2"
+			    android:layout_width="fill_parent"  
+			    android:fastScrollEnabled="true"  
+			    android:background="#e1e1e1"
+			    > 
+			  </ListView>  
+	 </LinearLayout>
+	 
+    <RelativeLayout 
+       android:layout_width="match_parent"
+       android:layout_height="match_parent" >
+       <TextView
+	      android:id="@+id/textView_Select"
+	      android:layout_width="wrap_content"
+	      android:layout_height="wrap_content"
+	      android:text="选择:" />
+       <LinearLayout
+          android:id="@+id/linear_tablerow1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_toRightOf="@id/textView_Select"
+          android:orientation="horizontal" >
+
+	     <TableRow
+	         android:id="@+id/tableRow1"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content" >
+             <CheckBox
+                 android:id="@+id/checkBox_VDC"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="VDC" />
+             
+             <CheckBox
+                 android:id="@+id/checkBox_VAC"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="VAC" />
+ 
+             <CheckBox
+                 android:id="@+id/checkBox_IDC"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="IDC" />
+	      </TableRow>
+      </LinearLayout>
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/linear_tablerow1"
+          android:layout_toRightOf="@id/textView_Select"
+          android:orientation="horizontal" >
+	      <TableRow
+	         android:id="@+id/tableRow2"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content">
+             <CheckBox
+                 android:id="@+id/checkBox_IAC"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="IAC" />
+ 
+             <CheckBox
+                 android:id="@+id/checkBox_TDC"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="TDC" />
+ 
+             <CheckBox
+                 android:id="@+id/checkBox_TAC"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="TAC" />
+             
+             <CheckBox
+                 android:id="@+id/checkBox_all"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:text="全选" />
+
+	       </TableRow>
+	    </LinearLayout>
+     </RelativeLayout>
+     <LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+      <Button
+        android:id="@+id/history_data"
+        android:text="历史数据"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp" />
+      <Button
+        android:id="@+id/probability_distribution"
+        android:textColor="@color/black"
+        android:text="概率分布"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp" />   
+	  <Button
+        android:id="@+id/select_report"
+        android:textColor="@color/black"
+        android:text="分选报表"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp" />
+	 </LinearLayout>	     
+</LinearLayout>

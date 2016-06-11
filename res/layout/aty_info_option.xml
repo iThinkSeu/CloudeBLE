@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@null"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:background="@color/white"
+        android:id="@+id/aty_info_option_edit_info"
+        android:textSize="16sp"
+        android:textColor="@color/colorPrimary"
+        android:gravity="center"
+        android:text="分选开关"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+    <View
+        android:background="@null"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+
+    <TextView
+        android:background="@color/white"
+        android:id="@+id/aty_info_option_settinglimit"
+        android:textSize="16sp"
+        android:textColor="@color/colorPrimary"
+        android:gravity="center"
+        android:text="上下限设置"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+    <View
+        android:background="@null"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+
+    <TextView
+        android:background="@color/white"
+        android:id="@+id/aty_info_option_biaochengzhi"
+        android:textSize="16sp"
+        android:textColor="@color/colorPrimary"
+        android:gravity="center"
+        android:text="标称值设置"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+    <View
+        android:background="@null"
+        android:layout_width="match_parent"
+        android:layout_height="1px"/>
+
+    <TextView
+        android:background="@color/white"
+        android:id="@+id/aty_info_option_synccloud"
+        android:textSize="16sp"
+        android:textColor="@color/colorPrimary"
+        android:gravity="center"
+        android:text="同步到云端"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+    <View
+        android:background="@null"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"/>
+
+    <TextView
+        android:background="@color/white"
+        android:id="@+id/aty_info_option_cancel"
+        android:textSize="16sp"
+        android:textColor="@color/colorPrimary"
+        android:gravity="center"
+        android:text="取消"
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+</LinearLayout>

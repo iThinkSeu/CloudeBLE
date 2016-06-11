@@ -15,6 +15,20 @@
         -->
     </style>
 
+    <style name="PopupWindowAnimation">
+        <item name="android:windowEnterAnimation">@anim/inuptodown</item>
+        <item name="android:windowExitAnimation">@anim/outdowntoup</item>
+    </style>
+    
+    <style name="Dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowBackground">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    <style name="DialogSlideAnim" parent="Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/PopupWindowAnimation</item>
+    </style>
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
@@ -26,4 +40,6 @@
     <style name="Titleground">  
         <item name="android:background">#2975E8</item>  
     </style>  
+    <!-- 设置按键相关 -->
+
 </resources>
