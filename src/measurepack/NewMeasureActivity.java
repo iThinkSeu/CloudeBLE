@@ -202,7 +202,7 @@ public class NewMeasureActivity  extends Activity{
 		LinearLayout meaLinear = (LinearLayout) findViewById(R.id.chart);
 	    
 		myLineChart = new CreateLineChart();
-		mChartView = myLineChart.oneLineChart(this);
+		mChartView = myLineChart.oneLineChart_rms(this);
 		meaLinear.addView(mChartView, new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
 		myLineChart.addSeriesData(200);
 		mChartView.repaint();
