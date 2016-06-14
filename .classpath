@@ -6,5 +6,8 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="lib" path="E:/Android/CloudeBLE/libs/achartengine-1.1.0.jar"/>
+	<classpathentry kind="lib" path="E:/Android/CloudeBLE/libs/okhttp-3.0.1.jar"/>
+	<classpathentry kind="lib" path="E:/Android/CloudeBLE/libs/okio-1.6.0_okhttp_reference_jar.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

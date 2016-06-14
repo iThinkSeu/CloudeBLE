@@ -44,4 +44,9 @@
     <string name="DCtime">直流时间</string>
     <string name="ACtime">交流时间</string>
 	
+    <string name="user_contract">用户协议</string>
+    <string name="name_not_empty">用户名不能为空</string>
+    <string name="password_long_6">密码至少6位</string>
+    <string name="password_not_equal">密码不一致</string>
+    <string name="network_error">网络异常</string>
 </resources>
