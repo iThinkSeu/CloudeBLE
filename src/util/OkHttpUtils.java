@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.util.ArrayMap;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -65,19 +66,25 @@ public final class OkHttpUtils {
     }
 
     public static void post(String url, Map<String,String> params,String tag, OkCallBack callback){
-        JSONObject j = new JSONObject(params);
+        Log.d("iThinker","register post1 url="+url);
+    	JSONObject j = new JSONObject(params);
+    	Log.d("ithinker",j.toString());
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), j.toString());
         Request.Builder builder = new Request.Builder().url(url).post(body);
         if(tag!=null) builder.tag(tag);
         Request request = builder.build();
+        Log.d("ithinker",body.toString());
         getInstance().firePost(request, callback);
+        Log.d("iThinker","register post2 = "+request.toString());
+    	Log.d("ithinker",request.toString());
     }
 
 
 
     
 
-    private void firePost(Request request, final OkCallBack callback){
+    private void firePost(final Request request, final OkCallBack callback){
+    	Log.d("ithinker","firepost");
         Call call = mClient.newCall(request);
         cacheCallForCancel(call);
         call.enqueue(new Callback() {
@@ -87,6 +94,7 @@ public final class OkHttpUtils {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
+                        Log.d("iThinker","register post4");
                         if (isCancel(call, true)) return;
                         callback.onFailure(e);
                     }
@@ -100,6 +108,7 @@ public final class OkHttpUtils {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
+                        Log.d("iThinker","register post3");
                         if (isCancel(call, true)) return;
                         callback.onResponse(s);
                     }
@@ -112,14 +121,14 @@ public final class OkHttpUtils {
         String tag = (String) call.request().tag();
         if(tag!=null){
             synchronized (mRunningCalls) {
-                //LogUtils.d(TAG,"start caching Call: " + printCall(call) + " \ncurrent running calls: "+printRunningCalls());
+                Log.d("ithinker","start caching Call: " + printCall(call) + " \ncurrent running calls: "+printRunningCalls());
                 Set<Call> calls = mRunningCalls.get(tag);
                 if (calls == null) {
                     calls = new HashSet<>();
                 }
                 calls.add(call);
                 mRunningCalls.put(tag, calls);
-                //LogUtils.d(TAG,"finish caching Call: " + printCall(call) + " \ncurrent running calls: "+printRunningCalls());
+                Log.d("ithinker","finish caching Call: " + printCall(call) + " \ncurrent running calls: "+printRunningCalls());
             }
         }
     }

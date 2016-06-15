@@ -17,15 +17,14 @@ public final class StrUtils {
     private StrUtils(){}
 
 
-
     /** ####################### URLs ############################### **/
-    private static final String BASE_URL = "http://218.244.147.240:8080/";
+    private static final String BASE_URL = "http://192.168.1.101:8080/";
 
     private static final String BASE_URL_NGINX = "http://218.244.147.240/";
 
     public static final String LOGIN_URL = BASE_URL + "login";
 
-    public static final String REGISTER_URL = BASE_URL + "register";
+    public static final String REGISTER_URL = BASE_URL + "appregister";
 
     public static final String EDIT_PROFILE_URL = BASE_URL + "editprofileinfo";
 

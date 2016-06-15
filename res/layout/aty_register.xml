@@ -91,7 +91,7 @@
             android:layout_height="48dp"
             android:layout_margin="16dp"
             android:background="@drawable/bg_aty_register_btn"
-            android:enabled="false"
+            android:enabled="true"
             android:gravity="center"
             android:text="注册"
             android:textColor="@color/white"

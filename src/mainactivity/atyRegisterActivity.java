@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class atyRegisterActivity extends Activity{
@@ -58,6 +59,14 @@ public class atyRegisterActivity extends Activity{
 	            }
 	        };
 	        
+	        mListener = new View.OnClickListener() {
+	            @Override
+	            public void onClick(View v) {
+	            	
+	                register();
+	            }
+	        };
+	        
 	        etName.addTextChangedListener(mTextWatcher);
 	        etPass.addTextChangedListener(mTextWatcher);
 	        etPass2.addTextChangedListener(mTextWatcher);
@@ -90,6 +99,7 @@ public class atyRegisterActivity extends Activity{
 	    ArrayMap<String,String> param = new ArrayMap<>();
 	    param.put("username",name);
 	    param.put("password", passMD5);
+	    Log.d("iThinker","register username"+name);
 	    OkHttpUtils.post(StrUtils.REGISTER_URL,param,TAG,new OkHttpUtils.SimpleOkCallBack(){
 	        @Override
 	        public void onResponse(String s) {
@@ -103,6 +113,7 @@ public class atyRegisterActivity extends Activity{
 	            SharedPreferences sp = getSharedPreferences(StrUtils.SP_USER,MODE_PRIVATE);
 	            sp.edit().putString(StrUtils.SP_USER_ID,id)
 	                    .putString(StrUtils.SP_USER_TOKEN,token).apply();
+	            Toast.makeText(atyRegisterActivity.this, "×¢²á³É¹¦£¬ÇëµÇÂ¼", Toast.LENGTH_SHORT).show();
 	            Intent i = new Intent(atyRegisterActivity.this,LoginActivity.class);
 	            startActivity(i);
 	        }
