@@ -66,17 +66,17 @@ public final class OkHttpUtils {
     }
 
     public static void post(String url, Map<String,String> params,String tag, OkCallBack callback){
-        Log.d("iThinker","register post1 url="+url);
+        //Log.d("iThinker","register post1 url="+url);
     	JSONObject j = new JSONObject(params);
-    	Log.d("ithinker",j.toString());
+    	//Log.d("ithinker",j.toString());
         RequestBody body = RequestBody.create(MediaType.parse("application/json"), j.toString());
         Request.Builder builder = new Request.Builder().url(url).post(body);
         if(tag!=null) builder.tag(tag);
         Request request = builder.build();
-        Log.d("ithinker",body.toString());
+        //Log.d("ithinker",body.toString());
         getInstance().firePost(request, callback);
-        Log.d("iThinker","register post2 = "+request.toString());
-    	Log.d("ithinker",request.toString());
+        //Log.d("iThinker","register post2 = "+request.toString());
+    	//Log.d("ithinker",request.toString());
     }
 
 
@@ -84,7 +84,7 @@ public final class OkHttpUtils {
     
 
     private void firePost(final Request request, final OkCallBack callback){
-    	Log.d("ithinker","firepost");
+    	//Log.d("ithinker","firepost");
         Call call = mClient.newCall(request);
         cacheCallForCancel(call);
         call.enqueue(new Callback() {
@@ -108,7 +108,7 @@ public final class OkHttpUtils {
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        Log.d("iThinker","register post3");
+                        //Log.d("iThinker","register post3");
                         if (isCancel(call, true)) return;
                         callback.onResponse(s);
                     }
@@ -121,14 +121,14 @@ public final class OkHttpUtils {
         String tag = (String) call.request().tag();
         if(tag!=null){
             synchronized (mRunningCalls) {
-                Log.d("ithinker","start caching Call: " + printCall(call) + " \ncurrent running calls: "+printRunningCalls());
+                //Log.d("ithinker","start caching Call: " + printCall(call) + " \ncurrent running calls: "+printRunningCalls());
                 Set<Call> calls = mRunningCalls.get(tag);
                 if (calls == null) {
                     calls = new HashSet<>();
                 }
                 calls.add(call);
                 mRunningCalls.put(tag, calls);
-                Log.d("ithinker","finish caching Call: " + printCall(call) + " \ncurrent running calls: "+printRunningCalls());
+                //Log.d("ithinker","finish caching Call: " + printCall(call) + " \ncurrent running calls: "+printRunningCalls());
             }
         }
     }

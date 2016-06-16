@@ -13,8 +13,11 @@ import mainactivity.newMainActivity;
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.model.SeriesSelection;
+import org.json.JSONObject;
 
 import util.DimensionUtils;
+import util.OkHttpUtils;
+import util.StrUtils;
 
 import com.example.learn.BluetoothLeService;
 import com.example.learn.MeasureActivity;
@@ -36,6 +39,7 @@ import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.util.ArrayMap;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -526,8 +530,10 @@ public class NewMeasureActivity  extends Activity{
 					}else if(sArray[1].equals("VAC"))
 					{
 						Log.d("ithinker", "VAC"+sArray[2]);
-						myLineChart.addSeriesData((float) Float.parseFloat(sArray[2]));
+						float value_VAC = (float) Float.parseFloat(sArray[2]);
+						myLineChart.addSeriesData(value_VAC);
 			    		mChartView.repaint();
+			    		commitdata("VAC",value_VAC);
 					}
 					
 				}
@@ -595,6 +601,29 @@ public class NewMeasureActivity  extends Activity{
 			intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
 			return intentFilter;
 		}
+
+		private void commitdata(String datatype,float value){
+			Log.d("ithinker", "post data in");
+	        ArrayMap<String,String> param = new ArrayMap<>();
+	        String token = StrUtils.token(NewMeasureActivity.this);
+	    	Log.d("ithinker", token);
+	        param.put("token", token);
+	        //param.put("token", "18d54ec8446d03451f5552033c64dbda");
+			param.put("datatype", datatype);
+			param.put("value", value+"");   
+		    OkHttpUtils.post(StrUtils.POST_MEASURE_DATA, param, TAG, new OkHttpUtils.SimpleOkCallBack() {
+		        @Override
+		        public void onResponse(String s) {
+		            //Log.d("ithinker", "post data"+s);
+		            JSONObject j = OkHttpUtils.parseJSON(NewMeasureActivity.this, s);
+		            if (j == null) {
+		                return;
+		            }
+		            Log.d("ithinker", "post successful"+s);
+		        }
+		    });
+		}
+
 
 	 
 }

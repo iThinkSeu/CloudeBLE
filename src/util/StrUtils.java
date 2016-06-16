@@ -22,13 +22,13 @@ public final class StrUtils {
 
     private static final String BASE_URL_NGINX = "http://218.244.147.240/";
 
-    public static final String LOGIN_URL = BASE_URL + "login";
+    public static final String LOGIN_URL = BASE_URL + "applogin";
 
     public static final String REGISTER_URL = BASE_URL + "appregister";
 
     public static final String EDIT_PROFILE_URL = BASE_URL + "editprofileinfo";
 
-    public static final String GET_TOP_ACTIVITY_URL = BASE_URL + "activitytopofficial";
+    public static final String POST_MEASURE_DATA = BASE_URL + "postmeasuredata";
 
     public static final String GET_ACTIVITY_INFO_URL = BASE_URL + "getactivityinformation";
 
@@ -130,6 +130,7 @@ public final class StrUtils {
     public static final String SP_USER = "StrUtils_sp_user";
     public static final String SP_USER_TOKEN = SP_USER + "_token";
     public static final String SP_USER_ID = SP_USER + "_id";
+    public static final String SP_USER_USERNAME = SP_USER + "_username";
     public static final String SP_USER_CAN_FOUND = SP_USER +"_can_found";
 
 
@@ -140,14 +141,18 @@ public final class StrUtils {
 
 
 
-    public static String token(){
-        SharedPreferences sp = APP.context().getSharedPreferences(SP_USER, Context.MODE_PRIVATE);
+    public static String token(Context context){
+        SharedPreferences sp = context.getSharedPreferences(SP_USER, Context.MODE_PRIVATE);
         return sp.getString(SP_USER_TOKEN,"");
     }
 
-    public static String id(){
-        SharedPreferences sp = APP.context().getSharedPreferences(SP_USER, Context.MODE_PRIVATE);
+    public static String id(Context context){
+        SharedPreferences sp = context.getSharedPreferences(SP_USER, Context.MODE_PRIVATE);
         return sp.getString(SP_USER_ID,"");
+    }
+    public static String username(Context context){
+        SharedPreferences sp = context.getSharedPreferences(SP_USER, Context.MODE_PRIVATE);
+        return sp.getString(SP_USER_USERNAME,"");
     }
 
     public static String md5(String input){

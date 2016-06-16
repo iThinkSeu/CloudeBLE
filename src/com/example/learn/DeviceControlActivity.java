@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import mainactivity.newMainActivity;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothGattCharacteristic;
@@ -92,11 +94,13 @@ public class DeviceControlActivity extends Activity {
 			final String action = intent.getAction();
 			if (BluetoothLeService.ACTION_GATT_CONNECTED.equals(action)) {
 				mConnected = true;
+				newMainActivity.BLEstate = "已连接";
 				updateConnectionState(R.string.connected);
 				invalidateOptionsMenu();
 			} else if (BluetoothLeService.ACTION_GATT_DISCONNECTED
 					.equals(action)) {
 				mConnected = false;
+				newMainActivity.BLEstate = "未连接";
 				updateConnectionState(R.string.disconnected);
 				invalidateOptionsMenu();
 				clearUI();

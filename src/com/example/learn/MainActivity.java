@@ -26,9 +26,8 @@ public class MainActivity extends Activity {
 
 	private ImageView imageviewTop;
 	private RelativeLayout searchLayout, measureLayout, chartLayout,settingLayout;
+	public static int BLEstate = 0;
 
-
-	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
