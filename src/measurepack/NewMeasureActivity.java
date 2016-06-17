@@ -309,7 +309,8 @@ public class NewMeasureActivity  extends Activity{
 	    	@Override
 	    	public void onClick(View v)
 	    	{
-	    	
+	    		String str = "<GET#VDC#VAL>";
+	    		Senddata(str);
 	    		//set_selectbutton_bg(5);
 	    	}
 	    	
@@ -333,6 +334,16 @@ public class NewMeasureActivity  extends Activity{
 	    
 	}
 	 
+	  private void Senddata(String str)
+	  {
+		  if (mNotifyCharacteristic != null) {
+				mNotifyCharacteristic.setValue((byte[]) str.getBytes());
+				mBluetoothLeService
+						.writeCharacteristic(mNotifyCharacteristic);
+			} else {
+				System.out.println("mNotifyCharacteristic is null");
+			}
+	  }
 	  private void set_selectbutton_bg(int select_int)
 	  {
 		  int alpha = 60;

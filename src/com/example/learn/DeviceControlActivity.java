@@ -1,10 +1,26 @@
-package com.example.learn;
+/*
+ * Copyright (C) 2013 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
+package com.example.learn;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import mainactivity.LoginActivity;
 import mainactivity.newMainActivity;
 
 import android.app.Activity;
@@ -25,6 +41,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.SimpleExpandableListAdapter;
@@ -101,7 +119,7 @@ public class DeviceControlActivity extends Activity {
 					.equals(action)) {
 				mConnected = false;
 				newMainActivity.BLEstate = "Î´Á¬½Ó";
-				updateConnectionState(R.string.disconnected);
+				updateConnectionState(R.string.connected);
 				invalidateOptionsMenu();
 				clearUI();
 			} else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED
@@ -233,9 +251,11 @@ public class DeviceControlActivity extends Activity {
 	};
 
 	private void clearUI() {
-		mGattServicesList.setAdapter((SimpleExpandableListAdapter) null);
-		mDataField.setText(R.string.no_data);
+		// mGattServicesList.setAdapter((SimpleExpandableListAdapter) null);
+		// mDataField.setText(R.string.no_data);
 	}
+
+	private Button btnReturn;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -248,16 +268,27 @@ public class DeviceControlActivity extends Activity {
 
 		// Sets up UI references.
 		((TextView) findViewById(R.id.device_address)).setText(mDeviceAddress);
-		mGattServicesList = (ExpandableListView) findViewById(R.id.gatt_services_list);
-		mGattServicesList.setOnChildClickListener(servicesListClickListner);
+		// mGattServicesList = (ExpandableListView)
+		// findViewById(R.id.gatt_services_list);
+		// mGattServicesList.setOnChildClickListener(servicesListClickListner);
 		mConnectionState = (TextView) findViewById(R.id.connection_state);
-		mDataField = (TextView) findViewById(R.id.data_value);
-
+		// mDataField = (TextView) findViewById(R.id.data_value);
+		//updateConnectionState(R.string.connected);
 		getActionBar().setTitle(mDeviceName);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
-		startService(gattServiceIntent);
+		// stopService(gattServiceIntent);
+		// startService(gattServiceIntent);
 		bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+		btnReturn = (Button) findViewById(R.id.BlueControlReturn);
+		btnReturn.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				startActivity(new Intent(DeviceControlActivity.this, newMainActivity.class));
+				//finish();
+			}
+		});
 	}
 
 	@Override
@@ -323,7 +354,7 @@ public class DeviceControlActivity extends Activity {
 
 	private void displayData(String data) {
 		if (data != null) {
-			mDataField.setText(data);
+			// mDataField.setText(data);
 		}
 	}
 
@@ -357,12 +388,13 @@ public class DeviceControlActivity extends Activity {
 			List<BluetoothGattCharacteristic> gattCharacteristics = gattService
 					.getCharacteristics();
 			ArrayList<BluetoothGattCharacteristic> charas = new ArrayList<BluetoothGattCharacteristic>();
-
+			System.out.println("Service uuid: " + uuid);
 			// Loops through available Characteristics.
 			for (BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
 				charas.add(gattCharacteristic);
 				HashMap<String, String> currentCharaData = new HashMap<String, String>();
 				uuid = gattCharacteristic.getUuid().toString();
+				System.out.println("gattCharacteristics uuid: " + uuid);
 				currentCharaData.put(LIST_NAME,
 						SampleGattAttributes.lookup(uuid, unknownCharaString));
 				currentCharaData.put(LIST_UUID, uuid);
@@ -374,33 +406,8 @@ public class DeviceControlActivity extends Activity {
 						mNotifyCharacteristic = gattCharacteristic;
 						mBluetoothLeService.setCharacteristicNotification(
 								gattCharacteristic, true);
-						System.out.println("addd");
-						byte[] value = new byte[20];
-						value[0] = (byte) 0x1;
-						value[1] = '\0';
-						// if (editTextName.getText().length() > 0) {
-						// // write string
-						// WriteBytes = editTextName.getText().toString()
-						// .getBytes();
-						// } else if (editTextNumEditText.getText().length() >
-						// 0)
-						// {
-						// WriteBytes = hex2byte(editTextNumEditText.getText()
-						// .toString().getBytes());
-						// }
-						WriteBytes = new byte[4];
-						WriteBytes[0] = 'O';
-						WriteBytes[1] = 'K';
-						WriteBytes[2] = '\0';
-						// gattService
-						// .getCharacteristics()
-						// .get(0)
-						// .setValue(value[0],
-						// BluetoothGattCharacteristic.FORMAT_UINT8, 0);
-						gattCharacteristic.setValue(WriteBytes);
+						System.out.println("add uuid: " + uuid);
 
-						mBluetoothLeService
-								.writeCharacteristic(gattCharacteristic);
 					}
 				}
 			}
@@ -416,47 +423,6 @@ public class DeviceControlActivity extends Activity {
 				android.R.layout.simple_expandable_list_item_2, new String[] {
 						LIST_NAME, LIST_UUID }, new int[] { android.R.id.text1,
 						android.R.id.text2 });
-		mGattServicesList.setAdapter(gattServiceAdapter);
-		// for (BluetoothGattService gattService : gattServices) {
-		// System.out.println(gattService.getUuid().toString());
-		// if (gattService.getUuid().toString().equals(DEFAULT_UUID)) {
-		// System.out.println("Same UUID" + gattService.toString());
-		// int charaProp = gattService.getCharacteristics().get(0)
-		// .getProperties();
-		// if ((charaProp | BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
-		// mNotifyCharacteristic = gattService.getCharacteristics()
-		// .get(0);
-		// mBluetoothLeService.setCharacteristicNotification(
-		// gattService.getCharacteristics().get(0), true);
-		// System.out.println("addd");
-		// byte[] value = new byte[20];
-		// value[0] = (byte) 0x1;
-		// value[1] = '\0';
-		// // if (editTextName.getText().length() > 0) {
-		// // // write string
-		// // WriteBytes = editTextName.getText().toString()
-		// // .getBytes();
-		// // } else if (editTextNumEditText.getText().length() > 0) {
-		// // WriteBytes = hex2byte(editTextNumEditText.getText()
-		// // .toString().getBytes());
-		// // }
-		// WriteBytes = new byte[4];
-		// WriteBytes[0] = 'O';
-		// WriteBytes[1] = 'K';
-		// WriteBytes[2] = '\0';
-		// // gattService
-		// // .getCharacteristics()
-		// // .get(0)
-		// // .setValue(value[0],
-		// // BluetoothGattCharacteristic.FORMAT_UINT8, 0);
-		// gattService.getCharacteristics().get(0)
-		// .setValue(WriteBytes);
-		//
-		// mBluetoothLeService.writeCharacteristic(gattService
-		// .getCharacteristics().get(0));
-		// }
-		// }
-		// }
 	}
 
 	private static IntentFilter makeGattUpdateIntentFilter() {
