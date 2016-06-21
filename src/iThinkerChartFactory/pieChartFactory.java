@@ -22,7 +22,7 @@ import com.example.learn.R;
 public class pieChartFactory {
 	
 
-	private static int[] COLORS = new int[] { Color.GREEN, Color.BLUE, Color.MAGENTA, Color.CYAN };
+	private static int[] COLORS = new int[] { Color.rgb(43, 201, 219), Color.rgb(227, 127, 120), Color.MAGENTA, Color.CYAN };
 	// 设置图例字体大小
 	private int legendTextSize = 30;
 	// 设置图例高度
@@ -32,6 +32,13 @@ public class pieChartFactory {
 	// 设置饼图标题大小
 	private int titleSize = 50;
 	
+	private String pietitle = "title";
+	
+	public void set_pietitle(String title)
+	{
+		pietitle = title;
+	}
+	
 	public GraphicalView create_pie_chart(Context context,int piedata[])
 	{
 		CategorySeries mSeries = new CategorySeries("");
@@ -40,21 +47,20 @@ public class pieChartFactory {
 		GraphicalView mChartView_pie;
 		/** Colors to be used for the pie slices. */
 		
-		String pieTitle = "销量图";
 		//饼状图
-	    mRenderer.setZoomButtonsVisible(true);
+	    //mRenderer.setZoomButtonsVisible(true);
 	    mRenderer.setStartAngle(180);
 	    mRenderer.setDisplayValues(true);
 	    mRenderer.setFitLegend(true);// 设置是否显示图例
-	    mRenderer.setLegendTextSize(legendTextSize);//
+	    mRenderer.setLegendTextSize(legendTextSize);//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
 	    mRenderer.setLegendHeight(legendHeight);
 	    mRenderer.setLabelsColor(labelColor);
-	   // mRenderer.setChartTitle(pieTitle);// 设置饼图标题
+	    mRenderer.setChartTitle(pietitle);// 设置饼图标题
 	    mRenderer.setChartTitleTextSize(titleSize);
 		
 	    for(int i=0;i<piedata.length;i++)
 	    {
-	    	mSeries.add(i%2==0?"合格":"不合格", piedata[i]);
+	    	mSeries.add(i%2==0?"合格":"不合格", piedata[i]);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
 	    	
 	    	SimpleSeriesRenderer renderer_pie = new SimpleSeriesRenderer();
 	    	renderer_pie.setChartValuesTextSize(100);

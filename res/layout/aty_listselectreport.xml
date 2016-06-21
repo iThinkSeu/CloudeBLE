@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical" >
+    <ScrollView
+        android:fillViewport="true"
+		android:layout_width="match_parent"
+		android:layout_height="fill_parent" >
+	   <LinearLayout 
+		   android:layout_width="fill_parent"
+		   android:layout_height="wrap_content"
+		   android:orientation="vertical" >	 
+		   
+	       <include layout="@layout/title"/>
+	       <LinearLayout
+		       android:layout_width="match_parent"
+		       android:layout_height="180dp"
+		       android:orientation="vertical">
+		       <ListView   
+				    android:id="@+id/ListViewTitle"  
+				   	android:layout_height="wrap_content"
+				    android:layout_width="fill_parent"
+					android:layout_gravity="center"
+					android:gravity="center"  
+				    android:fastScrollEnabled="true"  
+				    android:background="#566c83"> 
+				</ListView> 
+				<ListView   
+				   	android:padding="5dp"
+				    android:id="@+id/drawListView"  
+				   	android:layout_height="fill_parent"
+				    android:layout_width="fill_parent"  
+				    android:fastScrollEnabled="true"  
+				    android:background="@color/white"> 
+				</ListView>  
+		    </LinearLayout>
+		    
+	        <TextView
+				android:layout_width="match_parent"
+				android:layout_height="45dp"
+				android:layout_gravity="center"
+				android:gravity="center"
+				android:background="@color/wenzhi_gray"
+				android:text="饼图"
+				android:textSize="20sp" />
+       
+	        <LinearLayout 
+		   		android:layout_width="fill_parent"
+		   		android:layout_height="wrap_content"
+		   		android:orientation="horizontal" >	
+		        <LinearLayout
+			       android:id="@+id/chart_VDC"
+			       android:layout_width="0dp"
+			       android:layout_height="300dp"
+			       android:layout_weight="1"
+			       android:orientation="vertical" />
+			   <LinearLayout
+			       android:id="@+id/chart_VAC"
+			       android:layout_width="0dp"
+			       android:layout_height="300dp"
+			       android:layout_weight="1"
+			       android:orientation="vertical" />
+		   </LinearLayout>
+
+	       <LinearLayout 
+		   		android:layout_width="fill_parent"
+		   		android:layout_height="wrap_content"
+		   		android:orientation="horizontal" >	
+		        <LinearLayout
+			       android:id="@+id/chart_IDC"
+			       android:layout_width="0dp"
+			       android:layout_height="300dp"
+			       android:layout_weight="1"
+			       android:orientation="vertical" />
+			   <LinearLayout
+			       android:id="@+id/chart_IAC"
+			       android:layout_width="0dp"
+			       android:layout_height="300dp"
+			       android:layout_weight="1"
+			       android:orientation="vertical" />
+		   </LinearLayout>
+		   <TextView
+				android:layout_width="match_parent"
+				android:layout_height="45dp"
+				android:layout_gravity="center"
+				android:gravity="center"
+				android:background="@color/wenzhi_gray"
+				android:text="柱状图"
+				android:textSize="20sp" />
+		   <LinearLayout
+		        android:id="@+id/bar_chart"
+		        android:padding="8dp"
+		        android:layout_width="fill_parent"
+		        android:layout_height="300dp"
+		        android:orientation="horizontal" />
+           </LinearLayout>
+ </ScrollView>
+
+</LinearLayout>

@@ -142,22 +142,22 @@ public class mybarchart {
 			renderer.setAxesColor(Color.BLACK);
 			renderer.setLabelsColor(Color.BLACK);
 			renderer.setXAxisMin(0.5);
-			renderer.setXAxisMax(6.5);
+			renderer.setXAxisMax(4.5);
 			renderer.setYAxisMin(0.5);
 			//renderer.setXAxisMax(6.5);
 			renderer.addXTextLabel(0.75, "直流电压");//在指定坐标处显示文字
 			renderer.addXTextLabel(1.75, "交流电压");//在指定坐标处显示文字
 			renderer.addXTextLabel(2.75, "直流电流");//在指定坐标处显示文字
 			renderer.addXTextLabel(3.75, "交流电流");//在指定坐标处显示文字
-			renderer.addXTextLabel(4.75, "直流时间");//在指定坐标处显示文字
-			renderer.addXTextLabel(5.75, "交流时间");//在指定坐标处显示文字
+			//renderer.addXTextLabel(4.75, "直流时间");//在指定坐标处显示文字
+			//renderer.addXTextLabel(5.75, "交流时间");//在指定坐标处显示文字
 			renderer.setXLabels(0);//设置x轴上的下标数量
 			renderer.setLabelsTextSize(25);//设置坐标轴上数字的大小
 			renderer.setFitLegend(true);
 			
 			renderer.setPanEnabled(true);
 			renderer.setZoomEnabled(true);
-			renderer.setZoomButtonsVisible(true);// 显示放大缩小功能按钮
+			//renderer.setZoomButtonsVisible(true);// 显示放大缩小功能按钮
 			renderer.setZoomRate(1.0f);
 			renderer.setBarSpacing(0.5f);// 柱形图间隔
 			renderer.setBackgroundColor(Color.rgb(0xff, 0xff, 0xff));
@@ -165,10 +165,10 @@ public class mybarchart {
 	
 		    renderer.setMargins(new int[] {20, 30, 15, 0});
 		    SimpleSeriesRenderer r = new SimpleSeriesRenderer();
-		    r.setColor(Color.BLUE);
+		    r.setColor(Color.rgb(43, 201, 219));
 		    renderer.addSeriesRenderer(r);
 		    r = new SimpleSeriesRenderer();
-		    r.setColor(Color.GREEN);
+		    r.setColor( Color.rgb(227, 127, 120));
 		    renderer.addSeriesRenderer(r);
 			renderer.getSeriesRendererAt(0).setDisplayChartValues(true);// 在第0条柱形图上显示数据
 			renderer.getSeriesRendererAt(1).setDisplayChartValues(true);// 在第0条柱形图上显示数据

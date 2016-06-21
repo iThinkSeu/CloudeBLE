@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+    <include layout="@layout/title"/>
+    
+	<RelativeLayout 
+	      android:id="@+id/select"
+	      android:layout_width="match_parent"
+	      android:layout_height="45dp"
+	      android:clickable="true"
+	      android:background="@drawable/home_select_list_style">
+	      <TextView
+			android:layout_width="match_parent"
+			android:layout_height="45dp"
+			android:layout_gravity="center"
+			android:gravity="center"
+			android:text="选择"
+			android:textSize="20sp" />
+	      <ImageView 
+	        android:id="@+id/select_index_image"
+			android:layout_width="12dp"
+			android:layout_height="12dp"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="15dip"
+			android:layout_centerVertical="true"
+			android:src="@drawable/home_index_arrow"/>
+	  </RelativeLayout>
+ 
+	 <LinearLayout
+	      android:id="@+id/select_view_linearlayout"
+	      android:layout_width="fill_parent"
+	      android:layout_height="wrap_content"
+	      android:visibility="gone"
+	      android:orientation="vertical">
+		  <RelativeLayout 
+		      android:id="@+id/VDC_select_layout"
+		      android:layout_width="match_parent"
+		      android:layout_height="45dp">
+		      <TextView
+				android:layout_width="match_parent"
+				android:layout_height="40dp"
+				android:gravity="center_vertical|left"
+				android:layout_marginLeft="15dp"
+				android:text="VDC"
+				android:textSize="20sp" />
+		      <ImageView 
+		        android:id="@+id/VDC_select_image"
+				android:layout_width="22dp"
+				android:layout_height="22dp"
+				android:layout_alignParentRight="true"
+				android:layout_marginRight="15dp"
+				android:layout_centerVertical="true"
+				android:src="@drawable/noselect_circle"/>
+		  </RelativeLayout>
+	  <View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:layout_marginRight="30dp"
+			android:layout_marginLeft="30dp"
+			android:background="@color/white_line" />
+	
+	  <RelativeLayout
+	      android:id="@+id/VAC_select_layout" 
+	      android:layout_width="match_parent"
+	      android:layout_height="45dp">
+	      <TextView
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:gravity="center_vertical|left"
+			android:layout_marginLeft="15dp"
+			android:text="VAC"
+			android:textSize="20sp" />
+	      <ImageView 
+	        android:id="@+id/VAC_select_image"
+			android:layout_width="22dp"
+			android:layout_height="22dp"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="15dp"
+			android:layout_centerVertical="true"
+			android:src="@drawable/noselect_circle"/>
+	  </RelativeLayout>
+	  <View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:layout_marginRight="30dp"
+			android:layout_marginLeft="30dp"
+			android:background="@color/white_line" />
+	  <RelativeLayout
+	      android:id="@+id/IDC_select_layout" 
+	      android:layout_width="match_parent"
+	      android:layout_height="45dp">
+	      <TextView
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:gravity="center_vertical|left"
+			android:layout_marginLeft="15dp"
+			android:text="IDC"
+			android:textSize="20sp" />
+	      <ImageView 
+	        android:id="@+id/IDC_select_image"
+			android:layout_width="22dp"
+			android:layout_height="22dp"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="15dp"
+			android:layout_centerVertical="true"
+			android:src="@drawable/noselect_circle"/>
+	  </RelativeLayout>
+	  <View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:layout_marginRight="30dp"
+			android:layout_marginLeft="30dp"
+			android:background="@color/white_line" />
+	  
+	  <RelativeLayout
+	      android:id="@+id/IAC_select_layout" 
+	      android:layout_width="match_parent"
+	      android:layout_height="45dp">
+	      <TextView
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:gravity="center_vertical|left"
+			android:layout_marginLeft="15dp"
+			android:text="IAC"
+			android:textSize="20sp" />
+	      <ImageView 
+	        android:id="@+id/IAC_select_image"
+			android:layout_width="22dp"
+			android:layout_height="22dp"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="15dp"
+			android:layout_centerVertical="true"
+			android:src="@drawable/noselect_circle"/>
+	  </RelativeLayout>
+	  <View
+			android:layout_width="match_parent"
+			android:layout_height="1dp"
+			android:layout_marginRight="30dp"
+			android:layout_marginLeft="30dp"
+			android:background="@color/white_line" />
+
+       <LinearLayout
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:gravity="center_vertical"
+                android:text="开始时间:" />
+            <TextView
+                android:id="@+id/tx_startdate"
+                android:textSize="14sp"
+                android:background="@null"
+                android:text="2015-12-23"
+                android:layout_gravity="center_vertical"
+                android:gravity="center|center_vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tx_starttime"
+                android:textSize="14sp"
+                android:background="@null"
+                android:text="18:30"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_marginLeft="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:gravity="center_vertical"
+                android:text="结束时间:" />
+            <TextView
+                android:id="@+id/tx_enddate"
+                android:textSize="14sp"
+                android:background="@null"
+                android:text="2015-12-23"
+                android:layout_gravity="center_vertical"
+                android:gravity="center|center_vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/tx_endtime"
+                android:textSize="14sp"
+                android:background="@null"
+                android:text="18:30"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        
+        <TextView
+            android:id="@+id/history_data_enter"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/bg_login_btn"
+            android:enabled="true"
+            android:clickable="true" 
+            android:gravity="center"
+            android:text="确认查询"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+	</LinearLayout>
+    <LinearLayout
+	       android:layout_width="wrap_content"
+	       android:layout_height="0dp"
+	       android:layout_margin="5dp"
+	       android:layout_weight="6"
+	       android:orientation="vertical">
+	       <ListView   
+			    android:id="@+id/ListViewTitle"  
+			   	android:layout_height="wrap_content"
+			    android:layout_width="fill_parent"  
+			    android:fastScrollEnabled="true"  
+			    android:background="#e1e1e1"
+			    > 
+			</ListView> 
+			<ListView   
+			    android:id="@+id/drawListView"  
+			   	android:layout_height="0dp"
+	            android:layout_weight="2"
+			    android:layout_width="fill_parent"  
+			    android:fastScrollEnabled="true"  
+			    android:background="#e1e1e1"> 
+			</ListView>  
+	 </LinearLayout>
+	 <LinearLayout
+      android:layout_width="fill_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:orientation="horizontal">
+	  <TextView
+		   android:id="@+id/probability_distribution"
+		   android:layout_width="0dp"
+		   android:layout_weight="1"
+		   android:layout_height="fill_parent"
+		   android:layout_margin="12dp"
+		   android:background="@drawable/bg_login_btn"
+		   android:enabled="true"
+		   android:clickable="true" 
+		   android:gravity="center"
+		   android:text="概率分布"
+		   android:textColor="@color/white"
+		   android:textSize="20sp" />
+	  <TextView
+		   android:id="@+id/select_report"
+		   android:layout_width="0dp"
+		   android:layout_weight="1"
+		   android:layout_height="fill_parent"
+		   android:layout_margin="12dp"
+		   android:background="@drawable/bg_login_btn"
+		   android:enabled="true"
+		   android:clickable="true" 
+		   android:gravity="center"
+		   android:text="分选报表"
+		   android:textColor="@color/white"
+		   android:textSize="20sp" />
+	 </LinearLayout>
+</LinearLayout>

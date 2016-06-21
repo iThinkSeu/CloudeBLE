@@ -10,13 +10,22 @@
         android:gravity="center"
         android:id="@+id/login_text_view_title"
         android:text="云端登录"
-        android:textColor="@color/blue_300"
+        android:textColor="@color/white"
         android:textSize="30dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:layout_alignParentTop="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <ImageView
+        android:padding="16dp"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:layout_alignParentTop="true"
+        android:src="@mipmap/cloude"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
     <LinearLayout
         android:id="@+id/login_input"
         android:layout_centerInParent="true"
@@ -87,7 +96,7 @@
         android:id="@+id/login_text_view_register"
         android:text="@string/login_weme_user"
         android:clickable="true" 
-        android:textColor="@color/blue_300"
+        android:textColor="@color/white"
         android:textSize="16sp"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"

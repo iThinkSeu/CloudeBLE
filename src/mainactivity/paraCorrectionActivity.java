@@ -11,35 +11,51 @@ import com.example.learn.R;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 public class paraCorrectionActivity extends Activity{
 
 	private List<Map<String, Object>> listTitle;
 	private List<Map<String, Object>> list;
 
-	private Button mAdd;/** Button for adding entered data to table */
+	private RelativeLayout mAdd;
+	private TextView mSave;/** Button for adding entered data to table */
 	private EditText mX;/** Edit text field for entering the X value of the data to be added. */
 	private EditText mY;/** Edit text field for entering the Y value of the data to be added. */ 
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private int txid;
 	
+	private TextView titleview;
+	private LinearLayout select_view_linearlayout;
+	private ImageView select_index_image;
+	private boolean isSelect = false;
+	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.aty_paracorrection);
+    	requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.aty_newparacorrection);
+        bindview();
+       	titleview.setText("校正报告 ADJUST");
+       	
         ListView lv = (ListView) findViewById(R.id.drawListView);
         ListView lvTitle = (ListView) findViewById(R.id.ListViewTitle);
         
         //添加
         mX = (EditText) findViewById(R.id.xValue);
         mY = (EditText) findViewById(R.id.yValue);
-        mAdd = (Button) findViewById(R.id.add);
+        mSave = (TextView) findViewById(R.id.save);
         
         createTableFactory myTable = new createTableFactory();
 		list = myTable.getTableList();
@@ -69,7 +85,7 @@ public class paraCorrectionActivity extends Activity{
 		
 		//adapter.notifyDataSetChanged();
 		
-		 mAdd.setOnClickListener(new View.OnClickListener() {
+		mSave.setOnClickListener(new View.OnClickListener() {
 		      public void onClick(View v) {
 		        double x = 0;
 		        double y = 0;
@@ -99,6 +115,30 @@ public class paraCorrectionActivity extends Activity{
 		        // repaint the chart such as the newly added point to be visible
 		      }
 		    });
-		
     }	
+	
+	private void bindview()
+	{
+		titleview = (TextView) findViewById(R.id.title);
+		mAdd = (RelativeLayout) findViewById(R.id.add);
+	 	select_view_linearlayout = (LinearLayout) findViewById(R.id.select_view_linearlayout);
+	 	select_index_image = (ImageView) findViewById(R.id.select_index_image);
+		mAdd.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				isSelect = !isSelect;
+				Log.d("ithinker", ""+isSelect);
+				if(isSelect==true)
+				{
+					select_index_image.setImageResource(R.drawable.home_index_arrow_down);
+					select_view_linearlayout.setVisibility(View.VISIBLE);
+				}else
+				{
+					select_index_image.setImageResource(R.drawable.home_index_arrow);
+					select_view_linearlayout.setVisibility(View.GONE);
+				}
+			}
+		});
+	}
 }

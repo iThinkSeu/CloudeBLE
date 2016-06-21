@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+        
+    <include layout="@layout/title"/>
+    
+	<RelativeLayout 
+	    android:id="@+id/address_select_layout"
+	    android:layout_width="match_parent"
+	    android:layout_height="45dp">
+	    <TextView
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:gravity="center_vertical|left"
+			android:layout_marginLeft="15dp"
+			android:text="仪表地址"
+			android:textSize="20sp" />
+	    <ImageView 
+	        android:id="@+id/address_set_image"
+			android:layout_width="12dp"
+			android:layout_height="12dp"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="15dip"
+			android:layout_centerVertical="true"
+			android:src="@drawable/home_index_arrow"/>
+	    <EditText 
+            android:id="@+id/address_set_value"
+            android:layout_centerVertical="true" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_marginRight="2dp"
+			android:layout_toLeftOf="@id/address_set_image"
+            android:textColor="#000000"
+            android:text="01" 
+            android:background="@null"/>
+	</RelativeLayout>
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/white_line" />    	
+    <RelativeLayout 
+	    android:id="@+id/trigger_mode_select_layout"
+	    android:layout_width="match_parent"
+	    android:layout_height="45dp">
+	    <TextView
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:gravity="center_vertical|left"
+			android:layout_marginLeft="15dp"
+			android:text="触发模式"
+			android:textSize="20sp" />
+	    <ImageView 
+	        android:id="@+id/trigger_mode_image"
+			android:layout_width="12dp"
+			android:layout_height="12dp"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="15dip"
+			android:layout_centerVertical="true"
+			android:src="@drawable/home_index_arrow"/>
+	    <EditText 
+            android:id="@+id/trigger_mode_value"
+            android:layout_centerVertical="true" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_marginRight="2dp"
+			android:layout_toLeftOf="@id/trigger_mode_image"
+            android:textColor="#000000"
+            android:text="内触发" 
+            android:background="@null"/>
+	</RelativeLayout>
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/white_line" />    
+
+</LinearLayout>

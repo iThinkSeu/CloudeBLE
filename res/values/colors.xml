@@ -15,7 +15,7 @@
     <color name="blue_900">#2a36b1</color>
 
     <color name="red_grey">#f0eff5</color>
-    <color name="white">#ffffffff</color>
+    <color name="white">#ffffff</color>
     <color name="grey_gap">#d2d4d3</color>
     <color name="red">#ff0000</color>
     <color name="shadow_white">#000000</color>
@@ -24,5 +24,14 @@
     <color name="graywhite">#a3a8af</color>
     <color name="circleline">#22b964</color>
     <color name="bantouming">#00000000</color>
+    
+    <color name="orange">#fa6e1b</color>
+    <color name="orange_press">#ff5f00</color>
+    <color name="green">#81b007</color>
+    <color name="green_press">#618505</color>
+    <color name="title_color">#0b1d36</color>
+    <color name="white_depth">#e9e9e9</color>
+    <color name ="white_line">#bdbdbd</color>
+    <color name="wenzhi_gray">#dfdfdf</color>
     
 </resources>
