@@ -109,9 +109,9 @@ public class paraCorrectionActivity extends Activity{
 		{
 			txid++;
 			map = new HashMap<String, Object>();
-			map.put("id","+"+(list.size()+1));
-			map.put("real_value","1.51KV");
-			map.put("measure_value","1.50KV");
+			map.put("id",""+(list.size()+1));
+			map.put("real_value","1.51");
+			map.put("measure_value","1.50");
 		    list.add(map);
 		}
 		
@@ -136,9 +136,9 @@ public class paraCorrectionActivity extends Activity{
 		        // add a new data point to the current series
 		        map = new HashMap<String, Object>();
 		        txid++;
-				map.put("id","+"+(list.size()+1));
-				map.put("real_value",x+"KV");
-				map.put("measure_value",y+"KV");
+				map.put("id",""+(list.size()+1));
+				map.put("real_value",x+"");
+				map.put("measure_value",y+"");
 			    list.add(map);
 			    adapter.notifyDataSetChanged(); 
         		Toast.makeText(paraCorrectionActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
@@ -230,12 +230,32 @@ public class paraCorrectionActivity extends Activity{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				String str = "<CR#1#1#12.02#12.00>";
+				for(int i=0;i<list.size();i++)
+        		{
+					str = "<C#1#"+list.get(i).get("id")+"#"+list.get(i).get("real_value")+"#"+list.get(i).get("measure_value")+">";
+					
+					Senddata(str);
+					delay(100);
+        			//Log.d("ithinker","list result"+(String) list.get(i).get("id"));//修改值
+        	    
+        		}	 
         		Toast.makeText(paraCorrectionActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
-        		Senddata(str);
+        		Senddata("finish");
 			}
 		});
 	}
 	
+	private void delay(int ms)
+	{
+		int k;
+		for(int i=0;i<ms;i++)
+		{
+			for(int j=0;j<1000;j++)
+			{
+				k=1;
+			}
+		}
+	}
 	
 	//蓝牙BLE
 	private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {

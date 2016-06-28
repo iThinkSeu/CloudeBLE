@@ -98,7 +98,7 @@ public class SelectStatisticActivity extends Activity{
 		lvTitle.setAdapter(adapterTitle);
 
 		mapTitle = new HashMap<String, Object>();
-	    mapTitle.put("id","序号");
+	    mapTitle.put("id","时间");
 	    mapTitle.put("type","模式");
 	    mapTitle.put("value","结果");
 	    mapTitle.put("select","分选");
@@ -106,7 +106,7 @@ public class SelectStatisticActivity extends Activity{
 		for(int i=1;i<60;i++)
 		{
 			map = new HashMap<String, Object>();
-			map.put("id","+"+i);
+			map.put("id","+"+"2016-6-28 18:30:"+i);
 			map.put("type","IDC");
 			map.put("value","1.50KV");
 			map.put("select","合格");
@@ -340,8 +340,6 @@ public class SelectStatisticActivity extends Activity{
 				Log.d("ithinker","history starttime"+starttime);
 				list.clear();
 				//select_function();
-				
-				
 			}
 		});
 
@@ -408,7 +406,7 @@ public class SelectStatisticActivity extends Activity{
 	            for(int i = 0; i<result.length(); i++){
 	            	addTablePost(Post.fromJSON(result.optJSONObject(i)));
                 }
-	            
+	            adapter.notifyDataSetChanged();//刷新列表
 	        }
 	    });
 	}
@@ -421,6 +419,7 @@ public class SelectStatisticActivity extends Activity{
 		map.put("value",post.value);
 		map.put("select","合格");
 	    list.add(map);
+	    
 	}
 
 }

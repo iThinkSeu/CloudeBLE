@@ -117,6 +117,7 @@ public class CreateLineChart {
 			series.add(dates[2], 7.0);
 			series.add(dates[3], 8.05);
 			
+			
 			//mRenderer.setPanEnabled(false);
 			//mRenderer.setZoomEnabled(true);
 		    mRenderer.setZoomEnabled(true,true);
@@ -307,7 +308,6 @@ public class CreateLineChart {
 			series.add(dates[2], 7.0);
 			series.add(dates[3], 18.05);
 			
-			
 			mRenderer.setZoomButtonsVisible(true);
  	        //mChartView = ChartFactory.getLineChartView(context, mDataset, mRenderer);
 			 mChartView = ChartFactory.getTimeChartView(context, mDataset, mRenderer, "HH:mm:ss a");
@@ -321,6 +321,11 @@ public class CreateLineChart {
     {
     	//long now = Math.round(new Date().getTime());
     	Date curDate = new  Date(System.currentTimeMillis());
+    	if(series.getItemCount()>20)
+    	{
+    		//series.clear();
+    		series.remove(0);
+    	}
     	series.add(curDate,y);
     	
     }

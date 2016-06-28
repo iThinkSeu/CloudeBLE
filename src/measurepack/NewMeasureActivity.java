@@ -1,5 +1,6 @@
 package measurepack;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -109,6 +110,7 @@ public class NewMeasureActivity  extends Activity{
 	LinearLayout mLinear;
 	
 	//定时器
+	private int dalayms = 1500;
     Handler handler=new Handler();  
     //定时任务
     Runnable runnable=new Runnable() {  
@@ -117,7 +119,7 @@ public class NewMeasureActivity  extends Activity{
             // TODO Auto-generated method stub  
             //要做的事情  
         	timerSenderToBLE();
-            handler.postDelayed(this, 1000); 
+            handler.postDelayed(this, dalayms); 
         }  
     };  
 
@@ -385,7 +387,9 @@ public class NewMeasureActivity  extends Activity{
 		    		mChartView.repaint();
 		    		
 		    		measure_mode = "VDC";
-		    		handler.postDelayed(runnable, 1000);//每两秒执行一次runnable. 
+		    		//dalayms = 2000;
+		    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable. 
+		    		//handler.postDelayed(this, 2000); 
 		    	}
 		    });
 		    //交流电压
@@ -400,7 +404,8 @@ public class NewMeasureActivity  extends Activity{
 		    		//start_stop_flag = !start_stop_flag;
 		    		measure_mode = "VAC";
 		    		//timer_start_or_stop();
-		    		handler.postDelayed(runnable, 1000);//每两秒执行一次runnable. 
+		    		//dalayms = 5000;
+		    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable. 
 		    	}
 		    });
 		    //直流电流
@@ -480,7 +485,7 @@ public class NewMeasureActivity  extends Activity{
 	  {
 	  		if(start_stop_flag==true)
 		    {
-	  			handler.postDelayed(runnable, 1000);//每两秒执行一次runnable. 
+	  			handler.postDelayed(runnable, 2000);//每两秒执行一次runnable. 
 					
 			}else
 			{
@@ -606,6 +611,9 @@ public class NewMeasureActivity  extends Activity{
 						case "VDC":		
 						{
 							float value_VDC = (float) Float.parseFloat(sArray[2]);
+							value_VDC = value_VDC/1000;
+							BigDecimal b = new BigDecimal((double)value_VDC);  
+							value_VDC = (float)b.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();  
 							myCircle.DrawVolumn(iv, value_VDC,"VDC");
 							myLineChart.addSeriesData(value_VDC);
 				    		mChartView.repaint();
@@ -616,6 +624,9 @@ public class NewMeasureActivity  extends Activity{
 						case "VAC":
 						{
 							float value_VAC = (float) Float.parseFloat(sArray[2]);
+							value_VAC = value_VAC/1000;
+							BigDecimal b = new BigDecimal((double)value_VAC);  
+							value_VAC = (float)b.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();  
 							//Log.d("ithinker", "value_VAC"+value_VAC);
 							myCircle.DrawVolumn(iv, value_VAC,"VAC");
 							myLineChart.addSeriesData(value_VAC);
