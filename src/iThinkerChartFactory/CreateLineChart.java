@@ -67,7 +67,7 @@ public class CreateLineChart {
 			mRenderer.setYTitle("纵坐标");  
 			mRenderer.setXLabels(5);//设置x轴显示6个点,根据setChartSettings的最大值和最小值自动计算点的间隔   
 			mRenderer.setXLabelsColor(Color.WHITE);
-			mRenderer.setYLabels(7);
+			mRenderer.setYLabels(8);//设置y轴数据显示多少个点
 			mRenderer.setYLabelsColor(0, Color.WHITE);
 			mRenderer.setXLabelsAlign(Align.CENTER);
 		    mRenderer.setYLabelsAlign(Align.LEFT);
@@ -98,8 +98,9 @@ public class CreateLineChart {
 			renderer.setPointStyle(PointStyle.CIRCLE);
 			renderer.setColor(lineColor);
 			//renderer.setFillPoints(true);
-			renderer.setDisplayChartValues(true);
-			renderer.setDisplayChartValuesDistance(10);
+			
+			//renderer.setDisplayChartValues(false); //坐标点显示大小
+			//renderer.setDisplayChartValuesDistance(10);
 			//renderer.setLineWidth(4);
 			mCurrentRenderer = renderer;
 			
@@ -114,7 +115,7 @@ public class CreateLineChart {
 			series.add(dates[0], 2.0);
 			series.add(dates[1], 6.0);
 			series.add(dates[2], 7.0);
-			series.add(dates[3], 18.05);
+			series.add(dates[3], 8.05);
 			
 			//mRenderer.setPanEnabled(false);
 			//mRenderer.setZoomEnabled(true);
@@ -234,24 +235,26 @@ public class CreateLineChart {
 			//mRenderer.setBackgroundColor(Color.argb(0x00, 0x01, 0x01, 0x01));
 			//mRenderer.setBackgroundColor(Color.rgb(0x1B, 0x48, 0x65));
 			
-			
-			
 			//mRenderer.setBackgroundColor(Color.rgb(0x44, 0x7E, 0x77));
-			mRenderer.setAxisTitleTextSize(16);
+			mRenderer.setAxisTitleTextSize(20);
 			mRenderer.setChartTitleTextSize(20);
-			mRenderer.setLabelsTextSize(15);
+			mRenderer.setLabelsTextSize(25);
 			mRenderer.setLegendTextSize(15);
 			mRenderer.setMarginsColor(Color.argb(0x00, 0x01, 0x01, 0x01));
 			mRenderer.setMargins(new int[] { 20, 30, 15, 10 });
 			//mRenderer.setMarginsColor(Color.rgb(0xea, 0xea, 0xea));
 			mRenderer.setZoomButtonsVisible(true);
+			
+			/*设置曲线*/
 			mRenderer.setPointSize(4);
 			
+			
+			/*设置坐标轴*/
 			mRenderer.setShowLegend(true);
-			mRenderer.setChartTitle("实时曲线");  
-			mRenderer.setXTitle("横坐标");  
-			mRenderer.setYTitle("纵坐标");  
-			mRenderer.setXLabels(8);//设置x轴显示6个点,根据setChartSettings的最大值和最小值自动计算点的间隔   
+			//mRenderer.setChartTitle("实时曲线");  
+			//mRenderer.setXTitle("横坐标");  
+			mRenderer.setYTitle("RESULT/KV");  
+			mRenderer.setXLabels(6);//设置x轴显示6个点,根据setChartSettings的最大值和最小值自动计算点的间隔   
 			mRenderer.setXLabelsColor(Color.WHITE);
 			mRenderer.setYLabels(9);
 			mRenderer.setYLabelsColor(0, Color.WHITE);
@@ -285,7 +288,7 @@ public class CreateLineChart {
 			renderer.setPointStyle(PointStyle.CIRCLE);
 			renderer.setColor(lineColor);
 			renderer.setFillPoints(true);
-			renderer.setDisplayChartValues(true);
+			renderer.setDisplayChartValues(false);
 			renderer.setDisplayChartValuesDistance(10);
 			//renderer.setLineWidth(4);
 			mCurrentRenderer = renderer;

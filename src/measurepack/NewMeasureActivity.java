@@ -38,6 +38,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.util.ArrayMap;
 import android.util.Log;
@@ -106,6 +107,23 @@ public class NewMeasureActivity  extends Activity{
 	//设置按键
 	private ImageView moreSetting;
 	LinearLayout mLinear;
+	
+	//定时器
+    Handler handler=new Handler();  
+    //定时任务
+    Runnable runnable=new Runnable() {  
+        @Override  
+        public void run() {  
+            // TODO Auto-generated method stub  
+            //要做的事情  
+        	timerSenderToBLE();
+            handler.postDelayed(this, 1000); 
+        }  
+    };  
+
+    private boolean start_stop_flag = false;
+    private String measure_mode = "VDC";
+    
 	private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
 		@Override
@@ -202,7 +220,8 @@ public class NewMeasureActivity  extends Activity{
 		setContentView(R.layout.aty_measure);
 		mLinear = (LinearLayout) findViewById(R.id.MeasureLayout);
 		mLinear.setBackgroundResource(R.drawable.cup5);
-   
+		bindview();
+		
 		LinearLayout meaLinear = (LinearLayout) findViewById(R.id.chart);
 	    
 		myLineChart = new CreateLineChart();
@@ -211,125 +230,13 @@ public class NewMeasureActivity  extends Activity{
 		myLineChart.addSeriesData(200);
 		mChartView.repaint();
 		iv = (ImageView) findViewById(R.id.measureVolumn);
-		myCircle.DrawVolumn(iv, (float) 9.82);
+		myCircle.DrawVolumn(iv, (float) 9.82,"VAC");
 		
 		//开启蓝牙服务
 		Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
 		startService(gattServiceIntent);
 		bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
 		
-		//网格按键背景初始化
-	    actime_gridbg = (RelativeLayout) findViewById(R.id.actime_relativelayout);
-	    dctime_gridbg = (RelativeLayout) findViewById(R.id.dctime_relativelayout);
-	    accurrent_gridbg = (RelativeLayout) findViewById(R.id.accurrent_relativelayout);
-	    dccurrent_gridbg = (RelativeLayout) findViewById(R.id.dccurrent_relativelayout);
-	    acvoltage_gridbg = (RelativeLayout) findViewById(R.id.acvoltage_relativelayout);
-	    dcvoltage_gridbg = (RelativeLayout) findViewById(R.id.dcvoltage_relativelayout);
-	    
-	    //按键设置
-	    moreSetting = (ImageView)findViewById(R.id.aty_info_more);
-	    
-	    moreSetting.setOnClickListener(new OnClickListener(){
-	    	@Override
-	    	public void onClick(View v)
-	    	{
-	    		final Dialog dialog = new Dialog(NewMeasureActivity.this,R.style.DialogSlideAnim);
-                View content = LayoutInflater.from(NewMeasureActivity.this).inflate(R.layout.aty_info_option,mLinear,false);
-                View.OnClickListener listener = new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(v.getId() == R.id.aty_info_option_edit_info){
-                            Intent i = new Intent(NewMeasureActivity.this, newMainActivity.class);
-                            startActivity(i);
-                        	
-                        }
-                        dialog.dismiss();
-                    }
-                };
-                content.findViewById(R.id.aty_info_option_cancel).setOnClickListener(listener);
-                content.findViewById(R.id.aty_info_option_edit_info).setOnClickListener(listener);
-                dialog.setContentView(content);
-
-                WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
-                wmlp.gravity = Gravity.BOTTOM | Gravity.START;
-                wmlp.x = 0;   //x position
-                wmlp.y = 0;   //y position
-                wmlp.width = DimensionUtils.getDisplay(NewMeasureActivity.this).widthPixels;
-                dialog.show();
-	    	}
-	    });
-	    //按键绑定事件  
-	    //直流电压
-	    //dcvoltage_button = (Button) findViewById(R.id.dcvoltage_button);
-	    dcvoltage_gridbg.setOnClickListener(new OnClickListener(){
-	    	@Override
-	    	public void onClick(View v)
-	    	{
-	    		//myLineChart.addSeriesData(100);
-	    		//mChartView.repaint();
-	    		//set_selectbutton_bg(1);
-	    	}
-	    });
-	    //交流电压
-	    //acvoltage_button = (Button) findViewById(R.id.acvoltage_button);
-	    acvoltage_gridbg.setOnClickListener(new OnClickListener(){
-	    	@Override
-	    	public void onClick(View v)
-	    	{
-	    		myLineChart.clearSeriesData();
-	    		mChartView.repaint();
-	    		//set_selectbutton_bg(2);
-	    	}
-	    });
-	    //直流电流
-	    //dccurrent_button = (Button) findViewById(R.id.dccurrent_button);
-	    dccurrent_gridbg.setOnClickListener(new OnClickListener(){
-	    	@Override
-	    	public void onClick(View v)
-	    	{
-
-	    		//set_selectbutton_bg(3);
-	    	}
-	    });
-	    //交流电流
-	    //accurrent_button = (Button)findViewById(R.id.accurrent_button);
-	    accurrent_gridbg.setOnClickListener(new OnClickListener(){
-	    	@Override
-	    	public void onClick(View v)
-	    	{
-	    	
-	    		//set_selectbutton_bg(4);
-	    	}
-	    	
-	    });
-	    
-	    //直流时间
-	    //dctime_button = (Button)findViewById(R.id.dctime_button);
-	    dctime_gridbg.setOnClickListener(new OnClickListener(){
-	    	@Override
-	    	public void onClick(View v)
-	    	{
-	    		String str = "<GET#VDC#VAL>";
-	    		Senddata(str);
-	    		//set_selectbutton_bg(5);
-	    	}
-	    	
-	    });
-	    //交流时间
-	    //actime_button = (Button)findViewById(R.id.actime_button);
-	    actime_gridbg.setOnClickListener(new OnClickListener(){
-	    	@Override
-	    	public void onClick(View v)
-	    	{
-	    	
-				Intent intent = new Intent();
-				intent.setClass(NewMeasureActivity.this, MeasureTestActivityNew.class);
-				startActivity(intent);
-				
-	    		//set_selectbutton_bg(6);
-	    	}
-	    	
-	    });     
 	    
 	    
 	}
@@ -344,6 +251,7 @@ public class NewMeasureActivity  extends Activity{
 				System.out.println("mNotifyCharacteristic is null");
 			}
 	  }
+	  
 	  private void set_selectbutton_bg(int select_int)
 	  {
 		  int alpha = 60;
@@ -423,6 +331,167 @@ public class NewMeasureActivity  extends Activity{
 		  }
 	  } 
 	  
+	  private void bindview()
+	  {
+
+			//网格按键背景初始化
+		    actime_gridbg = (RelativeLayout) findViewById(R.id.actime_relativelayout);
+		    dctime_gridbg = (RelativeLayout) findViewById(R.id.dctime_relativelayout);
+		    accurrent_gridbg = (RelativeLayout) findViewById(R.id.accurrent_relativelayout);
+		    dccurrent_gridbg = (RelativeLayout) findViewById(R.id.dccurrent_relativelayout);
+		    acvoltage_gridbg = (RelativeLayout) findViewById(R.id.acvoltage_relativelayout);
+		    dcvoltage_gridbg = (RelativeLayout) findViewById(R.id.dcvoltage_relativelayout);	
+		    
+		    //按键设置
+		    moreSetting = (ImageView)findViewById(R.id.aty_info_more);
+		    
+		    moreSetting.setOnClickListener(new OnClickListener(){
+		    	@Override
+		    	public void onClick(View v)
+		    	{
+		    		final Dialog dialog = new Dialog(NewMeasureActivity.this,R.style.DialogSlideAnim);
+	                View content = LayoutInflater.from(NewMeasureActivity.this).inflate(R.layout.aty_info_option,mLinear,false);
+	                View.OnClickListener listener = new View.OnClickListener() {
+	                    @Override
+	                    public void onClick(View v) {
+	                        if(v.getId() == R.id.aty_info_option_edit_info){
+	                            Intent i = new Intent(NewMeasureActivity.this, newMainActivity.class);
+	                            startActivity(i);
+	                        	
+	                        }
+	                        dialog.dismiss();
+	                    }
+	                };
+	                content.findViewById(R.id.aty_info_option_cancel).setOnClickListener(listener);
+	                content.findViewById(R.id.aty_info_option_edit_info).setOnClickListener(listener);
+	                dialog.setContentView(content);
+
+	                WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
+	                wmlp.gravity = Gravity.BOTTOM | Gravity.START;
+	                wmlp.x = 0;   //x position
+	                wmlp.y = 0;   //y position
+	                wmlp.width = DimensionUtils.getDisplay(NewMeasureActivity.this).widthPixels;
+	                dialog.show();
+		    	}
+		    });
+		    //按键绑定事件  
+		    //直流电压
+		    //dcvoltage_button = (Button) findViewById(R.id.dcvoltage_button);
+		    dcvoltage_gridbg.setOnClickListener(new OnClickListener(){
+		    	@Override
+		    	public void onClick(View v)
+		    	{
+		    		myLineChart.clearSeriesData();
+		    		mChartView.repaint();
+		    		
+		    		measure_mode = "VDC";
+		    		handler.postDelayed(runnable, 1000);//每两秒执行一次runnable. 
+		    	}
+		    });
+		    //交流电压
+		    //acvoltage_button = (Button) findViewById(R.id.acvoltage_button);
+		    acvoltage_gridbg.setOnClickListener(new OnClickListener(){
+		    	@Override
+		    	public void onClick(View v)
+		    	{
+		    		myLineChart.clearSeriesData();
+		    		mChartView.repaint();
+		    		
+		    		//start_stop_flag = !start_stop_flag;
+		    		measure_mode = "VAC";
+		    		//timer_start_or_stop();
+		    		handler.postDelayed(runnable, 1000);//每两秒执行一次runnable. 
+		    	}
+		    });
+		    //直流电流
+		    //dccurrent_button = (Button) findViewById(R.id.dccurrent_button);
+		    dccurrent_gridbg.setOnClickListener(new OnClickListener(){
+		    	@Override
+		    	public void onClick(View v)
+		    	{
+		    		myLineChart.clearSeriesData();
+		    		mChartView.repaint();
+		    		measure_mode = "IDC";
+		    		handler.postDelayed(runnable, 1000);//每两秒执行一次runnable.  
+		    	}
+		    });
+		    //交流电流
+		    //accurrent_button = (Button)findViewById(R.id.accurrent_button);
+		    accurrent_gridbg.setOnClickListener(new OnClickListener(){
+		    	@Override
+		    	public void onClick(View v)
+		    	{
+		    	
+		    		myLineChart.clearSeriesData();
+		    		mChartView.repaint();
+		    		measure_mode = "IAC";
+		    		handler.postDelayed(runnable, 1000);//每两秒执行一次runnable.  
+		    	}
+		    	
+		    });
+		    
+		    //直流时间
+		    //dctime_button = (Button)findViewById(R.id.dctime_button);
+		    dctime_gridbg.setOnClickListener(new OnClickListener(){
+		    	@Override
+		    	public void onClick(View v)
+		    	{
+		    		String str = "<GET#VDC#VAL>";
+		    		Senddata(str);
+		    		//set_selectbutton_bg(5);
+		    	}
+		    	
+		    });
+		    //交流时间
+		    //actime_button = (Button)findViewById(R.id.actime_button);
+		    actime_gridbg.setOnClickListener(new OnClickListener(){
+		    	@Override
+		    	public void onClick(View v)
+		    	{
+		    	
+					Intent intent = new Intent();
+					intent.setClass(NewMeasureActivity.this, MeasureTestActivityNew.class);
+					startActivity(intent);
+		    		//set_selectbutton_bg(6);
+		    	}
+		    	
+		    });
+		    
+
+	  }
+	  
+	  
+	  private void timerSenderToBLE()
+	  {
+			String str = "<GET#VDC#VAL>";
+			switch(measure_mode)
+			{
+				case "VDC":str = "<GET#VDC#VAL>";break;
+				case "VAC":str = "<GET#VAC#VAL>";break;
+				case "IDC":str = "<GET#IDC#VAL>";break;
+				case "IAC":str = "<GET#IAC#VAL>";break;
+				default:str = "<GET#VDC#VAL>";break;
+			}
+			Senddata(str);
+			//Log.d("ithinker", "timer function");
+	  }
+	  
+	  private void timer_start_or_stop()
+	  {
+	  		if(start_stop_flag==true)
+		    {
+	  			handler.postDelayed(runnable, 1000);//每两秒执行一次runnable. 
+					
+			}else
+			{
+	    		handler.removeCallbacks(runnable);   
+			}
+	  }
+	  
+	  private void upload_Display_state()
+	  {
+		  
+	  }
 
 	  @Override
 	  protected void onResume() {
@@ -447,6 +516,7 @@ public class NewMeasureActivity  extends Activity{
 			super.onDestroy();
 			unbindService(mServiceConnection);
 			mBluetoothLeService = null;
+			handler.removeCallbacks(runnable);   
 		}
 		
 		/*显示的变量定义*/
@@ -496,7 +566,7 @@ public class NewMeasureActivity  extends Activity{
 					}
 					Log.d("ithinker","receive 温度 data" + convertData);
 					//mDataField.setText("高压表电流值 "+convertData);
-					myCircle.DrawVolumn(iv, (float) Integer.parseInt(convertData));
+					myCircle.DrawVolumn(iv, (float) Integer.parseInt(convertData),"VDC");
 					myLineChart.addSeriesData((float) Integer.parseInt(convertData));
 		    		mChartView.repaint();
 				} 
@@ -516,37 +586,43 @@ public class NewMeasureActivity  extends Activity{
 			recFrame += response;
 			String sub;
 			
-			Log.d("ithinker", "recFrame in "+recFrame);
-			Log.d("ithinker", "recTrue"+(recFrame.contains("<")&&recFrame.contains(">")));
+			//Log.d("ithinker", "recFrame in "+recFrame);
+			//Log.d("ithinker", "recTrue"+(recFrame.contains("<")&&recFrame.contains(">")));
 			
 			if(recFrame.contains("<")&&recFrame.contains(">"))
 			{
 				sub = recFrame.substring(recFrame.indexOf("<") + 1, recFrame.indexOf(">"));
 				String[] sArray = sub.split("#");
 				
-				Log.d("ithinker", "recFrame NEW"+recFrame);
-				Log.d("ithinker", "sub"+sub);
-				Log.d("ithinker", "s0="+sArray[0]+" s1="+sArray[1]+ " s2="+sArray[2]);
+				//Log.d("ithinker", "recFrame NEW"+recFrame);
+				//Log.d("ithinker", "sub"+sub);
+				//Log.d("ithinker", "s0="+sArray[0]+" s1="+sArray[1]+ " s2="+sArray[2]);
 				
 				if(sArray[0].equals("data"))
 				{
-					if(sArray[1].equals("VDC"))
-					{
-						Log.d("ithinker", "VDC"+sArray[2]);
-						myCircle.DrawVolumn(iv, (float) Float.parseFloat(sArray[2]));
-						//myLineChart.addSeriesData((float) Float.parseFloat(sArray[2]));
-			    		//mChartView.repaint();
-						
-						
-					}else if(sArray[1].equals("VAC"))
-					{
-						Log.d("ithinker", "VAC"+sArray[2]);
-						float value_VAC = (float) Float.parseFloat(sArray[2]);
-						myLineChart.addSeriesData(value_VAC);
-			    		mChartView.repaint();
-			    		commitdata("VAC",value_VAC);
-					}
 					
+					switch(sArray[1])
+					{
+						case "VDC":		
+						{
+							float value_VDC = (float) Float.parseFloat(sArray[2]);
+							myCircle.DrawVolumn(iv, value_VDC,"VDC");
+							myLineChart.addSeriesData(value_VDC);
+				    		mChartView.repaint();
+				    		commitdata("VDC",value_VDC);
+				    		Log.d("ithinker", "commit"+value_VDC);
+				    		break;
+						}
+						case "VAC":
+						{
+							float value_VAC = (float) Float.parseFloat(sArray[2]);
+							//Log.d("ithinker", "value_VAC"+value_VAC);
+							myCircle.DrawVolumn(iv, value_VAC,"VAC");
+							myLineChart.addSeriesData(value_VAC);
+				    		mChartView.repaint();
+				    		commitdata("VAC",value_VAC);					
+						}
+					}
 				}
 				//清空接收字符串
 				recFrame = "";

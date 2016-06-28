@@ -1,11 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="fill_parent"
     android:orientation="vertical" >
         
     <include layout="@layout/title"/>
-    
+
+    <RelativeLayout 
+	    android:id="@+id/LANIP_select_layout"
+	    android:layout_width="match_parent"
+	    android:layout_height="45dp">
+	    <TextView
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:gravity="center_vertical|left"
+			android:layout_marginLeft="15dp"
+			android:text="LAN IP"
+			android:textSize="20sp" />
+	    <ImageView 
+	        android:id="@+id/LANIP_image"
+			android:layout_width="12dp"
+			android:layout_height="12dp"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="15dip"
+			android:layout_centerVertical="true"
+			android:src="@drawable/home_index_arrow"/>
+	    <EditText 
+            android:id="@+id/LANIP_value"
+            android:layout_centerVertical="true" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_marginRight="2dp"
+			android:layout_toLeftOf="@id/LANIP_image"
+            android:textColor="#000000"
+            android:text="192.168.1.7" 
+            android:background="@null"/>
+	</RelativeLayout>
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/white_line" />    
 	<RelativeLayout 
 	    android:id="@+id/address_select_layout"
 	    android:layout_width="match_parent"
@@ -74,5 +108,283 @@
 		android:layout_width="match_parent"
 		android:layout_height="1dp"
 		android:background="@color/white_line" />    
+		
+    <RelativeLayout 
+	    android:id="@+id/sound_select_layout"
+	    android:layout_width="match_parent"
+	    android:layout_height="45dp">
+	    <TextView
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:gravity="center_vertical|left"
+			android:layout_marginLeft="15dp"
+			android:text="声音"
+			android:textSize="20sp" />
+	    <ImageView 
+	        android:id="@+id/sound_image"
+			android:layout_width="12dp"
+			android:layout_height="12dp"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="15dip"
+			android:layout_centerVertical="true"
+			android:src="@drawable/home_index_arrow"/>
+	    
+	    <Switch  
+	        android:id="@+id/sound_switch"  
+	        android:layout_width="wrap_content"  
+	        android:layout_height="wrap_content"  
+	        android:layout_marginRight="2dp"
+	        android:layout_centerVertical="true" 
+			android:layout_toLeftOf="@id/sound_image"
+	        android:textOff="关闭"  
+	        android:textOn="开启" /> 		
+	    
+	</RelativeLayout>
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/white_line" />    
+    <RelativeLayout 
+	    android:id="@+id/brightness_select_layout"
+	    android:layout_width="match_parent"
+	    android:layout_height="45dp">
+	    <TextView
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:gravity="center_vertical|left"
+			android:layout_marginLeft="15dp"
+			android:text="屏幕亮度"
+			android:textSize="20sp" />
+	    
+	    <SeekBar  
+        	android:id="@+id/brightness_Seekbar"  
+        	android:layout_width="220dp"  
+        	android:layout_height="wrap_content"
+	        android:layout_centerVertical="true" 
+	        android:scrollbarSize="0.1dp"
+			android:layout_alignParentRight="true"/> 	
+	    <TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginRight="2dp"
+			android:visibility="gone"
+	        android:layout_centerVertical="true" 
+			android:layout_toLeftOf="@id/brightness_Seekbar"
+			android:text="20"
+			android:textSize="12sp" />	
 
+	</RelativeLayout>
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/white_line" />    	
+
+    <RelativeLayout 
+	    android:id="@+id/systemtime_select_layout"
+	    android:layout_width="match_parent"
+	    android:layout_height="45dp">
+	    <TextView
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:gravity="center_vertical|left"
+			android:layout_marginLeft="15dp"
+			android:text="系统时间"
+			android:textSize="20sp" />
+	    <ImageView 
+	        android:id="@+id/settime_image"
+			android:layout_width="12dp"
+			android:layout_height="12dp"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="15dip"
+			android:layout_centerVertical="true"
+			android:src="@drawable/home_index_arrow"/>
+	    
+	    <TextView
+            android:id="@+id/settime_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:textSize="17dp"
+            android:text="18:30"
+            android:layout_centerVertical="true" 
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:layout_marginRight="2dp"
+			android:layout_toLeftOf="@id/settime_image"
+            android:textColor="#000000"/>
+	    <TextView
+            android:id="@+id/setdate_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17dp"
+            android:background="@null"
+            android:text="2016-6-24"
+            android:layout_centerVertical="true" 
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:layout_marginRight="5dp"
+			android:layout_toLeftOf="@id/settime_value"
+            android:textColor="#000000"/>
+	    
+	</RelativeLayout>
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/white_line" />   	
+    <RelativeLayout 
+	    android:id="@+id/RS232_select_layout"
+	    android:layout_width="match_parent"
+	    android:layout_height="45dp">
+	    <TextView
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:gravity="center_vertical|left"
+			android:layout_marginLeft="15dp"
+			android:text="RS232设置"
+			android:textSize="20sp" />
+	    <ImageView 
+	        android:id="@+id/RS232_image"
+			android:layout_width="12dp"
+			android:layout_height="12dp"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="15dip"
+			android:layout_centerVertical="true"
+			android:src="@drawable/home_index_arrow"/>
+	    <EditText 
+            android:id="@+id/RS232_value"
+            android:layout_centerVertical="true" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_marginRight="2dp"
+			android:layout_toLeftOf="@id/RS232_image"
+            android:textColor="#000000"
+            android:text="8/1/1" 
+            android:background="@null"/>
+	</RelativeLayout>
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/white_line" />  
+    <RelativeLayout 
+	    android:id="@+id/baudrate_select_layout"
+	    android:layout_width="match_parent"
+	    android:layout_height="45dp">
+	    <TextView
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:gravity="center_vertical|left"
+			android:layout_marginLeft="15dp"
+			android:text="波特率"
+			android:textSize="20sp" />
+	    <ImageView 
+	        android:id="@+id/boudrate_image"
+			android:layout_width="12dp"
+			android:layout_height="12dp"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="15dip"
+			android:layout_centerVertical="true"
+			android:src="@drawable/home_index_arrow"/>
+	    <EditText 
+            android:id="@+id/boudrate_value"
+            android:layout_centerVertical="true" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_marginRight="2dp"
+			android:layout_toLeftOf="@id/boudrate_image"
+            android:textColor="#000000"
+            android:text="115200" 
+            android:background="@null"/>
+	</RelativeLayout>
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/white_line" />  
+    <RelativeLayout 
+	    android:id="@+id/password_select_layout"
+	    android:layout_width="match_parent"
+	    android:layout_height="45dp">
+	    <TextView
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:gravity="center_vertical|left"
+			android:layout_marginLeft="15dp"
+			android:text="仪器密码"
+			android:textSize="20sp" />
+	    <ImageView 
+	        android:id="@+id/password_image"
+			android:layout_width="12dp"
+			android:layout_height="12dp"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="15dip"
+			android:layout_centerVertical="true"
+			android:src="@drawable/home_index_arrow"/>
+	    <EditText 
+            android:id="@+id/password_value"
+            android:layout_centerVertical="true" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_marginRight="2dp"
+			android:layout_toLeftOf="@id/password_image"
+            android:textColor="#000000"
+            android:text="******" 
+            android:background="@null"/>
+	</RelativeLayout>
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/white_line" />  
+		
+    <RelativeLayout 
+	    android:id="@+id/language_select_layout"
+	    android:layout_width="match_parent"
+	    android:layout_height="45dp">
+	    <TextView
+			android:layout_width="match_parent"
+			android:layout_height="40dp"
+			android:gravity="center_vertical|left"
+			android:layout_marginLeft="15dp"
+			android:text="语言"
+			android:textSize="20sp" />
+	    <ImageView 
+	        android:id="@+id/language_image"
+			android:layout_width="12dp"
+			android:layout_height="12dp"
+			android:layout_alignParentRight="true"
+			android:layout_marginRight="15dip"
+			android:layout_centerVertical="true"
+			android:src="@drawable/home_index_arrow"/>
+	    <EditText 
+            android:id="@+id/language_value"
+            android:layout_centerVertical="true" 
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_marginRight="2dp"
+			android:layout_toLeftOf="@id/language_image"
+            android:textColor="#000000"
+            android:text="中文" 
+            android:background="@null"/>
+	</RelativeLayout>
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:background="@color/white_line" />  
+	<RelativeLayout 
+	    android:id="@+id/setting_enter_layout"
+	    android:layout_width="match_parent"
+	    android:layout_alignParentBottom="true"
+	    android:layout_height="100dp">	
+	     <TextView
+           android:id="@+id/setting_enter"
+           android:layout_alignParentBottom="true"
+           android:layout_width="match_parent"
+           android:layout_height="45dp"
+           android:layout_margin="16dp"
+           android:background="@drawable/bg_login_btn"
+           android:enabled="true"
+           android:clickable="true" 
+           android:gravity="center"
+           android:text="确定设置"
+           android:textColor="@color/white"
+           android:textSize="20sp" />
+	</RelativeLayout>
 </LinearLayout>

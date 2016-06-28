@@ -17,7 +17,7 @@ public class circleFactory {
 	private float currentV;
 	private Paint mPaint;
 	private Paint paint;
-	public void DrawVolumn(ImageView iv,float volumn) {
+	public void DrawVolumn(ImageView iv,float volumn,String title) {
 		currentV = volumn;
 		int offset = 120;//50
 		int color = 0;
@@ -78,7 +78,17 @@ public class circleFactory {
 		Typeface font = Typeface.create(familyName, Typeface.BOLD);
 		fontPaint.setColor(Color.WHITE);
 		fontPaint.setTextSize(52);
-		canvas.drawText("直流电压", 150, 200, fontPaint);
+		switch(title)
+		{
+			case "VDC":	canvas.drawText("直流电压", 150, 200, fontPaint);break;
+			case "VAC": canvas.drawText("交流电压", 150, 200, fontPaint);break;
+			case "IDC": canvas.drawText("直流电流", 150, 200, fontPaint);break;
+			case "IAC": canvas.drawText("交流电流", 150, 200, fontPaint);break;
+			case "TDC": canvas.drawText("直流时间", 150, 200, fontPaint);break;
+			case "TAC": canvas.drawText("交流时间", 150, 200, fontPaint);break;
+			default:canvas.drawText("直流电压", 150, 200, fontPaint);break;
+		}
+	
 		//fontPaint.setColor(Color.rgb(0x07, 0xaF, 0xd9));
 		fontPaint.setTypeface(font);
 		if (volumn >= 1000) {

@@ -18,7 +18,7 @@ public final class StrUtils {
 
 
     /** ####################### URLs ############################### **/
-    private static final String BASE_URL = "http://192.168.1.101:8080/";
+    private static final String BASE_URL = "http://192.168.1.101:3000/";
 
     private static final String BASE_URL_NGINX = "http://218.244.147.240/";
 
@@ -29,7 +29,9 @@ public final class StrUtils {
     public static final String EDIT_PROFILE_URL = BASE_URL + "editprofileinfo";
 
     public static final String POST_MEASURE_DATA = BASE_URL + "postmeasuredata";
-
+    
+    public static final String HISTORY_DATA = BASE_URL + "history_data";
+    
     public static final String GET_ACTIVITY_INFO_URL = BASE_URL + "getactivityinformation";
 
     public static final String TOP_BROAD_URL = BASE_URL + "topofficial";

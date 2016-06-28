@@ -2,27 +2,47 @@ package mainactivity;
 
 import iThinkerChartFactory.createTableFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.learn.BluetoothLeService;
 import com.example.learn.R;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattService;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
+import android.view.View.OnCreateContextMenuListener;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
+import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.learn.BluetoothLeService;
+
 
 public class paraCorrectionActivity extends Activity{
 
@@ -36,11 +56,23 @@ public class paraCorrectionActivity extends Activity{
 	private Map<String, Object> map = new HashMap<String, Object>();
 	private int txid;
 	
+	
 	private TextView titleview;
 	private LinearLayout select_view_linearlayout;
 	private ImageView select_index_image;
 	private boolean isSelect = false;
+	private TextView setting_correction_enter;
+	private SimpleAdapter adapter;
 	
+	//蓝牙
+	private boolean mConnected = false;
+	private BluetoothLeService mBluetoothLeService;
+	private BluetoothGattCharacteristic mNotifyCharacteristic = null;
+	//private ExpandableListView mGattServicesList;
+	private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics = new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
+	private final String DEFAULT_UUID = "0000ffe1-0000-1000-8000-00805f9b34fb";
+	byte[] WriteBytes = new byte[20];
+
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +92,7 @@ public class paraCorrectionActivity extends Activity{
         createTableFactory myTable = new createTableFactory();
 		list = myTable.getTableList();
 		listTitle = myTable.getTableList();
-		SimpleAdapter adapter = new SimpleAdapter(this,list, R.layout.list_item_paracorrection, new String[] {"id", "real_value","measure_value"}, new int[] { R.id.txid,R.id.txreal_value,R.id.txmeasure_value});
+		adapter = new SimpleAdapter(this,list, R.layout.list_item_paracorrection, new String[] {"id", "real_value","measure_value"}, new int[] { R.id.txid,R.id.txreal_value,R.id.txmeasure_value});
 		SimpleAdapter adapterTitle = new SimpleAdapter(this,listTitle, R.layout.list_item_paracorrection, new String[] {"id", "real_value","measure_value"}, new int[] { R.id.txid,R.id.txreal_value,R.id.txmeasure_value});
 
 		lv.setAdapter(adapter);
@@ -77,7 +109,7 @@ public class paraCorrectionActivity extends Activity{
 		{
 			txid++;
 			map = new HashMap<String, Object>();
-			map.put("id","+"+txid);
+			map.put("id","+"+(list.size()+1));
 			map.put("real_value","1.51KV");
 			map.put("measure_value","1.50KV");
 		    list.add(map);
@@ -104,18 +136,68 @@ public class paraCorrectionActivity extends Activity{
 		        // add a new data point to the current series
 		        map = new HashMap<String, Object>();
 		        txid++;
-				map.put("id","+"+txid);
+				map.put("id","+"+(list.size()+1));
 				map.put("real_value",x+"KV");
 				map.put("measure_value",y+"KV");
 			    list.add(map);
-			    
+			    adapter.notifyDataSetChanged(); 
+        		Toast.makeText(paraCorrectionActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
+
 		        mX.setText("");
 		        mY.setText("");
 		        mX.requestFocus();
 		        // repaint the chart such as the newly added point to be visible
 		      }
 		    });
-    }	
+		
+		 lv.setOnCreateContextMenuListener(new OnCreateContextMenuListener(){
+			 
+			 @Override  
+			 public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo)
+			 {
+			       menu.add(0, 0, 0, "删除"); 
+                   menu.add(0, 1, 0, "取消"); 
+                   //menu.add(0, 2, 0, "对比"); 
+			 }
+		 });
+		 
+		//开启蓝牙服务
+		Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
+		startService(gattServiceIntent);
+		bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+
+    }
+	
+    @Override  
+    public boolean onContextItemSelected(MenuItem item) {  
+    	 AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item 
+                 .getMenuInfo(); 
+        //setTitle("点击了长按菜单里面的第"+item.getItemId()+"个项目"); 
+        switch(item.getItemId())
+        {
+        	case 0: 
+        		Toast.makeText(paraCorrectionActivity.this, "已删除position"+(info.position+1), Toast.LENGTH_SHORT).show();
+        		list.remove(info.position);  
+        		for(int i=0;i<list.size();i++)
+        		{
+        			 ((Map)list.get(i)).put("id","+"+(i+1));//修改值
+        	    
+        		}	 
+        	    adapter.notifyDataSetChanged(); 
+        	    break;
+        	case 1:
+          		Toast.makeText(paraCorrectionActivity.this, item.getItemId()+"取消 You clicked positon"+info.position, Toast.LENGTH_SHORT).show();
+        	    break;
+        	default:
+          		Toast.makeText(paraCorrectionActivity.this, item.getItemId()+"default You clicked positon"+info.position, Toast.LENGTH_SHORT).show();
+          		break;
+        }
+        //Toast.makeText(SelectStatisticActivity.this, item.getItemId()+"You clicked positon"+info.position, Toast.LENGTH_SHORT).show();
+        //list.remove(info.position);  
+        //adapter.notifyDataSetChanged();  
+        return super.onContextItemSelected(item);  
+    }  
+	
 	
 	private void bindview()
 	{
@@ -123,6 +205,8 @@ public class paraCorrectionActivity extends Activity{
 		mAdd = (RelativeLayout) findViewById(R.id.add);
 	 	select_view_linearlayout = (LinearLayout) findViewById(R.id.select_view_linearlayout);
 	 	select_index_image = (ImageView) findViewById(R.id.select_index_image);
+	 	setting_correction_enter = (TextView)findViewById(R.id.setting_enter);
+	 	
 		mAdd.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -140,5 +224,133 @@ public class paraCorrectionActivity extends Activity{
 				}
 			}
 		});
+		
+		setting_correction_enter.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				String str = "<CR#1#1#12.02#12.00>";
+        		Toast.makeText(paraCorrectionActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
+        		Senddata(str);
+			}
+		});
 	}
+	
+	
+	//蓝牙BLE
+	private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			final String action = intent.getAction();
+			if (BluetoothLeService.ACTION_GATT_CONNECTED.equals(action)) {
+				mConnected = true;
+				// updateConnectionState(R.string.connected);
+				// invalidateOptionsMenu();
+			} else if (BluetoothLeService.ACTION_GATT_DISCONNECTED
+					.equals(action)) {
+				mConnected = false;
+				// updateConnectionState(R.string.disconnected);
+				// invalidateOptionsMenu();
+				//clearUI();
+			} else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED
+					.equals(action)) {
+				// Show all the supported services and characteristics on the
+				// user interface.
+				displayGattServices(mBluetoothLeService.getSupportedGattServices());
+			} else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
+				//displayData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
+				BLEdReceive(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
+			}
+		}
+	};
+
+	private void BLEdReceive(String response)
+	{
+		Toast.makeText(paraCorrectionActivity.this, "receive"+response, Toast.LENGTH_SHORT).show();
+
+	}
+	
+	private void Senddata(String str)
+	{
+		  if (mNotifyCharacteristic != null) {
+				mNotifyCharacteristic.setValue((byte[]) str.getBytes());
+				mBluetoothLeService
+						.writeCharacteristic(mNotifyCharacteristic);
+			} else {
+				System.out.println("mNotifyCharacteristic is null");
+			}
+	}
+
+	private final ServiceConnection mServiceConnection = new ServiceConnection() {
+
+		@Override
+		public void onServiceConnected(ComponentName componentName,
+				IBinder service) {
+			mBluetoothLeService = ((BluetoothLeService.LocalBinder) service)
+					.getService();
+			if (!mBluetoothLeService.initialize()) {
+				//Log.e(TAG, "Unable to initialize Bluetooth");
+				finish();
+			}
+			System.out.println("enter onServiceConnected");
+			displayGattServices(mBluetoothLeService.getSupportedGattServices());
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName componentName) {
+			mBluetoothLeService = null;
+		}
+	};
+
+
+	// Demonstrates how to iterate through the supported GATT
+	// Services/Characteristics.
+	// In this sample, we populate the data structure that is bound to the
+	// ExpandableListView
+	// on the UI.
+	private void displayGattServices(List<BluetoothGattService> gattServices) {
+		if (gattServices == null) {
+			System.out.println("gattServices is null");
+			return;
+		}
+		System.out.println("gattServices size" + gattServices.size());
+		String uuid = null;
+		ArrayList<HashMap<String, String>> gattServiceData = new ArrayList<HashMap<String, String>>();
+		ArrayList<ArrayList<HashMap<String, String>>> gattCharacteristicData = new ArrayList<ArrayList<HashMap<String, String>>>();
+		mGattCharacteristics = new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
+
+		// Loops through available GATT Services.
+		for (BluetoothGattService gattService : gattServices) {
+			List<BluetoothGattCharacteristic> gattCharacteristics = gattService
+					.getCharacteristics();
+			ArrayList<BluetoothGattCharacteristic> charas = new ArrayList<BluetoothGattCharacteristic>();
+
+			// Loops through available Characteristics.
+			for (BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
+				if (gattCharacteristic.getUuid().toString()
+						.equals(DEFAULT_UUID)) {
+					int charaProp = gattCharacteristic.getProperties();
+					if ((charaProp | BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
+						mNotifyCharacteristic = gattCharacteristic;
+						// mBluetoothLeService.setCharacteristicNotification(
+						// gattCharacteristic, true);
+						System.out.println("addd");
+						byte[] value = new byte[20];
+						value[0] = (byte) 0x1;
+						value[1] = '\0';
+						WriteBytes = new byte[4];
+						WriteBytes[0] = 'O';
+						WriteBytes[1] = 'K';
+						WriteBytes[2] = '\0';
+						gattCharacteristic.setValue(WriteBytes);
+
+						mBluetoothLeService.writeCharacteristic(gattCharacteristic);
+					}
+				}
+			}
+		}
+
+	}
+	
+	
 }

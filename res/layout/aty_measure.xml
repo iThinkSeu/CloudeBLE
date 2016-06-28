@@ -22,7 +22,7 @@
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:orientation="horizontal"
-      android:layout_weight="2"
+      android:layout_weight="1.6"
       android:layout_centerInParent="true">
       <LinearLayout
 	       android:layout_width="wrap_content"
@@ -215,7 +215,7 @@
         android:id="@+id/chart"
         android:layout_width="fill_parent"
         android:layout_height="0dip"
-        android:layout_weight="2"
+        android:layout_weight="2.2"
         android:padding="30px"
         android:orientation="horizontal" />
   
