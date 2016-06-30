@@ -633,6 +633,31 @@ public class NewMeasureActivity  extends Activity{
 				    		mChartView.repaint();
 				    		commitdata("VAC",value_VAC);					
 						}
+						case "IDC":		
+						{
+							float value_IDC = (float) Float.parseFloat(sArray[2]);
+							value_IDC = value_IDC/1000;
+							BigDecimal b = new BigDecimal((double)value_IDC);  
+							value_IDC = (float)b.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();  
+							myCircle.DrawVolumn(iv, value_IDC,"IDC");
+							myLineChart.addSeriesData(value_IDC);
+				    		mChartView.repaint();
+				    		commitdata("IDC",value_IDC);
+				    		Log.d("ithinker", "commit"+value_IDC);
+				    		break;
+						}
+						case "IAC":
+						{
+							float value_IAC = (float) Float.parseFloat(sArray[2]);
+							value_IAC = value_IAC/1000;
+							BigDecimal b = new BigDecimal((double)value_IAC);  
+							value_IAC = (float)b.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();  
+							//Log.d("ithinker", "value_VAC"+value_VAC);
+							myCircle.DrawVolumn(iv, value_IAC,"IAC");
+							myLineChart.addSeriesData(value_IAC);
+				    		mChartView.repaint();
+				    		commitdata("IAC",value_IAC);					
+						}
 					}
 				}
 				//Çå¿Õ½ÓÊÕ×Ö·û´®
