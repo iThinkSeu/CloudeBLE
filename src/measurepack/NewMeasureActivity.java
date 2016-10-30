@@ -653,7 +653,7 @@ public class NewMeasureActivity  extends Activity{
 						Log.d("ithinker", "val="+val);
 						float value_VDC = Float.valueOf(val);
 						BigDecimal b = new BigDecimal((double)value_VDC);  
-						value_VDC = (float)b.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();  
+						value_VDC = (float)b.setScale(4,BigDecimal.ROUND_HALF_UP).doubleValue();  
 						myCircle.DrawVolumn(iv, value_VDC,"VDC");
 						myLineChart.addSeriesData(value_VDC);
 			    		mChartView.repaint();
@@ -678,7 +678,7 @@ public class NewMeasureActivity  extends Activity{
 						
 						float value_VAC = (float) Float.valueOf(val);
 						BigDecimal b = new BigDecimal((double)value_VAC);  
-						value_VAC = (float)b.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();  
+						value_VAC = (float)b.setScale(4,BigDecimal.ROUND_HALF_UP).doubleValue();  
 						//Log.d("ithinker", "value_VAC"+value_VAC);
 						myCircle.DrawVolumn(iv, value_VAC,"VAC");
 						myLineChart.addSeriesData(value_VAC);
@@ -703,7 +703,7 @@ public class NewMeasureActivity  extends Activity{
 						float value_IDC = (float) Float.valueOf(val);
 						
 						BigDecimal b = new BigDecimal((double)value_IDC);  
-						value_IDC = (float)b.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();  
+						value_IDC = (float)b.setScale(4,BigDecimal.ROUND_HALF_UP).doubleValue();  
 						myCircle.DrawVolumn(iv, value_IDC,"IDC");
 						myLineChart.addSeriesData(value_IDC);
 			    		mChartView.repaint();
@@ -711,7 +711,56 @@ public class NewMeasureActivity  extends Activity{
 			    	
 			    		break;
 					}
+					case "IAC":
+					{
+						val = "";
+						for(int i=0;i<data.length();i++)
+						{
+							//判断是数字
+							if(data.charAt(i)=='.'||(data.charAt(i)-'0'>=0&&data.charAt(i)-'0'<=9))
+							{
+								val+=data.charAt(i);
+							}else
+							{
+								break;
+							}		
+						}
+						
+						float value_IAC = (float) Float.parseFloat(val);
+					
+						BigDecimal b = new BigDecimal((double)value_IAC);  
+						value_IAC = (float)b.setScale(4,BigDecimal.ROUND_HALF_UP).doubleValue();  
+						//Log.d("ithinker", "value_VAC"+value_VAC);
+						myCircle.DrawVolumn(iv, value_IAC,"IAC");
+						myLineChart.addSeriesData(value_IAC);
+			    		mChartView.repaint();
+			    		commitdata("IAC",value_IAC);		
+					}
+					case "VDC-T":
+					{
+						val = "";
+						for(int i=0;i<data.length();i++)
+						{
+							//判断是数字
+							if(data.charAt(i)=='.'||(data.charAt(i)-'0'>=0&&data.charAt(i)-'0'<=9))
+							{
+								val+=data.charAt(i);
+							}else
+							{
+								break;
+							}		
+						}
+						float value_VDC_T = (float) Float.parseFloat(val);						
+						BigDecimal b = new BigDecimal((double)value_VDC_T);  
+						value_VDC_T = (float)b.setScale(4,BigDecimal.ROUND_HALF_UP).doubleValue();  
+						//Log.d("ithinker", "value_VAC"+value_VAC);
+						myCircle.DrawVolumn(iv, value_VDC_T,"VDC-T");
+						myLineChart.addSeriesData(value_VDC_T);
+			    		mChartView.repaint();
+			    		commitdata("VDC-T",value_VDC_T);	
+					}	
 				}
+				
 				
 			}
 			

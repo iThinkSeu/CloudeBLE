@@ -84,8 +84,8 @@ public class circleFactory {
 			case "VAC": canvas.drawText("交流电压", 150, 200, fontPaint);break;
 			case "IDC": canvas.drawText("直流电流", 150, 200, fontPaint);break;
 			case "IAC": canvas.drawText("交流电流", 150, 200, fontPaint);break;
-			case "TDC": canvas.drawText("直流时间", 150, 200, fontPaint);break;
-			case "TAC": canvas.drawText("交流时间", 150, 200, fontPaint);break;
+			case "VDC-T": canvas.drawText("直流时间", 150, 200, fontPaint);break;
+			case "VAC-T": canvas.drawText("交流时间", 150, 200, fontPaint);break;
 			default:canvas.drawText("直流电压", 150, 200, fontPaint);break;
 		}
 	

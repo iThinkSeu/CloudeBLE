@@ -274,8 +274,8 @@ public class CreateLineChart {
 			//mRenderer.setAxesColor(Color.CYAN); ，坐标轴颜色
 	
 			
-		    mRenderer.setPanEnabled(true);
-		    mRenderer.setZoomEnabled(true,true);
+		    mRenderer.setPanEnabled(false);
+		    mRenderer.setZoomEnabled(false,false);
 		    mRenderer.setZoomButtonsVisible(true);// 显示放大缩小功能按钮
 			// create a new series of data
 

@@ -79,7 +79,45 @@
                   android:text="KV" 
                   android:padding="5dip"/>
            </LinearLayout>
+        <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+          <RadioButton
+            android:id="@+id/radioVDCV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VDCV" />
 
+          <RadioButton
+            android:id="@+id/radioVACV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VACV" />
+	
+          <RadioButton
+            android:id="@+id/radioVACF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VACF" />
+          <RadioButton
+            android:id="@+id/radioIDCV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="IDCV" />
+
+         <RadioButton
+            android:id="@+id/radioIACV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="IACV" />
+
+         <RadioButton
+            android:id="@+id/radioIACF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="IACF" />
+       </RadioGroup>
        <TextView
             android:id="@+id/save"
             android:layout_width="match_parent"

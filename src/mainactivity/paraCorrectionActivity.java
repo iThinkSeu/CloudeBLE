@@ -11,11 +11,13 @@ import com.example.learn.BluetoothLeService;
 import com.example.learn.R;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
@@ -35,6 +37,8 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.SimpleExpandableListAdapter;
@@ -72,6 +76,7 @@ public class paraCorrectionActivity extends Activity{
 	private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics = new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
 	private final String DEFAULT_UUID = "0000ffe1-0000-1000-8000-00805f9b34fb";
 	byte[] WriteBytes = new byte[20];
+	//
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +97,8 @@ public class paraCorrectionActivity extends Activity{
         createTableFactory myTable = new createTableFactory();
 		list = myTable.getTableList();
 		listTitle = myTable.getTableList();
-		adapter = new SimpleAdapter(this,list, R.layout.list_item_paracorrection, new String[] {"id", "real_value","measure_value"}, new int[] { R.id.txid,R.id.txreal_value,R.id.txmeasure_value});
-		SimpleAdapter adapterTitle = new SimpleAdapter(this,listTitle, R.layout.list_item_paracorrection, new String[] {"id", "real_value","measure_value"}, new int[] { R.id.txid,R.id.txreal_value,R.id.txmeasure_value});
+		adapter = new SimpleAdapter(this,list, R.layout.list_item_paracorrection, new String[] {"id", "type","real_value","measure_value"}, new int[] { R.id.txid,R.id.txtype,R.id.txreal_value,R.id.txmeasure_value});
+		SimpleAdapter adapterTitle = new SimpleAdapter(this,listTitle, R.layout.list_item_paracorrection, new String[] {"id","type","real_value","measure_value"}, new int[] { R.id.txid,R.id.txtype,R.id.txreal_value,R.id.txmeasure_value});
 
 		lv.setAdapter(adapter);
 		lvTitle.setAdapter(adapterTitle);
@@ -101,6 +106,7 @@ public class paraCorrectionActivity extends Activity{
 		Map<String, Object> mapTitle = new HashMap<String, Object>();
 		mapTitle = new HashMap<String, Object>();
 	    mapTitle.put("id","序号");
+	    mapTitle.put("type", "类型");
 	    mapTitle.put("real_value","实际值");
 	    mapTitle.put("measure_value","测量值");
 		listTitle.add(mapTitle);
@@ -110,6 +116,7 @@ public class paraCorrectionActivity extends Activity{
 			txid++;
 			map = new HashMap<String, Object>();
 			map.put("id",""+(list.size()+1));
+			map.put("type", "VDC");
 			map.put("real_value","1.51");
 			map.put("measure_value","1.50");
 		    list.add(map);
@@ -119,6 +126,9 @@ public class paraCorrectionActivity extends Activity{
 		
 		mSave.setOnClickListener(new View.OnClickListener() {
 		      public void onClick(View v) {
+		        
+		    	RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+		        RadioButton radioButton = (RadioButton)findViewById(radioGroup.getCheckedRadioButtonId());//获取被选中的单选框。
 		        double x = 0;
 		        double y = 0;
 		        try {
@@ -137,6 +147,7 @@ public class paraCorrectionActivity extends Activity{
 		        map = new HashMap<String, Object>();
 		        txid++;
 				map.put("id",""+(list.size()+1));
+				map.put("type", radioButton.getText());
 				map.put("real_value",x+"");
 				map.put("measure_value",y+"");
 			    list.add(map);
@@ -156,8 +167,8 @@ public class paraCorrectionActivity extends Activity{
 			 public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo)
 			 {
 			       menu.add(0, 0, 0, "删除"); 
-                   menu.add(0, 1, 0, "取消"); 
-                   //menu.add(0, 2, 0, "对比"); 
+                   menu.add(0, 1, 0, "修改"); 
+                   menu.add(0, 2, 0, "取消"); 
 			 }
 		 });
 		 
@@ -170,7 +181,7 @@ public class paraCorrectionActivity extends Activity{
 	
     @Override  
     public boolean onContextItemSelected(MenuItem item) {  
-    	 AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item 
+    	final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item 
                  .getMenuInfo(); 
         //setTitle("点击了长按菜单里面的第"+item.getItemId()+"个项目"); 
         switch(item.getItemId())
@@ -185,7 +196,32 @@ public class paraCorrectionActivity extends Activity{
         		}	 
         	    adapter.notifyDataSetChanged(); 
         	    break;
-        	case 1:
+        	case 1:	
+        		//
+        		
+        		  AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+        		  final EditText feedEditText = new EditText(this);
+        		  feedEditText.setText(list.get(info.position).get("measure_value").toString());
+	    		  dialog.setTitle("校正值");
+	              dialog.setView(feedEditText);
+	              dialog.setPositiveButton("确定", new DialogInterface.OnClickListener(){
+	                  @Override
+	                  public void onClick(DialogInterface dialog,int which){
+	                      if(!feedEditText.getText().toString().isEmpty()){
+	                    	 list.get(info.position).put("measure_value",feedEditText.getText().toString());
+	                    	 System.out.println(info.position);
+	                    	 adapter.notifyDataSetChanged(); 
+	                      }
+	                      else{
+	                          Toast.makeText(paraCorrectionActivity.this, "请输入校正值", Toast.LENGTH_SHORT).show();
+	                      }
+	                  }
+	              });
+	              dialog.setNegativeButton("取消", null);
+	              dialog.show();
+	              
+        		break;       		
+        	case 2:
           		Toast.makeText(paraCorrectionActivity.this, item.getItemId()+"取消 You clicked positon"+info.position, Toast.LENGTH_SHORT).show();
         	    break;
         	default:
