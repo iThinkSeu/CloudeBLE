@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Timer;
 
 import iThinkerChartFactory.CreateLineChart;
 import iThinkerChartFactory.circleFactory;
@@ -110,9 +111,10 @@ public class NewMeasureActivity  extends Activity{
 	LinearLayout mLinear;
 	
 	//定时器
-	private int dalayms = 1500;
+	private int dalayms = 3500;
     Handler handler=new Handler();  
     //定时任务
+    
     Runnable runnable=new Runnable() {  
         @Override  
         public void run() {  
@@ -122,6 +124,11 @@ public class NewMeasureActivity  extends Activity{
             handler.postDelayed(this, dalayms); 
         }  
     };  
+    
+    //timer定时器
+    Timer timer = new Timer();
+    //timer.schedule(new MyTask(),1000,2000);
+    
 
     private boolean start_stop_flag = false;
     private String measure_mode = "VDC";
@@ -387,9 +394,10 @@ public class NewMeasureActivity  extends Activity{
 		    		mChartView.repaint();
 		    		
 		    		measure_mode = "VDC";
-		    		//dalayms = 2000;
-		    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable. 
-		    		//handler.postDelayed(this, 2000); 
+		    		handler.removeCallbacks(runnable);
+		    		sleepTread(20);
+		    		Senddata("CONF:VOLT DC#");
+		    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.
 		    	}
 		    });
 		    //交流电压
@@ -401,11 +409,13 @@ public class NewMeasureActivity  extends Activity{
 		    		myLineChart.clearSeriesData();
 		    		mChartView.repaint();
 		    		
-		    		//start_stop_flag = !start_stop_flag;
 		    		measure_mode = "VAC";
-		    		//timer_start_or_stop();
-		    		//dalayms = 5000;
-		    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable. 
+		    		handler.removeCallbacks(runnable);
+		    		sleepTread(20);
+		    		Senddata("CONF:VOLT AC#");
+		    		sleepTread(20);
+		    		Senddata("CONF:VOLT AC#");
+		    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.
 		    	}
 		    });
 		    //直流电流
@@ -417,7 +427,12 @@ public class NewMeasureActivity  extends Activity{
 		    		myLineChart.clearSeriesData();
 		    		mChartView.repaint();
 		    		measure_mode = "IDC";
-		    		handler.postDelayed(runnable, 1000);//每两秒执行一次runnable.  
+		    		handler.removeCallbacks(runnable);
+		    		sleepTread(20);
+		    		Senddata("CONF:CURR DC#");
+		    		sleepTread(20);
+		    		Senddata("CONF:CURR DC#");
+		    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.
 		    	}
 		    });
 		    //交流电流
@@ -426,11 +441,15 @@ public class NewMeasureActivity  extends Activity{
 		    	@Override
 		    	public void onClick(View v)
 		    	{
-		    	
 		    		myLineChart.clearSeriesData();
 		    		mChartView.repaint();
 		    		measure_mode = "IAC";
-		    		handler.postDelayed(runnable, 1000);//每两秒执行一次runnable.  
+		    		handler.removeCallbacks(runnable);
+		    		sleepTread(20);
+		    		Senddata("CONF:CURR AC#");
+		    		sleepTread(20);
+		    		Senddata("CONF:CURR AC#");
+		    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.
 		    	}
 		    	
 		    });
@@ -441,12 +460,18 @@ public class NewMeasureActivity  extends Activity{
 		    	@Override
 		    	public void onClick(View v)
 		    	{
-		    		String str = "<GET#VDC#VAL>";
-		    		Senddata(str);
-		    		//set_selectbutton_bg(5);
+		    		myLineChart.clearSeriesData();
+		    		mChartView.repaint();
+		    		measure_mode = "VDC-T";
+		    		handler.removeCallbacks(runnable);
+		    		sleepTread(20);
+		    		Senddata("CONF:TIME DC#");
+		    		sleepTread(20);
+		    		Senddata("CONF:TIME DC#");
+		    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.
 		    	}
-		    	
 		    });
+		    
 		    //交流时间
 		    //actime_button = (Button)findViewById(R.id.actime_button);
 		    actime_gridbg.setOnClickListener(new OnClickListener(){
@@ -468,14 +493,14 @@ public class NewMeasureActivity  extends Activity{
 	  
 	  private void timerSenderToBLE()
 	  {
-			String str = "<GET#VDC#VAL>";
+			String str = "MEASure:VALue?#";
 			switch(measure_mode)
 			{
-				case "VDC":str = "<GET#VDC#VAL>";break;
-				case "VAC":str = "<GET#VAC#VAL>";break;
-				case "IDC":str = "<GET#IDC#VAL>";break;
-				case "IAC":str = "<GET#IAC#VAL>";break;
-				default:str = "<GET#VDC#VAL>";break;
+				case "VDC":str = "MEASure:VALue?#";break;
+				case "VAC":str = "MEASure:VALue?#";break;
+				case "IDC":str = "MEASure:VALue?#";break;
+				case "IAC":str = "MEASure:VALue?#";break;
+				default:str = "MEASure:VALue?#";break;
 			}
 			Senddata(str);
 			//Log.d("ithinker", "timer function");
@@ -591,9 +616,107 @@ public class NewMeasureActivity  extends Activity{
 			recFrame += response;
 			String sub;
 			
-			//Log.d("ithinker", "recFrame in "+recFrame);
-			//Log.d("ithinker", "recTrue"+(recFrame.contains("<")&&recFrame.contains(">")));
+			Log.d("ithinker", "recFrame in "+recFrame+recFrame.contains("\n"));
+			recFrame+="\n";
 			
+			if(recFrame.contains("\n"))
+			{
+				Log.d("ithinker", "!!!!");
+				recFrame = recFrame.trim();
+				String[] sArray = recFrame.split(":");
+				if(sArray.length!=2)
+				{
+					return;
+				}
+				String val = "";
+				String data = sArray[1];
+				data = data.trim();
+				Log.d("ithinker", "!!!!sArray[0]=VDC.data="+data);
+				switch(sArray[0])
+				{
+					case "VDC":
+					{
+						Log.d("ithinker", "!!!!sArray[0]=VDC.data="+data);
+						val = "";
+						for(int i=0;i<data.length();i++)
+						{
+							//判断是数字
+							if(data.charAt(i)=='.'||(data.charAt(i)-'0'>=0&&data.charAt(i)-'0'<=9))
+							{
+								val+=data.charAt(i);
+							}else
+							{
+								break;
+							}
+								
+						}
+						Log.d("ithinker", "val="+val);
+						float value_VDC = Float.valueOf(val);
+						BigDecimal b = new BigDecimal((double)value_VDC);  
+						value_VDC = (float)b.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();  
+						myCircle.DrawVolumn(iv, value_VDC,"VDC");
+						myLineChart.addSeriesData(value_VDC);
+			    		mChartView.repaint();
+			    		commitdata("VDC",value_VDC);
+			    		break;
+					}
+					case "VAC":
+					{
+						val = "";
+						for(int i=0;i<data.length();i++)
+						{
+							//判断是数字
+							if(data.charAt(i)=='.'||(data.charAt(i)-'0'>=0&&data.charAt(i)-'0'<=9))
+							{
+								val+=data.charAt(i);
+							}else
+							{
+								break;
+							}
+								
+						}
+						
+						float value_VAC = (float) Float.valueOf(val);
+						BigDecimal b = new BigDecimal((double)value_VAC);  
+						value_VAC = (float)b.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();  
+						//Log.d("ithinker", "value_VAC"+value_VAC);
+						myCircle.DrawVolumn(iv, value_VAC,"VAC");
+						myLineChart.addSeriesData(value_VAC);
+			    		mChartView.repaint();
+			    		commitdata("VAC",value_VAC);
+			    		break;
+					}
+					case "IDC":
+					{
+						val = "";
+						for(int i=0;i<data.length();i++)
+						{
+							//判断是数字
+							if(data.charAt(i)=='.'||(data.charAt(i)-'0'>=0&&data.charAt(i)-'0'<=9))
+							{
+								val+=data.charAt(i);
+							}else
+							{
+								break;
+							}							
+						}
+						float value_IDC = (float) Float.valueOf(val);
+						
+						BigDecimal b = new BigDecimal((double)value_IDC);  
+						value_IDC = (float)b.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();  
+						myCircle.DrawVolumn(iv, value_IDC,"IDC");
+						myLineChart.addSeriesData(value_IDC);
+			    		mChartView.repaint();
+			    		commitdata("IDC",value_IDC);
+			    	
+			    		break;
+					}
+				}
+				
+			}
+			
+			//Log.d("ithinker", "recTrue"+(recFrame.contains("<")&&recFrame.contains(">")));
+			/*
 			if(recFrame.contains("<")&&recFrame.contains(">"))
 			{
 				sub = recFrame.substring(recFrame.indexOf("<") + 1, recFrame.indexOf(">"));
@@ -660,10 +783,13 @@ public class NewMeasureActivity  extends Activity{
 						}
 					}
 				}
+				
 				//清空接收字符串
 				recFrame = "";
 				//Log.d("ithinker", "clear recFrame");
 			}
+			*/
+			recFrame = "";
 		}
 
 		// Demonstrates how to iterate through the supported GATT
@@ -723,6 +849,17 @@ public class NewMeasureActivity  extends Activity{
 					.addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED);
 			intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
 			return intentFilter;
+		}
+		
+		private  static void sleepTread(int ms)
+		{
+			try 
+			{
+		         Thread.currentThread();
+				 Thread.sleep(ms);//阻断
+			} catch (InterruptedException e) {
+		         e.printStackTrace();
+			}
 		}
 
 		private void commitdata(String datatype,float value){
