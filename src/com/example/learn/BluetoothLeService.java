@@ -255,7 +255,6 @@ public class BluetoothLeService extends Service {
 			Log.d(TAG,
 					"Trying to use an existing mBluetoothGatt for connection.");
 			//Log.d(TAG,"close before connect");
-			//mBluetoothGatt.close();
 			if (mBluetoothGatt.connect()) {
 				mConnectionState = STATE_CONNECTING;
 				return true;
@@ -303,7 +302,7 @@ public class BluetoothLeService extends Service {
 			return;
 		}
 		mBluetoothGatt.close();
-		//mBluetoothGatt = null;
+		mBluetoothGatt = null;
 	}
 	
 	public void gattclose()
