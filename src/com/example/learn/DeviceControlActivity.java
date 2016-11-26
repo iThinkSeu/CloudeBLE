@@ -70,11 +70,13 @@ public class DeviceControlActivity extends Activity {
 	private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics = new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
 	private boolean mConnected = false;
 	private BluetoothGattCharacteristic mNotifyCharacteristic;
+	private BluetoothGattCharacteristic mWriteCharacteristic = null;
 
 	private final String LIST_NAME = "NAME";
 	private final String LIST_UUID = "UUID";
 	//private final String DEFAULT_UUID = "0000ffe1-0000-1000-8000-00805f9b34fb";
 	private final String DEFAULT_UUID = SampleGattAttributes.DEFULT_UUID;
+	private final String WRITE_UUID = SampleGattAttributes.WRITE_UUID;
 	// byte[] WriteBytes = null;
 	byte[] WriteBytes = new byte[20];
 	// Code to manage Service lifecycle.
@@ -416,6 +418,18 @@ public class DeviceControlActivity extends Activity {
 						mBluetoothLeService.setCharacteristicNotification(
 								gattCharacteristic, true);
 						System.out.println("add uuid: " + uuid);
+
+					}
+				}
+				
+				if (gattCharacteristic.getUuid().toString()
+						.equals(WRITE_UUID)) {
+					int charaProp = gattCharacteristic.getProperties();
+					if ((charaProp | BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
+						mWriteCharacteristic = gattCharacteristic;
+						mBluetoothLeService.setCharacteristicNotification(
+								gattCharacteristic, true);
+						System.out.println("add write uuid: " + uuid);
 
 					}
 				}

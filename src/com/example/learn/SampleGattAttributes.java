@@ -27,6 +27,7 @@ public class SampleGattAttributes {
 	public static String HEART_RATE_MEASUREMENT = "0003cdd5-0000-1000-8000-00805f9b0131";
 	public static String CLIENT_CHARACTERISTIC_CONFIG = "00002902-0000-1000-8000-00805f9b34fb";
 	public static String DEFULT_UUID = "0003cdd1-0000-1000-8000-00805f9b0131";
+	public static String WRITE_UUID = "0003cdd2-0000-1000-8000-00805f9b0131";
 
 	static {
 		// Sample Services.
