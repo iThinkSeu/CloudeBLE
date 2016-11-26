@@ -41,7 +41,7 @@ import android.util.Log;
  * hosted on a given Bluetooth LE device.
  */
 public class BluetoothLeService extends Service {
-	private final static String TAG = "ithinker";
+	private final static String TAG = BluetoothLeService.class.getSimpleName();
 
 	private BluetoothManager mBluetoothManager;
 	private BluetoothAdapter mBluetoothAdapter;
@@ -70,7 +70,6 @@ public class BluetoothLeService extends Service {
 		public void onConnectionStateChange(BluetoothGatt gatt, int status,
 				int newState) {
 			String intentAction;
-			
 			if (newState == BluetoothProfile.STATE_CONNECTED) {
 				intentAction = ACTION_GATT_CONNECTED;
 				mConnectionState = STATE_CONNECTED;
@@ -92,6 +91,8 @@ public class BluetoothLeService extends Service {
 		public void onServicesDiscovered(BluetoothGatt gatt, int status) {
 			if (status == BluetoothGatt.GATT_SUCCESS) {
 				broadcastUpdate(ACTION_GATT_SERVICES_DISCOVERED);
+				Log.d(TAG, "onServiceDiscovered ACTION_GATT_SERVICES_DISCOVERED");
+
 			} else {
 				Log.w(TAG, "onServicesDiscovered received: " + status);
 			}
@@ -131,7 +132,6 @@ public class BluetoothLeService extends Service {
 		// parsing is
 		// carried out as per profile specifications:
 		// http://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.heart_rate_measurement.xml
-		Log.d("ithinker","broadcastUpdate"+characteristic.getUuid());
 		if (UUID_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
 			int flag = characteristic.getProperties();
 			int format = -1;
@@ -143,6 +143,8 @@ public class BluetoothLeService extends Service {
 				Log.d(TAG, "Heart rate format UINT8.");
 			}
 			final int heartRate = characteristic.getIntValue(format, 1);
+			byte[] data = characteristic.getValue();
+			Log.d(TAG,"data="+data.toString());
 			Log.d(TAG, String.format("Received heart rate: %d", heartRate));
 			intent.putExtra(EXTRA_DATA, String.valueOf(heartRate));
 		} else {
@@ -252,6 +254,8 @@ public class BluetoothLeService extends Service {
 				&& mBluetoothGatt != null) {
 			Log.d(TAG,
 					"Trying to use an existing mBluetoothGatt for connection.");
+			//Log.d(TAG,"close before connect");
+			//mBluetoothGatt.close();
 			if (mBluetoothGatt.connect()) {
 				mConnectionState = STATE_CONNECTING;
 				return true;
@@ -298,8 +302,14 @@ public class BluetoothLeService extends Service {
 		if (mBluetoothGatt == null) {
 			return;
 		}
-		// mBluetoothGatt.close();
-		// mBluetoothGatt = null;
+		mBluetoothGatt.close();
+		//mBluetoothGatt = null;
+	}
+	
+	public void gattclose()
+	{
+		if(mBluetoothGatt==null) return ;
+		 mBluetoothGatt.close();
 	}
 
 	/**
