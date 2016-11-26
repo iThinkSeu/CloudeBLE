@@ -80,7 +80,8 @@ public class testMeasureActivity  extends Activity{
 
 	private final String LIST_NAME = "NAME";
 	private final String LIST_UUID = "UUID";
-	private final String DEFAULT_UUID = "0000ffe1-0000-1000-8000-00805f9b34fb";
+	//private final String DEFAULT_UUID = "0000ffe1-0000-1000-8000-00805f9b34fb";
+	private final String DEFAULT_UUID = SampleGattAttributes.DEFULT_UUID;
 	private byte[] WriteBytes = new byte[20];
 	
 	//¹¤¾ßº¯Êý

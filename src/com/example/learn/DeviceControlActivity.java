@@ -73,7 +73,8 @@ public class DeviceControlActivity extends Activity {
 
 	private final String LIST_NAME = "NAME";
 	private final String LIST_UUID = "UUID";
-	private final String DEFAULT_UUID = "0000ffe1-0000-1000-8000-00805f9b34fb";
+	//private final String DEFAULT_UUID = "0000ffe1-0000-1000-8000-00805f9b34fb";
+	private final String DEFAULT_UUID = "0003cdd1-0000-1000-8000-00805f9b0131";
 	// byte[] WriteBytes = null;
 	byte[] WriteBytes = new byte[20];
 	// Code to manage Service lifecycle.
@@ -110,6 +111,7 @@ public class DeviceControlActivity extends Activity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			final String action = intent.getAction();
+			Log.d("ithinker", "broadcastreceive");
 			if (BluetoothLeService.ACTION_GATT_CONNECTED.equals(action)) {
 				mConnected = true;
 				newMainActivity.BLEstate = "ÒÑÁ¬½Ó";
@@ -282,7 +284,6 @@ public class DeviceControlActivity extends Activity {
 		bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
 		btnReturn = (Button) findViewById(R.id.BlueControlReturn);
 		btnReturn.setOnClickListener(new OnClickListener() {
-
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				startActivity(new Intent(DeviceControlActivity.this, newMainActivity.class));
@@ -388,7 +389,7 @@ public class DeviceControlActivity extends Activity {
 			List<BluetoothGattCharacteristic> gattCharacteristics = gattService
 					.getCharacteristics();
 			ArrayList<BluetoothGattCharacteristic> charas = new ArrayList<BluetoothGattCharacteristic>();
-			System.out.println("Service uuid: " + uuid);
+			System.out.println("GET Service uuid: " + uuid);
 			// Loops through available Characteristics.
 			for (BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
 				charas.add(gattCharacteristic);

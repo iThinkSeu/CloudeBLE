@@ -41,7 +41,7 @@ import android.util.Log;
  * hosted on a given Bluetooth LE device.
  */
 public class BluetoothLeService extends Service {
-	private final static String TAG = BluetoothLeService.class.getSimpleName();
+	private final static String TAG = "ithinker";
 
 	private BluetoothManager mBluetoothManager;
 	private BluetoothAdapter mBluetoothAdapter;
@@ -70,6 +70,7 @@ public class BluetoothLeService extends Service {
 		public void onConnectionStateChange(BluetoothGatt gatt, int status,
 				int newState) {
 			String intentAction;
+			
 			if (newState == BluetoothProfile.STATE_CONNECTED) {
 				intentAction = ACTION_GATT_CONNECTED;
 				mConnectionState = STATE_CONNECTED;
@@ -130,6 +131,7 @@ public class BluetoothLeService extends Service {
 		// parsing is
 		// carried out as per profile specifications:
 		// http://developer.bluetooth.org/gatt/characteristics/Pages/CharacteristicViewer.aspx?u=org.bluetooth.characteristic.heart_rate_measurement.xml
+		Log.d("ithinker","broadcastUpdate"+characteristic.getUuid());
 		if (UUID_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
 			int flag = characteristic.getProperties();
 			int format = -1;
