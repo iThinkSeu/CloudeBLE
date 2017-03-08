@@ -9,6 +9,7 @@ import java.util.Map;
 
 import com.example.learn.BluetoothLeService;
 import com.example.learn.R;
+import com.example.learn.SampleGattAttributes;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,6 +20,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -74,10 +76,60 @@ public class paraCorrectionActivity extends Activity{
 	private BluetoothGattCharacteristic mNotifyCharacteristic = null;
 	//private ExpandableListView mGattServicesList;
 	private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics = new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
-	private final String DEFAULT_UUID = "0000ffe1-0000-1000-8000-00805f9b34fb";
+	private final String DEFAULT_UUID = SampleGattAttributes.DEFULT_UUID;
+	private final String WRITE_UUID = SampleGattAttributes.WRITE_UUID;
 	byte[] WriteBytes = new byte[20];
 	//
 
+	
+	private final ServiceConnection mServiceConnection = new ServiceConnection() {
+
+		@Override
+		public void onServiceConnected(ComponentName componentName,
+				IBinder service) {
+			mBluetoothLeService = ((BluetoothLeService.LocalBinder) service)
+					.getService();
+			if (!mBluetoothLeService.initialize()) {
+				//Log.e(TAG, "Unable to initialize Bluetooth");
+				finish();
+			}
+			System.out.println("enter onServiceConnected");
+			displayGattServices(mBluetoothLeService.getSupportedGattServices());
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName componentName) {
+			mBluetoothLeService = null;
+		}
+	};
+
+		
+  @Override
+  protected void onResume() {
+		super.onResume();
+		registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
+		if (mBluetoothLeService != null) {
+			// final boolean result =
+			// mBluetoothLeService.connect(mDeviceAddress);
+			Log.d("ithinker", "Connect request result=");
+		}
+		Log.d("ithinker", "Connect request result22");
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		unregisterReceiver(mGattUpdateReceiver);
+	}
+  
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unbindService(mServiceConnection);
+		mBluetoothLeService = null;
+	}
+		
+		
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +162,15 @@ public class paraCorrectionActivity extends Activity{
 	    mapTitle.put("real_value","实际值");
 	    mapTitle.put("measure_value","测量值");
 		listTitle.add(mapTitle);
+		
+		//开启蓝牙服务
+		Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
+		startService(gattServiceIntent);
+		bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+
+		
 		txid = 0;
+		/*
 		for(int i=1;i<6;i++)
 		{
 			txid++;
@@ -121,6 +181,54 @@ public class paraCorrectionActivity extends Activity{
 			map.put("measure_value","1.50");
 		    list.add(map);
 		}
+		*/
+		txid++;
+		map = new HashMap<String, Object>();
+		map.put("id",""+(list.size()+1));
+		map.put("type", "VDC");
+		map.put("real_value","1.500");
+		map.put("measure_value","1.510");
+	    list.add(map);
+	    
+		txid++;
+		map = new HashMap<String, Object>();
+		map.put("id",""+(list.size()+1));
+		map.put("type", "VDC");
+		map.put("real_value","3.500");
+		map.put("measure_value","3.514");
+	    list.add(map);
+	    
+		txid++;
+		map = new HashMap<String, Object>();
+		map.put("id",""+(list.size()+1));
+		map.put("type", "VDC");
+		map.put("real_value","5.500");
+		map.put("measure_value","5.510");
+	    list.add(map);
+	    
+		txid++;
+		map = new HashMap<String, Object>();
+		map.put("id",""+(list.size()+1));
+		map.put("type", "VDC");
+		map.put("real_value","7.500");
+		map.put("measure_value","7.514");
+	    list.add(map);
+	    
+		txid++;
+		map = new HashMap<String, Object>();
+		map.put("id",""+(list.size()+1));
+		map.put("type", "VDC");
+		map.put("real_value","10.000");
+		map.put("measure_value","10.010");
+	    list.add(map);
+		
+		txid++;
+		map = new HashMap<String, Object>();
+		map.put("id",""+(list.size()+1));
+		map.put("type", "VDC");
+		map.put("real_value","12.000");
+		map.put("measure_value","12.013");
+	    list.add(map);
 		
 		//adapter.notifyDataSetChanged();
 		
@@ -172,13 +280,11 @@ public class paraCorrectionActivity extends Activity{
 			 }
 		 });
 		 
-		//开启蓝牙服务
-		Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
-		startService(gattServiceIntent);
-		bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
 
     }
 	
+	
+
     @Override  
     public boolean onContextItemSelected(MenuItem item) {  
     	final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item 
@@ -266,6 +372,8 @@ public class paraCorrectionActivity extends Activity{
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				String str = "<CR#1#1#12.02#12.00>";
+				System.out.println("test send fix data");
+				Senddata("start send fix data");
 				for(int i=0;i<list.size();i++)
         		{
 					str = "<C#1#"+list.get(i).get("id")+"#"+list.get(i).get("real_value")+"#"+list.get(i).get("measure_value")+">";
@@ -337,26 +445,6 @@ public class paraCorrectionActivity extends Activity{
 			}
 	}
 
-	private final ServiceConnection mServiceConnection = new ServiceConnection() {
-
-		@Override
-		public void onServiceConnected(ComponentName componentName,
-				IBinder service) {
-			mBluetoothLeService = ((BluetoothLeService.LocalBinder) service)
-					.getService();
-			if (!mBluetoothLeService.initialize()) {
-				//Log.e(TAG, "Unable to initialize Bluetooth");
-				finish();
-			}
-			System.out.println("enter onServiceConnected");
-			displayGattServices(mBluetoothLeService.getSupportedGattServices());
-		}
-
-		@Override
-		public void onServiceDisconnected(ComponentName componentName) {
-			mBluetoothLeService = null;
-		}
-	};
 
 
 	// Demonstrates how to iterate through the supported GATT
@@ -408,5 +496,15 @@ public class paraCorrectionActivity extends Activity{
 
 	}
 	
+	
+	private static IntentFilter makeGattUpdateIntentFilter() {
+		final IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction(BluetoothLeService.ACTION_GATT_CONNECTED);
+		intentFilter.addAction(BluetoothLeService.ACTION_GATT_DISCONNECTED);
+		intentFilter
+				.addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED);
+		intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
+		return intentFilter;
+	}
 	
 }

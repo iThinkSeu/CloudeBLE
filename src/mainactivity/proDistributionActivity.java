@@ -35,26 +35,59 @@ public class proDistributionActivity extends Activity{
  
     	myLineChart_VDC = new CreateLineChart();
 		myLineChart_VDC.setAxesBlack();
-		mChartView_VDC = myLineChart_VDC.oneLineChart_rms(this);
+		mChartView_VDC = myLineChart_VDC.oneLineChart_black(this);
+		myLineChart_VDC.clearSeriesData();
+		for(double x=-6;x<6;x+=0.2)
+		{
+			double y;
+			y=1/(Math.sqrt(2*Math.PI))*Math.exp(-1*x*x/2);
+			myLineChart_VDC.addXYData(x,y);
+		}
 		mLinear_VDC.addView(mChartView_VDC, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		mChartView_VDC.repaint();
 		
     	myLineChart_VAC = new CreateLineChart();
 		myLineChart_VAC.setAxesBlack();
-		mChartView_VAC = myLineChart_VAC.oneLineChart_rms(this);
+		mChartView_VAC = myLineChart_VAC.oneLineChart_black(this);
+		
+		myLineChart_VAC.clearSeriesData();
+		for(double x=-6;x<6;x+=0.2)
+		{
+			double y;
+			y=1/(Math.sqrt(2*Math.PI))*Math.exp(-1*x*x/2);
+			myLineChart_VAC.addXYData(x,y);
+		}
 		mLinear_VAC.addView(mChartView_VAC, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		mChartView_VAC.repaint();
 		
 		
     	myLineChart_IDC = new CreateLineChart();
 		myLineChart_IDC.setAxesBlack();
-		mChartView_IDC = myLineChart_IDC.oneLineChart_rms(this);
+		mChartView_IDC = myLineChart_IDC.oneLineChart_black(this);
+		
+		myLineChart_IDC.clearSeriesData();
+		for(double x=-6;x<6;x+=0.2)
+		{
+			double y;
+			y=1/(Math.sqrt(2*Math.PI))*Math.exp(-1*x*x/2);
+			myLineChart_IDC.addXYData(x,y);
+		}
+		
 		mLinear_IDC.addView(mChartView_IDC, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		mChartView_IDC.repaint();
 		
     	myLineChart_IAC = new CreateLineChart();
 		myLineChart_IAC.setAxesBlack();
-		mChartView_IAC = myLineChart_IAC.oneLineChart_rms(this);
+		mChartView_IAC = myLineChart_IAC.oneLineChart_black(this);
+		
+		myLineChart_IAC.clearSeriesData();
+		for(double x=-6;x<6;x+=0.2)
+		{
+			double y;
+			y=1/(Math.sqrt(2*Math.PI))*Math.exp(-1*x*x/2);
+			myLineChart_IAC.addXYData(x,y);
+		}
+		
 		mLinear_IAC.addView(mChartView_IAC, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 		mChartView_IAC.repaint();
 		/*

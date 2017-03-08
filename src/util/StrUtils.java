@@ -18,7 +18,7 @@ public final class StrUtils {
 
 
     /** ####################### URLs ############################### **/
-    private static final String BASE_URL = "http://192.168.1.101:3000/";
+    private static final String BASE_URL = "http://218.244.147.240:4020/";
 
     private static final String BASE_URL_NGINX = "http://218.244.147.240/";
 

@@ -87,36 +87,36 @@
             android:id="@+id/radioVDCV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="VDCV" />
+            android:text="VDC" />
 
           <RadioButton
             android:id="@+id/radioVACV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="VACV" />
+            android:text="VAC" />
 	
           <RadioButton
             android:id="@+id/radioVACF"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="VACF" />
+            android:text="IDC" />
           <RadioButton
             android:id="@+id/radioIDCV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="IDCV" />
+            android:text="IAC" />
 
          <RadioButton
             android:id="@+id/radioIACV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="IACV" />
+            android:text="VDC-T" />
 
          <RadioButton
             android:id="@+id/radioIACF"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="IACF" />
+            android:text="VAC-T" />
        </RadioGroup>
        <TextView
             android:id="@+id/save"

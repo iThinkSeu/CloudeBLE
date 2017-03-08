@@ -48,7 +48,7 @@
 		            />
 		       <TextView
 				  	android:id="@+id/RHD_value"
-		            android:text="1.20%"
+		            android:text="0.05%"
 		            android:layout_gravity="center"
 		            android:gravity="center"
 		            android:layout_width="wrap_content"
@@ -63,7 +63,7 @@
 		       android:orientation="vertical">
 		       <TextView
 				  	android:id="@+id/deta"
-		            android:text="Δ"
+		            android:text="f"
 		            android:layout_gravity="center"
 		            android:gravity="center"
 		            android:layout_width="wrap_content"
@@ -73,7 +73,7 @@
 		            />
 		       <TextView
 				  	android:id="@+id/deta_value"
-		            android:text="3.2﹪"
+		            android:text="50HZ"
 		            android:layout_gravity="center"
 		            android:gravity="center"
 		            android:layout_width="wrap_content"
@@ -98,7 +98,7 @@
 		            />
 		       <TextView
 				  	android:id="@+id/error_value"
-		            android:text="0.18KV"
+		            android:text="0.306KV"
 		            android:layout_gravity="center"
 		            android:gravity="center"
 		            android:layout_width="wrap_content"
@@ -140,7 +140,7 @@
 		            />
 		       <TextView
 				  	android:id="@+id/uplimit_value"
-		            android:text="12.00KV"
+		            android:text="12.200KV"
 		            android:layout_gravity="center"
 		            android:gravity="center"
 		            android:layout_width="wrap_content"
@@ -165,7 +165,7 @@
 		            />
 		       <TextView
 				  	android:id="@+id/downlimit_value"
-		            android:text="9.00KV"
+		            android:text="11.800KV"
 		            android:layout_gravity="center"
 		            android:gravity="center"
 		            android:layout_width="wrap_content"
@@ -190,7 +190,7 @@
 		            />
 		       <TextView
 				  	android:id="@+id/rating_value"
-		            android:text="10.00KV"
+		            android:text="12.000KV"
 		            android:layout_gravity="center"
 		            android:gravity="center"
 		            android:layout_width="wrap_content"

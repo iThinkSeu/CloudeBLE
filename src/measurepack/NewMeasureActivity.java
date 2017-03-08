@@ -11,6 +11,7 @@ import iThinkerChartFactory.CreateLineChart;
 import iThinkerChartFactory.circleFactory;
 
 import mainactivity.newMainActivity;
+import mainactivity.paraCorrectionActivity;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
@@ -25,16 +26,20 @@ import com.example.learn.BluetoothLeService;
 import com.example.learn.MeasureActivity;
 import com.example.learn.MeasureTestActivityNew;
 import com.example.learn.R;
+import com.example.learn.SampleGattAttributes;
 import com.example.learn.XYChartBuilder;
 import com.example.learn.testMeasureActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
@@ -52,6 +57,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -79,6 +85,9 @@ public class NewMeasureActivity  extends Activity{
 	private RelativeLayout acvoltage_gridbg;
 	private RelativeLayout dcvoltage_gridbg;
 	
+	//6个参数显示
+	TextView error;
+	
 	//BLE
 	private final static String TAG = MeasureActivity.class.getSimpleName();
 
@@ -94,10 +103,12 @@ public class NewMeasureActivity  extends Activity{
 	private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics = new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
 	private boolean mConnected = false;
 	private BluetoothGattCharacteristic mNotifyCharacteristic = null;
+	private BluetoothGattCharacteristic mWriteCharacteristic = null;
 
 	private final String LIST_NAME = "NAME";
 	private final String LIST_UUID = "UUID";
-	private final String DEFAULT_UUID = "0000ffe1-0000-1000-8000-00805f9b34fb";
+	private final String DEFAULT_UUID = SampleGattAttributes.DEFULT_UUID;
+	private final String WRITE_UUID = SampleGattAttributes.WRITE_UUID;
 	byte[] WriteBytes = new byte[20];
 	
 	//工具函数,图像
@@ -111,7 +122,7 @@ public class NewMeasureActivity  extends Activity{
 	LinearLayout mLinear;
 	
 	//定时器
-	private int dalayms = 3500;
+	private int dalayms = 1000;
     Handler handler=new Handler();  
     //定时任务
     
@@ -221,6 +232,35 @@ public class NewMeasureActivity  extends Activity{
 		mDataField.setText(R.string.no_data);
 	}
 	
+	  @Override
+	  protected void onResume() {
+			super.onResume();
+			Log.d("ithinker", "Connect request result22");
+			System.out.println("test onResume");
+			registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
+			if (mBluetoothLeService != null) {
+				// final boolean result =
+				// mBluetoothLeService.connect(mDeviceAddress);
+				Log.d("ithinker", "Connect request result=");
+			}
+			Log.d("ithinker", "Connect request result22");
+		}
+
+		@Override
+		protected void onPause() {
+			super.onPause();
+			unregisterReceiver(mGattUpdateReceiver);
+		}
+	  
+		@Override
+		protected void onDestroy() {
+			super.onDestroy();
+			unbindService(mServiceConnection);
+			mBluetoothLeService = null;
+			handler.removeCallbacks(runnable);   
+		}
+		
+	
 	
 	 @Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -230,6 +270,7 @@ public class NewMeasureActivity  extends Activity{
 		mLinear = (LinearLayout) findViewById(R.id.MeasureLayout);
 		mLinear.setBackgroundResource(R.drawable.cup5);
 		bindview();
+		error.setText("0.223KV");
 		
 		LinearLayout meaLinear = (LinearLayout) findViewById(R.id.chart);
 	    
@@ -239,7 +280,7 @@ public class NewMeasureActivity  extends Activity{
 		myLineChart.addSeriesData(200);
 		mChartView.repaint();
 		iv = (ImageView) findViewById(R.id.measureVolumn);
-		myCircle.DrawVolumn(iv, (float) 9.82,"VAC");
+		myCircle.DrawVolumn(iv, (float) 12.307,"VAC");
 		
 		//开启蓝牙服务
 		Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
@@ -252,12 +293,12 @@ public class NewMeasureActivity  extends Activity{
 	 
 	  private void Senddata(String str)
 	  {
-		  if (mNotifyCharacteristic != null) {
-				mNotifyCharacteristic.setValue((byte[]) str.getBytes());
+		  if (mWriteCharacteristic != null) {
+				mWriteCharacteristic.setValue((byte[]) str.getBytes());
 				mBluetoothLeService
-						.writeCharacteristic(mNotifyCharacteristic);
+						.writeCharacteristic(mWriteCharacteristic);
 			} else {
-				System.out.println("mNotifyCharacteristic is null");
+				System.out.println("mWriteCharacteristic is null");
 			}
 	  }
 	  
@@ -342,7 +383,7 @@ public class NewMeasureActivity  extends Activity{
 	  
 	  private void bindview()
 	  {
-
+		    error = (TextView) findViewById(R.id.error_value);
 			//网格按键背景初始化
 		    actime_gridbg = (RelativeLayout) findViewById(R.id.actime_relativelayout);
 		    dctime_gridbg = (RelativeLayout) findViewById(R.id.dctime_relativelayout);
@@ -390,14 +431,26 @@ public class NewMeasureActivity  extends Activity{
 		    	@Override
 		    	public void onClick(View v)
 		    	{
-		    		myLineChart.clearSeriesData();
-		    		mChartView.repaint();
-		    		
-		    		measure_mode = "VDC";
-		    		handler.removeCallbacks(runnable);
-		    		sleepTread(20);
-		    		Senddata("CONF:VOLT DC#");
-		    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.
+		    		AlertDialog.Builder dialog=new AlertDialog.Builder(NewMeasureActivity.this);
+		      		dialog.setTitle("确认切换模式吗?");
+		            dialog.setPositiveButton("确定", new DialogInterface.OnClickListener(){
+		                 @Override
+		                 public void onClick(DialogInterface dialog,int which){
+		 		    		//////
+		 		    		myLineChart.clearSeriesData();
+				    		mChartView.repaint();
+				    		
+				    		measure_mode = "VDC";
+				    		handler.removeCallbacks(runnable);
+				    		sleepTread(20);
+				    		Senddata("CONF:VOLT DC#");
+				    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.    	 	
+		                  }
+		            });
+	                dialog.setNegativeButton("取消", null);
+	                dialog.show();
+		    		//
+
 		    	}
 		    });
 		    //交流电压
@@ -406,16 +459,27 @@ public class NewMeasureActivity  extends Activity{
 		    	@Override
 		    	public void onClick(View v)
 		    	{
-		    		myLineChart.clearSeriesData();
-		    		mChartView.repaint();
-		    		
-		    		measure_mode = "VAC";
-		    		handler.removeCallbacks(runnable);
-		    		sleepTread(20);
-		    		Senddata("CONF:VOLT AC#");
-		    		sleepTread(20);
-		    		Senddata("CONF:VOLT AC#");
-		    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.
+		    		AlertDialog.Builder dialog=new AlertDialog.Builder(NewMeasureActivity.this);
+		      		dialog.setTitle("确认切换模式吗?");
+		            dialog.setPositiveButton("确定", new DialogInterface.OnClickListener(){
+		                 @Override
+		                 public void onClick(DialogInterface dialog,int which){
+		 		    		//////
+		 		    		myLineChart.clearSeriesData();
+				    		mChartView.repaint();
+				    		
+				    		measure_mode = "VAC";
+				    		handler.removeCallbacks(runnable);
+				    		sleepTread(20);
+				    		Senddata("CONF:VOLT AC#");
+				    		sleepTread(20);
+				    		Senddata("CONF:VOLT AC#");
+				    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.          	 	
+		                  }
+		            });
+	                dialog.setNegativeButton("取消", null);
+	                dialog.show();
+		    		////
 		    	}
 		    });
 		    //直流电流
@@ -424,15 +488,28 @@ public class NewMeasureActivity  extends Activity{
 		    	@Override
 		    	public void onClick(View v)
 		    	{
-		    		myLineChart.clearSeriesData();
-		    		mChartView.repaint();
-		    		measure_mode = "IDC";
-		    		handler.removeCallbacks(runnable);
-		    		sleepTread(20);
-		    		Senddata("CONF:CURR DC#");
-		    		sleepTread(20);
-		    		Senddata("CONF:CURR DC#");
-		    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.
+		    		
+		    		AlertDialog.Builder dialog=new AlertDialog.Builder(NewMeasureActivity.this);
+		      		dialog.setTitle("确认切换模式吗?");
+		            dialog.setPositiveButton("确定", new DialogInterface.OnClickListener(){
+		                 @Override
+		                 public void onClick(DialogInterface dialog,int which){
+		 		    		//////
+		 		    		myLineChart.clearSeriesData();
+				    		mChartView.repaint();
+				    		measure_mode = "IDC";
+				    		handler.removeCallbacks(runnable);
+				    		sleepTread(20);
+				    		Senddata("CONF:CURR DC#");
+				    		sleepTread(20);
+				    		Senddata("CONF:CURR DC#");
+				    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.            	 	
+		                  }
+		            });
+	                dialog.setNegativeButton("取消", null);
+	                dialog.show();
+		    		//
+
 		    	}
 		    });
 		    //交流电流
@@ -441,15 +518,28 @@ public class NewMeasureActivity  extends Activity{
 		    	@Override
 		    	public void onClick(View v)
 		    	{
-		    		myLineChart.clearSeriesData();
-		    		mChartView.repaint();
-		    		measure_mode = "IAC";
-		    		handler.removeCallbacks(runnable);
-		    		sleepTread(20);
-		    		Senddata("CONF:CURR AC#");
-		    		sleepTread(20);
-		    		Senddata("CONF:CURR AC#");
-		    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.
+		    		AlertDialog.Builder dialog=new AlertDialog.Builder(NewMeasureActivity.this);
+		      		dialog.setTitle("确认切换模式吗?");
+		            dialog.setPositiveButton("确定", new DialogInterface.OnClickListener(){
+		                 @Override
+		                 public void onClick(DialogInterface dialog,int which){
+		 		    		//////
+		 		    		myLineChart.clearSeriesData();
+				    		mChartView.repaint();
+				    		measure_mode = "IAC";
+				    		handler.removeCallbacks(runnable);
+				    		sleepTread(20);
+				    		Senddata("CONF:CURR AC#");
+				    		sleepTread(20);
+				    		Senddata("CONF:CURR AC#");
+				    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.
+		                	 	
+		                  }
+		            });
+	                dialog.setNegativeButton("取消", null);
+	                dialog.show();
+		    	    //
+
 		    	}
 		    	
 		    });
@@ -460,15 +550,26 @@ public class NewMeasureActivity  extends Activity{
 		    	@Override
 		    	public void onClick(View v)
 		    	{
-		    		myLineChart.clearSeriesData();
-		    		mChartView.repaint();
-		    		measure_mode = "VDC-T";
-		    		handler.removeCallbacks(runnable);
-		    		sleepTread(20);
-		    		Senddata("CONF:TIME DC#");
-		    		sleepTread(20);
-		    		Senddata("CONF:TIME DC#");
-		    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.
+		    		AlertDialog.Builder dialog=new AlertDialog.Builder(NewMeasureActivity.this);
+		      		dialog.setTitle("确认切换模式吗?");
+		            dialog.setPositiveButton("确定", new DialogInterface.OnClickListener(){
+		                 @Override
+		                 public void onClick(DialogInterface dialog,int which){
+		 		    		//////
+		 		    		myLineChart.clearSeriesData();
+		 		    		mChartView.repaint();
+		 		    		measure_mode = "VDC-T";
+		 		    		handler.removeCallbacks(runnable);
+		 		    		sleepTread(20);
+		 		    		Senddata("CONF:TIME DC#");
+		 		    		sleepTread(20);
+		 		    		Senddata("CONF:TIME DC#");
+		 		    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.
+		                	 	
+		                  }
+		            });
+	                dialog.setNegativeButton("取消", null);
+	                dialog.show();
 		    	}
 		    });
 		    
@@ -478,7 +579,6 @@ public class NewMeasureActivity  extends Activity{
 		    	@Override
 		    	public void onClick(View v)
 		    	{
-		    	
 					Intent intent = new Intent();
 					intent.setClass(NewMeasureActivity.this, MeasureTestActivityNew.class);
 					startActivity(intent);
@@ -523,32 +623,7 @@ public class NewMeasureActivity  extends Activity{
 		  
 	  }
 
-	  @Override
-	  protected void onResume() {
-			super.onResume();
-			registerReceiver(mGattUpdateReceiver, makeGattUpdateIntentFilter());
-			if (mBluetoothLeService != null) {
-				// final boolean result =
-				// mBluetoothLeService.connect(mDeviceAddress);
-				Log.d("ithinker", "Connect request result=");
-			}
-			Log.d("ithinker", "Connect request result22");
-		}
 
-		@Override
-		protected void onPause() {
-			super.onPause();
-			unregisterReceiver(mGattUpdateReceiver);
-		}
-	  
-		@Override
-		protected void onDestroy() {
-			super.onDestroy();
-			unbindService(mServiceConnection);
-			mBluetoothLeService = null;
-			handler.removeCallbacks(runnable);   
-		}
-		
 		/*显示的变量定义*/
 		private int recSize = 0;
 
@@ -653,7 +728,7 @@ public class NewMeasureActivity  extends Activity{
 						Log.d("ithinker", "val="+val);
 						float value_VDC = Float.valueOf(val);
 						BigDecimal b = new BigDecimal((double)value_VDC);  
-						value_VDC = (float)b.setScale(4,BigDecimal.ROUND_HALF_UP).doubleValue();  
+						value_VDC = (float)b.setScale(3,BigDecimal.ROUND_HALF_UP).doubleValue();  
 						myCircle.DrawVolumn(iv, value_VDC,"VDC");
 						myLineChart.addSeriesData(value_VDC);
 			    		mChartView.repaint();
@@ -678,9 +753,13 @@ public class NewMeasureActivity  extends Activity{
 						
 						float value_VAC = (float) Float.valueOf(val);
 						BigDecimal b = new BigDecimal((double)value_VAC);  
-						value_VAC = (float)b.setScale(4,BigDecimal.ROUND_HALF_UP).doubleValue();  
+						value_VAC = (float)b.setScale(3,BigDecimal.ROUND_HALF_UP).doubleValue();  
 						//Log.d("ithinker", "value_VAC"+value_VAC);
-						myCircle.DrawVolumn(iv, value_VAC,"VAC");
+						myCircle.DrawVolumn(iv, value_VAC,"VAC");					
+						float error_f=(float) (value_VAC-12.000);
+						BigDecimal b_error = new BigDecimal((double)error_f);
+						error_f = (float)b_error.setScale(3,BigDecimal.ROUND_HALF_UP).doubleValue();  
+						error.setText(error_f+"KV");
 						myLineChart.addSeriesData(value_VAC);
 			    		mChartView.repaint();
 			    		commitdata("VAC",value_VAC);
@@ -872,7 +951,20 @@ public class NewMeasureActivity  extends Activity{
 							mNotifyCharacteristic = gattCharacteristic;
 							// mBluetoothLeService.setCharacteristicNotification(
 							// gattCharacteristic, true);
-							System.out.println("addd");
+							System.out.println("addd"+gattCharacteristic.getUuid().toString());
+							
+						}
+					}
+					
+					if (gattCharacteristic.getUuid().toString()
+							.equals(WRITE_UUID)) {
+						int charaProp = gattCharacteristic.getProperties();
+						if ((charaProp | BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
+							System.out
+									.println("entern setCharacteristicWriteUUID");
+							mWriteCharacteristic = gattCharacteristic;
+							mBluetoothLeService.setCharacteristicNotification(
+									gattCharacteristic, true);
 							byte[] value = new byte[20];
 							value[0] = (byte) 0x1;
 							value[1] = '\0';
@@ -881,7 +973,6 @@ public class NewMeasureActivity  extends Activity{
 							WriteBytes[1] = 'K';
 							WriteBytes[2] = '\0';
 							gattCharacteristic.setValue(WriteBytes);
-
 							mBluetoothLeService.writeCharacteristic(gattCharacteristic);
 						}
 					}
@@ -932,7 +1023,19 @@ public class NewMeasureActivity  extends Activity{
 		        }
 		    });
 		}
-
-
+		
+		private  void dialog()
+		{
+  		  AlertDialog.Builder dialog=new AlertDialog.Builder(this);
+  		  dialog.setTitle("提示切换吗?");
+          dialog.setPositiveButton("确定", new DialogInterface.OnClickListener(){
+                @Override
+                public void onClick(DialogInterface dialog,int which){
+                   
+                }
+            });
+            dialog.setNegativeButton("取消", null);
+            dialog.show();
+		}
 	 
 }

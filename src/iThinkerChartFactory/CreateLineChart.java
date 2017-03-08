@@ -156,7 +156,7 @@ public class CreateLineChart {
 			mRenderer.setPointSize(4);
 			
 			mRenderer.setShowLegend(true);
-			mRenderer.setChartTitle("实时曲线");  
+			//mRenderer.setChartTitle("实时曲线");  
 			mRenderer.setXTitle("横坐标");  
 			mRenderer.setYTitle("纵坐标");  
 			mRenderer.setXLabels(8);//设置x轴显示6个点,根据setChartSettings的最大值和最小值自动计算点的间隔   
@@ -183,35 +183,22 @@ public class CreateLineChart {
 		    mRenderer.setZoomButtonsVisible(true);// 显示放大缩小功能按钮
 			// create a new series of data
 
-			
+		    series.setTitle("分布曲线");
 			mDataset.addSeries(series);
 			//mCurrentSeries = series;
 			// create a new renderer for the new series
 			XYSeriesRenderer renderer = new XYSeriesRenderer();
 			mRenderer.addSeriesRenderer(renderer);
 			// set some renderer properties
-			renderer.setPointStyle(PointStyle.CIRCLE);
+			//renderer.setPointStyle(PointStyle.CIRCLE);
 			renderer.setColor(lineColor);
 			renderer.setFillPoints(true);
-			renderer.setDisplayChartValues(true);
+			renderer.setDisplayChartValues(false);
 			renderer.setDisplayChartValuesDistance(10);
 			//renderer.setLineWidth(4);
 			mCurrentRenderer = renderer;
 			
-			
-			long now = Math.round(new Date().getTime());
-			Date[] dates = new Date[4];
-			for(int j=0;j<4;j++)
-			{
-				dates[j] = new Date(now - (4 - j) * 1000);
-			}
-			
-			/*
-			series.add(1, 2.0);
-			series.add(2, 6.0);
-			series.add(3, 7.0);
-			series.add(4, 18.05);
-			*/
+		
 			
 			mRenderer.setZoomButtonsVisible(true);
  	        mChartView = ChartFactory.getLineChartView(context, mDataset, mRenderer);
@@ -329,10 +316,10 @@ public class CreateLineChart {
     	series.add(curDate,y);
     	
     }
-    public void addXYData(float x, float y)
+    public void addXYData(double d, double e)
+    //long now = Math.round(new Date().getTime());
     {
-    	//long now = Math.round(new Date().getTime());
-    	series.add((double)x,(double)y);
+    	series.add((double)d,(double)e);
     	
     }
     public void clearSeriesData()

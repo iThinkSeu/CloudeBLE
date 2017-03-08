@@ -414,7 +414,7 @@ public class SelectStatisticActivity extends Activity{
 	private void addTablePost(Post post)
 	{
 		map = new HashMap<String, Object>();
-		map.put("id","+"+post.timestamp);
+		map.put("id",""+post.timestamp);
 		map.put("type",post.datatype);
 		map.put("value",post.value);
 		map.put("select","ºÏ¸ñ");

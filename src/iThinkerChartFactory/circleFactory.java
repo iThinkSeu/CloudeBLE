@@ -93,12 +93,12 @@ public class circleFactory {
 		fontPaint.setTypeface(font);
 		if (volumn >= 1000) {
 			fontPaint.setTextSize(90);
-			canvas.drawText(volumn+"", 130, 320, fontPaint);
+			canvas.drawText(volumn+"", 110, 320, fontPaint);
 			fontPaint.setTextSize(30);
 			canvas.drawText("KV", 300, 350, fontPaint);
 		} else if (volumn < 1000) {
 			fontPaint.setTextSize(90);
-			canvas.drawText(volumn + "", 130, 300, fontPaint);
+			canvas.drawText(volumn + "", 110, 300, fontPaint);
 			fontPaint.setTextSize(30);
 			canvas.drawText("KV", 300, 350, fontPaint);
 		} 
