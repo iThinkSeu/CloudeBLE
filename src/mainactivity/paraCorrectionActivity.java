@@ -74,6 +74,7 @@ public class paraCorrectionActivity extends Activity{
 	private boolean mConnected = false;
 	private BluetoothLeService mBluetoothLeService;
 	private BluetoothGattCharacteristic mNotifyCharacteristic = null;
+	private BluetoothGattCharacteristic mWriteCharacteristic = null;
 	//private ExpandableListView mGattServicesList;
 	private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics = new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
 	private final String DEFAULT_UUID = SampleGattAttributes.DEFULT_UUID;
@@ -167,7 +168,6 @@ public class paraCorrectionActivity extends Activity{
 		Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
 		startService(gattServiceIntent);
 		bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
-
 		
 		txid = 0;
 		/*
@@ -436,13 +436,13 @@ public class paraCorrectionActivity extends Activity{
 	
 	private void Senddata(String str)
 	{
-		  if (mNotifyCharacteristic != null) {
-				mNotifyCharacteristic.setValue((byte[]) str.getBytes());
-				mBluetoothLeService
-						.writeCharacteristic(mNotifyCharacteristic);
-			} else {
-				System.out.println("mNotifyCharacteristic is null");
-			}
+	  if (mWriteCharacteristic != null) {
+			mWriteCharacteristic.setValue((byte[]) str.getBytes());
+			mBluetoothLeService
+					.writeCharacteristic(mWriteCharacteristic);
+		} else {
+			System.out.println("mWriteCharacteristic is null");
+	  }
 	}
 
 
@@ -478,7 +478,20 @@ public class paraCorrectionActivity extends Activity{
 						mNotifyCharacteristic = gattCharacteristic;
 						// mBluetoothLeService.setCharacteristicNotification(
 						// gattCharacteristic, true);
-						System.out.println("addd");
+						System.out.println("addd"+gattCharacteristic.getUuid().toString());
+						
+					}
+				}
+				
+				if (gattCharacteristic.getUuid().toString()
+						.equals(WRITE_UUID)) {
+					int charaProp = gattCharacteristic.getProperties();
+					if ((charaProp | BluetoothGattCharacteristic.PROPERTY_NOTIFY) > 0) {
+						System.out
+								.println("entern setCharacteristicWriteUUID");
+						mWriteCharacteristic = gattCharacteristic;
+						mBluetoothLeService.setCharacteristicNotification(
+								gattCharacteristic, true);
 						byte[] value = new byte[20];
 						value[0] = (byte) 0x1;
 						value[1] = '\0';
@@ -487,7 +500,6 @@ public class paraCorrectionActivity extends Activity{
 						WriteBytes[1] = 'K';
 						WriteBytes[2] = '\0';
 						gattCharacteristic.setValue(WriteBytes);
-
 						mBluetoothLeService.writeCharacteristic(gattCharacteristic);
 					}
 				}
@@ -495,7 +507,6 @@ public class paraCorrectionActivity extends Activity{
 		}
 
 	}
-	
 	
 	private static IntentFilter makeGattUpdateIntentFilter() {
 		final IntentFilter intentFilter = new IntentFilter();
