@@ -794,7 +794,7 @@ public class NewMeasureActivity  extends Activity{
 						myCircle.DrawVolumn(iv, value_VDC,"VDC");
 						myLineChart.addSeriesData(value_VDC);
 			    		mChartView.repaint();
-			    		commitdata("VDC",value_VDC);
+			    		commitdata("001","VDC",value_VDC,VWRTHD,separation,up,down,stand,Freq);
 			    		break;
 					}
 					case "VAC":
@@ -842,7 +842,7 @@ public class NewMeasureActivity  extends Activity{
 						
 						myLineChart.addSeriesData(value_VAC);
 			    		mChartView.repaint();
-			    		commitdata("VAC",value_VAC);
+			    		commitdata("001","VAC",value_VAC,VWRTHD,separation,up,down,stand,Freq);
 			    		break;
 					}
 					case "IDC":
@@ -883,7 +883,7 @@ public class NewMeasureActivity  extends Activity{
 						myCircle.DrawVolumn(iv, value_IDC,"IDC");
 						myLineChart.addSeriesData(value_IDC);
 			    		mChartView.repaint();
-			    		commitdata("IDC",value_IDC);
+			    		commitdata("001","IDC",value_IDC,VWRTHD,separation,up,down,stand,Freq);
 			    	
 			    		break;
 					}
@@ -927,7 +927,7 @@ public class NewMeasureActivity  extends Activity{
 						myCircle.DrawVolumn(iv, value_IAC,"IAC");
 						myLineChart.addSeriesData(value_IAC);
 			    		mChartView.repaint();
-			    		commitdata("IAC",value_IAC);
+			    		commitdata("001","IAC",value_IAC,VWRTHD,separation,up,down,stand,Freq);
 			    		break;
 					}
 					case "VDC-T":
@@ -968,7 +968,7 @@ public class NewMeasureActivity  extends Activity{
 						myCircle.DrawVolumn(iv, value_VDC_T,"VDC-T");
 						myLineChart.addSeriesData(value_VDC_T);
 			    		mChartView.repaint();
-			    		commitdata("VDC-T",value_VDC_T);
+			    		commitdata("001","VDC-T",value_VDC_T,VWRTHD,separation,up,down,stand,Freq);
 			    		break;
 					}
 					
@@ -1009,7 +1009,8 @@ public class NewMeasureActivity  extends Activity{
 						myCircle.DrawVolumn(iv, value_T,"VAC-T");
 						myLineChart.addSeriesData(value_T);
 			    		mChartView.repaint();
-			    		commitdata("VAC-T",value_T);
+			    		//commitdata(String ID,String datatype,float value,String VWRTHD,String separation,String up,String down,String stand)
+			    		commitdata("001","VAC-T",value_T,VWRTHD,separation,up,down,stand,Freq);
 			    		break;
 					}
 				}
@@ -1175,7 +1176,7 @@ public class NewMeasureActivity  extends Activity{
 			}
 		}
 
-		private void commitdata(String datatype,float value){
+		private void commitdata(String ID,String datatype,float value,String VWRTHD,String separation,String up,String down,String stand,String fre){
 			Log.d("ithinker", "post data in");
 	        ArrayMap<String,String> param = new ArrayMap<>();
 	        String token = StrUtils.token(NewMeasureActivity.this);
@@ -1183,7 +1184,13 @@ public class NewMeasureActivity  extends Activity{
 	        param.put("token", token);
 	        //param.put("token", "18d54ec8446d03451f5552033c64dbda");
 			param.put("datatype", datatype);
-			param.put("value", value+"");   
+			param.put("value", value+"");
+			param.put("VWRTHD", VWRTHD);
+			param.put("separation", separation);
+			param.put("up", up);
+			param.put("down", down);
+			param.put("stand", stand);
+			param.put("fre", fre);
 		    OkHttpUtils.post(StrUtils.POST_MEASURE_DATA, param, TAG, new OkHttpUtils.SimpleOkCallBack() {
 		        @Override
 		        public void onResponse(String s) {
