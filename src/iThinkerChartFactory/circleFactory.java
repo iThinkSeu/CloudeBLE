@@ -80,14 +80,15 @@ public class circleFactory {
 		fontPaint.setColor(Color.WHITE);
 		fontPaint.setTextSize(52);
 		Log.d("ithinker", title+"title");
+		String danwei = "kV";
 		switch(title)
 		{
-			case "VDC":	canvas.drawText("直流电压", 150, 200, fontPaint);break;
-			case "VAC": canvas.drawText("交流电压", 150, 200, fontPaint);break;
-			case "IDC": canvas.drawText("直流电流", 150, 200, fontPaint);break;
-			case "IAC": canvas.drawText("交流电流", 150, 200, fontPaint);break;
-			case "VDC-T": canvas.drawText("直流时间", 150, 200, fontPaint);break;
-			case "VAC-T": canvas.drawText("交流时间", 150, 200, fontPaint);break;
+			case "VDC":	canvas.drawText("直流电压", 150, 200, fontPaint);danwei="kV";break;
+			case "VAC": canvas.drawText("交流电压", 150, 200, fontPaint);danwei="kV";break;
+			case "IDC": canvas.drawText("直流电流", 150, 200, fontPaint);danwei="mA";break;
+			case "IAC": canvas.drawText("交流电流", 150, 200, fontPaint);danwei="mA";break;
+			case "VDC-T": canvas.drawText("直流时间", 150, 200, fontPaint);danwei="s";break;
+			case "VAC-T": canvas.drawText("交流时间", 150, 200, fontPaint);danwei="s";break;
 			default:canvas.drawText("直流电压", 150, 200, fontPaint);break;
 		}
 	
@@ -97,12 +98,12 @@ public class circleFactory {
 			fontPaint.setTextSize(90);
 			canvas.drawText(volumn+"", 110, 320, fontPaint);
 			fontPaint.setTextSize(30);
-			canvas.drawText("KV", 300, 350, fontPaint);
+			canvas.drawText(danwei, 300, 350, fontPaint);
 		} else if (volumn < 1000) {
 			fontPaint.setTextSize(90);
 			canvas.drawText(volumn + "", 110, 300, fontPaint);
 			fontPaint.setTextSize(30);
-			canvas.drawText("KV", 300, 350, fontPaint);
+			canvas.drawText(danwei, 300, 350, fontPaint);
 		} 
 		iv.setImageBitmap(baseBitmap);
 	}

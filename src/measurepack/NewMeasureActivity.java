@@ -865,10 +865,8 @@ public class NewMeasureActivity  extends Activity{
 						value_IDC = (float)b.setScale(4,BigDecimal.ROUND_HALF_UP).doubleValue();  
 						
 						//特殊参数
-						if(sArray.length>14)
-							VWRTHD = sArray[14];
-						else
-							VWRTHD = "--";
+						VWRTHD = "--";
+						Freq="--";
 					    //刷新界面
 						VWRTHD_value.setText(VWRTHD);
 						f_value.setText(Freq);
@@ -876,7 +874,7 @@ public class NewMeasureActivity  extends Activity{
 						float error_f=(float) (value_IDC-Float.valueOf(stand));
 						BigDecimal b_error = new BigDecimal((double)error_f);
 						error_f = (float)b_error.setScale(3,BigDecimal.ROUND_HALF_UP).doubleValue();  
-						error_value.setText(error_f+"kV");
+						error_value.setText(error_f+"mA");
 						up_value.setText(up);
 						down_value.setText(down);
 						stand_value.setText(stand);
@@ -909,6 +907,23 @@ public class NewMeasureActivity  extends Activity{
 						BigDecimal b = new BigDecimal((double)value_IAC);  
 						value_IAC = (float)b.setScale(4,BigDecimal.ROUND_HALF_UP).doubleValue();  
 						//Log.d("ithinker", "value_VAC"+value_VAC);
+						
+						//特殊参数
+						VWRTHD = "--";
+						if(sArray.length>14)
+							Freq=sArray[14];;
+					    //刷新界面
+						VWRTHD_value.setText(VWRTHD);
+						f_value.setText(Freq);
+						
+						float error_f=(float) (value_IAC-Float.valueOf(stand));
+						BigDecimal b_error = new BigDecimal((double)error_f);
+						error_f = (float)b_error.setScale(3,BigDecimal.ROUND_HALF_UP).doubleValue();  
+						error_value.setText(error_f+"mA");
+						up_value.setText(up);
+						down_value.setText(down);
+						stand_value.setText(stand);
+						
 						myCircle.DrawVolumn(iv, value_IAC,"IAC");
 						myLineChart.addSeriesData(value_IAC);
 			    		mChartView.repaint();
@@ -931,7 +946,24 @@ public class NewMeasureActivity  extends Activity{
 						}
 						float value_VDC_T = (float) Float.parseFloat(val);						
 						BigDecimal b = new BigDecimal((double)value_VDC_T);  
-						value_VDC_T = (float)b.setScale(4,BigDecimal.ROUND_HALF_UP).doubleValue();  
+						value_VDC_T = (float)b.setScale(4,BigDecimal.ROUND_HALF_UP).doubleValue(); 
+						
+						
+						//特殊参数
+						VWRTHD = "--";
+						Freq="--";
+					    //刷新界面
+						VWRTHD_value.setText(VWRTHD);
+						f_value.setText(Freq);
+						
+						float error_f=(float) (value_VDC_T-Float.valueOf(stand));
+						BigDecimal b_error = new BigDecimal((double)error_f);
+						error_f = (float)b_error.setScale(3,BigDecimal.ROUND_HALF_UP).doubleValue();  
+						error_value.setText(error_f+"s");
+						up_value.setText(up);
+						down_value.setText(down);
+						stand_value.setText(stand);
+						
 						//Log.d("ithinker", "value_VAC"+value_VAC);
 						myCircle.DrawVolumn(iv, value_VDC_T,"VDC-T");
 						myLineChart.addSeriesData(value_VDC_T);
@@ -957,6 +989,22 @@ public class NewMeasureActivity  extends Activity{
 						float value_T = (float) Float.parseFloat(val);						
 						BigDecimal b = new BigDecimal((double)value_T);  
 						value_T = (float)b.setScale(4,BigDecimal.ROUND_HALF_UP).doubleValue();  
+						
+						//特殊参数
+						VWRTHD = "--";
+						Freq="--";
+					    //刷新界面
+						VWRTHD_value.setText(VWRTHD);
+						f_value.setText(Freq);
+						
+						float error_f=(float) (value_T-Float.valueOf(stand));
+						BigDecimal b_error = new BigDecimal((double)error_f);
+						error_f = (float)b_error.setScale(3,BigDecimal.ROUND_HALF_UP).doubleValue();  
+						error_value.setText(error_f+"s");
+						up_value.setText(up);
+						down_value.setText(down);
+						stand_value.setText(stand);
+						
 						//Log.d("ithinker", "value_VAC"+value_VAC);
 						myCircle.DrawVolumn(iv, value_T,"VAC-T");
 						myLineChart.addSeriesData(value_T);
