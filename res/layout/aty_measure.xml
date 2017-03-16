@@ -37,7 +37,7 @@
 		       android:layout_weight="1"
 		       android:orientation="vertical">
 		       <TextView
-				  	android:id="@+id/RHD"
+				  	android:id="@+id/VWRTHD"
 		            android:text="THD"
 		            android:layout_gravity="center"
 		            android:gravity="center"
@@ -47,7 +47,7 @@
 		       	  	android:textSize="12dp"
 		            />
 		       <TextView
-				  	android:id="@+id/RHD_value"
+				  	android:id="@+id/VWRTHD_value"
 		            android:text="0.05%"
 		            android:layout_gravity="center"
 		            android:gravity="center"
@@ -62,7 +62,7 @@
 		       android:layout_weight="1"
 		       android:orientation="vertical">
 		       <TextView
-				  	android:id="@+id/deta"
+				  	android:id="@+id/f"
 		            android:text="f"
 		            android:layout_gravity="center"
 		            android:gravity="center"
@@ -72,7 +72,7 @@
 		       	  	android:textSize="12dp"
 		            />
 		       <TextView
-				  	android:id="@+id/deta_value"
+				  	android:id="@+id/f_value"
 		            android:text="50HZ"
 		            android:layout_gravity="center"
 		            android:gravity="center"
@@ -129,7 +129,7 @@
 		       android:layout_weight="1"
 		       android:orientation="vertical">
 		       <TextView
-				  	android:id="@+id/up_limit"
+				  	android:id="@+id/up"
 		            android:text="上限值"
 		            android:layout_gravity="center"
 		            android:gravity="center"
@@ -139,7 +139,7 @@
 		       	  	android:textSize="12dp"
 		            />
 		       <TextView
-				  	android:id="@+id/uplimit_value"
+				  	android:id="@+id/up_value"
 		            android:text="12.200KV"
 		            android:layout_gravity="center"
 		            android:gravity="center"
@@ -154,7 +154,7 @@
 		       android:layout_weight="1"
 		       android:orientation="vertical">
 		       <TextView
-				  	android:id="@+id/down_limit"
+				  	android:id="@+id/down"
 		            android:text="下限值"
 		            android:layout_gravity="center"
 		            android:gravity="center"
@@ -164,7 +164,7 @@
 		       	  	android:textSize="12dp"
 		            />
 		       <TextView
-				  	android:id="@+id/downlimit_value"
+				  	android:id="@+id/down_value"
 		            android:text="11.800KV"
 		            android:layout_gravity="center"
 		            android:gravity="center"
@@ -179,7 +179,7 @@
 		       android:layout_weight="1"
 		       android:orientation="vertical">
 		       <TextView
-				  	android:id="@+id/rating"
+				  	android:id="@+id/stand"
 		            android:text="标称值"
 		            android:layout_gravity="center"
 		            android:gravity="center"
@@ -189,7 +189,7 @@
 		       	  	android:textSize="12dp"
 		            />
 		       <TextView
-				  	android:id="@+id/rating_value"
+				  	android:id="@+id/stand_value"
 		            android:text="12.000KV"
 		            android:layout_gravity="center"
 		            android:gravity="center"

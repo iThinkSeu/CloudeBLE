@@ -2,6 +2,7 @@ package mainactivity;
 
 import iThinkerChartFactory.createTableFactory;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +34,8 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.view.View.OnCreateContextMenuListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
@@ -44,6 +47,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.SimpleExpandableListAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,6 +72,7 @@ public class paraCorrectionActivity extends Activity{
 	private ImageView select_index_image;
 	private boolean isSelect = false;
 	private TextView setting_correction_enter;
+	private TextView setting_correction_get;
 	private SimpleAdapter adapter;
 	
 	//蓝牙
@@ -80,8 +85,12 @@ public class paraCorrectionActivity extends Activity{
 	private final String DEFAULT_UUID = SampleGattAttributes.DEFULT_UUID;
 	private final String WRITE_UUID = SampleGattAttributes.WRITE_UUID;
 	byte[] WriteBytes = new byte[20];
-	//
-
+	
+	//下拉模式选择
+	private Spinner spinnercal1,spinnercal2,spinnercal3;
+	//settingstate
+	private TextView settingstate;
+	private TextView settingreadstate;
 	
 	private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
@@ -129,14 +138,15 @@ public class paraCorrectionActivity extends Activity{
 		unbindService(mServiceConnection);
 		mBluetoothLeService = null;
 	}
-		
+	
+	
 		
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     	requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.aty_newparacorrection);
-        bindview();
+    	bindview();
        	titleview.setText("校正报告 ADJUST");
        	
         ListView lv = (ListView) findViewById(R.id.drawListView);
@@ -169,6 +179,7 @@ public class paraCorrectionActivity extends Activity{
 		startService(gattServiceIntent);
 		bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
 		
+
 		txid = 0;
 		/*
 		for(int i=1;i<6;i++)
@@ -235,8 +246,6 @@ public class paraCorrectionActivity extends Activity{
 		mSave.setOnClickListener(new View.OnClickListener() {
 		      public void onClick(View v) {
 		        
-		    	RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
-		        RadioButton radioButton = (RadioButton)findViewById(radioGroup.getCheckedRadioButtonId());//获取被选中的单选框。
 		        double x = 0;
 		        double y = 0;
 		        try {
@@ -253,9 +262,14 @@ public class paraCorrectionActivity extends Activity{
 		        }
 		        // add a new data point to the current series
 		        map = new HashMap<String, Object>();
+		        String modetype = null; 
+		        if(spinnercal3.getSelectedItem()==null)
+		        	modetype = spinnercal1.getSelectedItem().toString()+spinnercal2.getSelectedItem().toString();
+		        else
+		        	modetype = spinnercal1.getSelectedItem().toString()+spinnercal2.getSelectedItem().toString()+""+spinnercal3.getSelectedItem().toString();
 		        txid++;
 				map.put("id",""+(list.size()+1));
-				map.put("type", radioButton.getText());
+				map.put("type", modetype);
 				map.put("real_value",x+"");
 				map.put("measure_value",y+"");
 			    list.add(map);
@@ -283,8 +297,6 @@ public class paraCorrectionActivity extends Activity{
 
     }
 	
-	
-
     @Override  
     public boolean onContextItemSelected(MenuItem item) {  
     	final AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item 
@@ -347,7 +359,16 @@ public class paraCorrectionActivity extends Activity{
 		mAdd = (RelativeLayout) findViewById(R.id.add);
 	 	select_view_linearlayout = (LinearLayout) findViewById(R.id.select_view_linearlayout);
 	 	select_index_image = (ImageView) findViewById(R.id.select_index_image);
-	 	setting_correction_enter = (TextView)findViewById(R.id.setting_enter);
+	 	setting_correction_enter = (TextView)findViewById(R.id.cal_setting_enter);
+	 	setting_correction_get = (TextView)findViewById(R.id.cal_setting_get);
+	 	
+		//模式选择
+		spinnercal1 = (Spinner)findViewById(R.id.spinnercal1);
+		spinnercal2 = (Spinner)findViewById(R.id.spinnercal2);		
+		spinnercal3 = (Spinner)findViewById(R.id.spinnercal3);
+        //设置状态
+		settingstate = (TextView)findViewById(R.id.settingstate);
+		settingreadstate = (TextView)findViewById(R.id.settingreadstate);
 	 	
 		mAdd.setOnClickListener(new OnClickListener() {
 			@Override
@@ -371,22 +392,144 @@ public class paraCorrectionActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				String str = "<CR#1#1#12.02#12.00>";
-				System.out.println("test send fix data");
-				Senddata("start send fix data");
-				for(int i=0;i<list.size();i++)
-        		{
-					str = "<C#1#"+list.get(i).get("id")+"#"+list.get(i).get("real_value")+"#"+list.get(i).get("measure_value")+">";
-					
-					Senddata(str);
-					delay(100);
-        			//Log.d("ithinker","list result"+(String) list.get(i).get("id"));//修改值
-        	    
-        		}	 
-        		Toast.makeText(paraCorrectionActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
-        		Senddata("finish");
+				String mode = "";
+				if(!settingstate.getText().toString().equals("进行中")&&!settingstate.getText().toString().equals("成功"))
+				{
+					String str;
+					System.out.println("test send fix data");
+					for(int i=0;i<list.size();i++)
+	        		{
+						str = "CAL:"+list.get(i).get("type")+" "+list.get(i).get("id")+":"+list.get(i).get("real_value")+":"+list.get(i).get("measure_value")+"#";
+						if(str.length()>18)
+						{
+							String str1 = str.substring(0, 18);
+							String str2 = str.substring(18);
+							Log.d("ithinker", "str1"+str1+"   str2="+str2);
+							Senddata(str1);
+							delayms(100);
+							Senddata(str2);
+							delayms(100);
+						}
+						else
+						{
+							Senddata(str);
+							delayms(100);
+						}
+						mode = (String) list.get(i).get("type");
+	        			//Log.d("ithinker","list result"+(String) list.get(i).get("id"));//修改值
+	        		}
+					delayms(100);
+					Senddata("CAL:"+mode+" "+list.size()+"E#");
+	        		Toast.makeText(paraCorrectionActivity.this, "设置成功"+settingstate.getText().toString(), Toast.LENGTH_SHORT).show();
+	        		settingstate.setText("进行中");
+				}else
+				{
+	        		Toast.makeText(paraCorrectionActivity.this, "wait"+settingstate.getText().toString(), Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
+		
+		
+		
+		
+		setting_correction_get.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+		        String modetype = null; 
+		        if(spinnercal3.getSelectedItem()==null)
+		        	modetype = spinnercal1.getSelectedItem().toString()+spinnercal2.getSelectedItem().toString();
+		        else
+		        	modetype = spinnercal1.getSelectedItem().toString()+spinnercal2.getSelectedItem().toString()+" "+spinnercal3.getSelectedItem().toString();
+				
+		        if(!settingreadstate.getText().toString().equals("进行中")&&!settingreadstate.getText().toString().equals("成功"))
+		        {
+			        list.clear();
+				    adapter.notifyDataSetChanged(); 
+			        Senddata("CAL:READ:"+modetype+"?#");
+			        settingreadstate.setText("进行中");
+		        }else
+		        {
+	        		Toast.makeText(paraCorrectionActivity.this, "wait"+settingreadstate.getText().toString(), Toast.LENGTH_SHORT).show();
+
+		        }
+			}
+		});
+		
+		
+		
+		settingstate.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				settingstate.setText("正常");				
+			}
+		});
+		
+		settingreadstate.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				settingreadstate.setText("正常");				
+			}
+		});
+		
+		
+		
+		//给Spinner添加事件监听
+        spinnercal1.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+            //当选中某一个数据项时触发该方法
+            /*
+             * parent接收的是被选择的数据项所属的 Spinner对象，
+             * view参数接收的是显示被选择的数据项的TextView对象
+             * position接收的是被选择的数据项在适配器中的位置
+             * id被选择的数据项的行号
+             */
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,int position, long id) {
+                //System.out.println(spinner==parent);//true
+                //System.out.println(view);
+                //String data = adapter.getItem(position);//从适配器中获取被选择的数据项
+                //String data = list.get(position);//从集合中获取被选择的数据项
+                String data = (String)spinnercal1.getItemAtPosition(position);//从spinner中获取被选择的数据
+                //Toast.makeText(paraCorrectionActivity.this, data, Toast.LENGTH_SHORT).show();
+                updateSpinnerCAL2();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub    
+            }
+        });
+        
+		//给Spinner2添加事件监听
+        spinnercal2.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+            //当选中某一个数据项时触发该方法
+            /*
+             * parent接收的是被选择的数据项所属的 Spinner对象，
+             * view参数接收的是显示被选择的数据项的TextView对象
+             * position接收的是被选择的数据项在适配器中的位置
+             * id被选择的数据项的行号
+             */
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,int position, long id) {
+                //System.out.println(spinner==parent);//true
+                //System.out.println(view);
+                //String data = adapter.getItem(position);//从适配器中获取被选择的数据项
+                //String data = list.get(position);//从集合中获取被选择的数据项
+                String data = (String)spinnercal2.getItemAtPosition(position);//从spinner中获取被选择的数据
+                //Toast.makeText(paraCorrectionActivity.this, data, Toast.LENGTH_SHORT).show();
+                updateSpinnerCAL3();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // TODO Auto-generated method stub    
+            }
+        });
+		
 	}
 	
 	private void delay(int ms)
@@ -399,6 +542,92 @@ public class paraCorrectionActivity extends Activity{
 				k=1;
 			}
 		}
+	}
+	
+	private void delayms(int ms){  
+        try {  
+            Thread.currentThread();  
+            Thread.sleep(ms);  
+        } catch (InterruptedException e) {  
+            e.printStackTrace();  
+        }   
+     }   
+	
+	//校正模式选择更新函数
+	private void updateSpinnerCAL2()
+	{
+		String calmode1 = spinnercal1.getSelectedItem().toString();
+		List<String> data_list = new ArrayList<String>();
+		ArrayAdapter<String> arr_adapter2;
+		
+		switch(calmode1)
+		{
+			case "VAC": 
+		        data_list.add("V");
+		        data_list.add("F");				
+				break;
+			case "VDC": 
+		        data_list.add("P");
+		        data_list.add("N");
+				break;
+			case "IAC":
+				data_list.add("I");
+				data_list.add("F");
+				break;
+			case "IDC":
+				data_list.add("P");
+				data_list.add("N");				
+		}
+		
+		//适配器
+        arr_adapter2= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data_list);
+        //设置样式
+        arr_adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //加载适配器
+        spinnercal2.setAdapter(arr_adapter2);
+        
+	}
+	
+	private void updateSpinnerCAL3()
+	{
+		String calmode1 = spinnercal1.getSelectedItem().toString();
+		String calmode2 = spinnercal2.getSelectedItem().toString();
+		List<String> data_list = new ArrayList<String>();
+		ArrayAdapter<String> arr_adapter3;
+		
+		switch(calmode1)
+		{
+			case "VAC": 				
+				break;
+			case "VDC": 
+
+				break;
+			case "IAC":
+				if(calmode2=="I")
+				{
+					for(int i=1;i<9;i++)
+					{
+						data_list.add(i+"");
+					}
+				}
+				break;
+				
+			case "IDC":	
+				
+				for(int i=1;i<9;i++)
+				{
+					data_list.add(i+"");
+				}
+				break;			
+		}		
+	
+		//适配器
+        arr_adapter3= new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data_list);
+        //设置样式
+        arr_adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //加载适配器
+        spinnercal3.setAdapter(arr_adapter3);
+        
 	}
 	
 	//蓝牙BLE
@@ -428,10 +657,63 @@ public class paraCorrectionActivity extends Activity{
 		}
 	};
 
+	
+	private String recFrame = "";	
 	private void BLEdReceive(String response)
 	{
-		Toast.makeText(paraCorrectionActivity.this, "receive"+response, Toast.LENGTH_SHORT).show();
+		//Toast.makeText(paraCorrectionActivity.this, "receive"+response, Toast.LENGTH_SHORT).show();
 
+		recFrame += response;
+		String sub;
+		Log.d("ithinker", "recFrame!!!111111!!!"+recFrame);
+		//Log.d("ithinker", "receive"+response);
+		//recFrame+="\n";
+		
+		if(recFrame.contains("\n"))
+		{
+		   
+			Log.d("ithinker", "!!!!2222222"+recFrame);
+			//Log.d("ithinker", "recFrame END"+recFrame);
+			recFrame = recFrame.trim();
+			String[] sArray = recFrame.split("[: _]");
+			Log.d("ithinker", "!!!!"+sArray.length);
+			recFrame = "";		
+			/*
+			if(sArray.length!=5)
+			{
+			    recFrame = "";
+				return;
+			}
+			*/
+			if(sArray.length>3)
+			{
+				switch(sArray[3])
+				{
+				case "Complete":
+					settingstate.setText("设置成功");	
+		    		Toast.makeText(paraCorrectionActivity.this, "recsArray[1]="+sArray[1], Toast.LENGTH_SHORT).show();
+					break;
+				case "SumError":
+					settingstate.setText("error");
+					break;
+				default:
+					String val = "";
+					String data = sArray.toString();
+					data = data.trim();
+					Log.d("ithinker", "!!!!sArray[]=VDC.data="+data+recFrame);
+					
+					map = new HashMap<String, Object>();
+					map.put("id",""+sArray[4]);
+					map.put("type", sArray[3]);
+					map.put("real_value",sArray[5]);
+					map.put("measure_value",sArray[6]);
+				    list.add(map);
+				    adapter.notifyDataSetChanged(); 
+					break;
+				}
+			}
+
+		}
 	}
 	
 	private void Senddata(String str)
@@ -444,8 +726,6 @@ public class paraCorrectionActivity extends Activity{
 			System.out.println("mWriteCharacteristic is null");
 	  }
 	}
-
-
 
 	// Demonstrates how to iterate through the supported GATT
 	// Services/Characteristics.
@@ -496,11 +776,11 @@ public class paraCorrectionActivity extends Activity{
 						value[0] = (byte) 0x1;
 						value[1] = '\0';
 						WriteBytes = new byte[4];
-						WriteBytes[0] = 'O';
-						WriteBytes[1] = 'K';
-						WriteBytes[2] = '\0';
-						gattCharacteristic.setValue(WriteBytes);
-						mBluetoothLeService.writeCharacteristic(gattCharacteristic);
+						//WriteBytes[0] = 'O';
+						//WriteBytes[1] = 'K';
+						//WriteBytes[2] = '\0';
+						//gattCharacteristic.setValue(WriteBytes);
+						//mBluetoothLeService.writeCharacteristic(gattCharacteristic);
 					}
 				}
 			}

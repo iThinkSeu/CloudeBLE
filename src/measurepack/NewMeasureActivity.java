@@ -86,7 +86,7 @@ public class NewMeasureActivity  extends Activity{
 	private RelativeLayout dcvoltage_gridbg;
 	
 	//6个参数显示
-	TextView error;
+	TextView error_value,VWRTHD_text,VWRTHD_value,f_value,up_value,down_value,stand_value;
 	
 	//BLE
 	private final static String TAG = MeasureActivity.class.getSimpleName();
@@ -122,7 +122,7 @@ public class NewMeasureActivity  extends Activity{
 	LinearLayout mLinear;
 	
 	//定时器
-	private int dalayms = 1000;
+	private int dalayms = 3000;
     Handler handler=new Handler();  
     //定时任务
     
@@ -270,7 +270,7 @@ public class NewMeasureActivity  extends Activity{
 		mLinear = (LinearLayout) findViewById(R.id.MeasureLayout);
 		mLinear.setBackgroundResource(R.drawable.cup5);
 		bindview();
-		error.setText("0.223KV");
+		error_value.setText("0.223KV");
 		
 		LinearLayout meaLinear = (LinearLayout) findViewById(R.id.chart);
 	    
@@ -280,7 +280,7 @@ public class NewMeasureActivity  extends Activity{
 		myLineChart.addSeriesData(200);
 		mChartView.repaint();
 		iv = (ImageView) findViewById(R.id.measureVolumn);
-		myCircle.DrawVolumn(iv, (float) 12.307,"VAC");
+		myCircle.DrawVolumn(iv, (float) 0.000,"VAC");
 		
 		//开启蓝牙服务
 		Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
@@ -383,7 +383,13 @@ public class NewMeasureActivity  extends Activity{
 	  
 	  private void bindview()
 	  {
-		    error = (TextView) findViewById(R.id.error_value);
+		    error_value = (TextView) findViewById(R.id.error_value);
+		    VWRTHD_text = (TextView)findViewById(R.id.VWRTHD);
+		    VWRTHD_value = (TextView)findViewById(R.id.VWRTHD_value);
+		    f_value = (TextView)findViewById(R.id.f_value);
+		    up_value = (TextView)findViewById(R.id.up_value);
+		    down_value = (TextView)findViewById(R.id.down_value);
+		    stand_value = (TextView)findViewById(R.id.stand_value);
 			//网格按键背景初始化
 		    actime_gridbg = (RelativeLayout) findViewById(R.id.actime_relativelayout);
 		    dctime_gridbg = (RelativeLayout) findViewById(R.id.dctime_relativelayout);
@@ -405,7 +411,7 @@ public class NewMeasureActivity  extends Activity{
 	                    @Override
 	                    public void onClick(View v) {
 	                        if(v.getId() == R.id.aty_info_option_edit_info){
-	                            Intent i = new Intent(NewMeasureActivity.this, newMainActivity.class);
+	                            Intent i = new Intent(NewMeasureActivity.this, MeasureTestActivityNew.class);
 	                            startActivity(i);
 	                        	
 	                        }
@@ -579,10 +585,30 @@ public class NewMeasureActivity  extends Activity{
 		    	@Override
 		    	public void onClick(View v)
 		    	{
-					Intent intent = new Intent();
-					intent.setClass(NewMeasureActivity.this, MeasureTestActivityNew.class);
-					startActivity(intent);
+					//Intent intent = new Intent();
+					//intent.setClass(NewMeasureActivity.this, MeasureTestActivityNew.class);
+					//startActivity(intent);
 		    		//set_selectbutton_bg(6);
+		    		AlertDialog.Builder dialog=new AlertDialog.Builder(NewMeasureActivity.this);
+		      		dialog.setTitle("确认切换模式吗?");
+		            dialog.setPositiveButton("确定", new DialogInterface.OnClickListener(){
+		                 @Override
+		                 public void onClick(DialogInterface dialog,int which){
+		 		    		//////
+		 		    		myLineChart.clearSeriesData();
+		 		    		mChartView.repaint();
+		 		    		measure_mode = "VAC-T";
+		 		    		handler.removeCallbacks(runnable);
+		 		    		sleepTread(20);
+		 		    		Senddata("CONF:TIME AC#");
+		 		    		sleepTread(20);
+		 		    		Senddata("CONF:TIME AC#");
+		 		    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.
+		                	 	
+		                  }
+		            });
+	                dialog.setNegativeButton("取消", null);
+	                dialog.show();
 		    	}
 		    	
 		    });
@@ -593,17 +619,17 @@ public class NewMeasureActivity  extends Activity{
 	  
 	  private void timerSenderToBLE()
 	  {
-			String str = "MEASure:VALue?#";
-			switch(measure_mode)
-			{
-				case "VDC":str = "MEASure:VALue?#";break;
-				case "VAC":str = "MEASure:VALue?#";break;
-				case "IDC":str = "MEASure:VALue?#";break;
-				case "IAC":str = "MEASure:VALue?#";break;
-				default:str = "MEASure:VALue?#";break;
-			}
+			String str = "READ?#";
+			//switch(measure_mode)
+			//{
+				//case "VDC":str = "MEASure:VALue?#";break;
+				//case "VAC":str = "MEASure:VALue?#";break;
+				//case "IDC":str = "MEASure:VALue?#";break;
+				//case "IAC":str = "MEASure:VALue?#";break;
+				//default:str = "MEASure:VALue?#";break;
+			//}
 			Senddata(str);
-			//Log.d("ithinker", "timer function");
+			Log.d("ithinker", "timer function"+str);
 	  }
 	  
 	  private void timer_start_or_stop()
@@ -690,24 +716,45 @@ public class NewMeasureActivity  extends Activity{
 		{
 			recFrame += response;
 			String sub;
+			String ID = "--";
+			String data = "0";
+			String datatype = "VAC";
+			String separation = "--";
+			String up = "--";
+			String stand = "0";
+			String down = "--";
+			String Freq = "--";
+			String VWRTHD="--";
 			
 			Log.d("ithinker", "recFrame in "+recFrame+recFrame.contains("\n"));
-			recFrame+="\n";
+			//recFrame+="\n";
 			
 			if(recFrame.contains("\n"))
 			{
-				Log.d("ithinker", "!!!!");
+				Log.d("ithinker", "!!!!222"+recFrame);
 				recFrame = recFrame.trim();
-				String[] sArray = recFrame.split(":");
-				if(sArray.length!=2)
-				{
-					return;
-				}
+				//recFrame = "ID:001_MEA:VAC:2.0020kV_ErrorResult:Low_Up:12.2000_Stand:12.0000_Down:11.8000_Freq:0.0Hz_THD:0.00%";
+				String[] sArray = recFrame.split("[: _]");
+				recFrame = "";
+				Log.d("ithinker", "!!!!333"+sArray.length);
 				String val = "";
-				String data = sArray[1];
+				
+				if(sArray.length>12)
+				{
+					ID = sArray[1];
+					data = sArray[4];
+					datatype = sArray[3];
+					separation = sArray[6];
+					up = sArray[8];
+					stand = sArray[10];
+					down = sArray[12];
+					Freq = "--";
+					VWRTHD="--";
+				}
+				//String Freq = sArray[14];
 				data = data.trim();
 				Log.d("ithinker", "!!!!sArray[0]=VDC.data="+data);
-				switch(sArray[0])
+				switch(datatype)
 				{
 					case "VDC":
 					{
@@ -716,19 +763,34 @@ public class NewMeasureActivity  extends Activity{
 						for(int i=0;i<data.length();i++)
 						{
 							//判断是数字
-							if(data.charAt(i)=='.'||(data.charAt(i)-'0'>=0&&data.charAt(i)-'0'<=9))
+							if(data.charAt(i)=='-'||data.charAt(i)=='.'||(data.charAt(i)-'0'>=0&&data.charAt(i)-'0'<=9))
 							{
 								val+=data.charAt(i);
 							}else
 							{
 								break;
-							}
-								
+							}								
 						}
 						Log.d("ithinker", "val="+val);
 						float value_VDC = Float.valueOf(val);
 						BigDecimal b = new BigDecimal((double)value_VDC);  
-						value_VDC = (float)b.setScale(3,BigDecimal.ROUND_HALF_UP).doubleValue();  
+						value_VDC = (float)b.setScale(3,BigDecimal.ROUND_HALF_UP).doubleValue();
+						//特殊参数
+						if(sArray.length>14)
+							VWRTHD = sArray[14];
+						else
+							VWRTHD = "--";
+					    //刷新界面
+						VWRTHD_value.setText(VWRTHD);
+						f_value.setText(Freq);
+						
+						float error_f=(float) (value_VDC-Float.valueOf(stand));
+						BigDecimal b_error = new BigDecimal((double)error_f);
+						error_f = (float)b_error.setScale(3,BigDecimal.ROUND_HALF_UP).doubleValue();  
+						error_value.setText(error_f+"kV");
+						up_value.setText(up);
+						down_value.setText(down);
+						stand_value.setText(stand);
 						myCircle.DrawVolumn(iv, value_VDC,"VDC");
 						myLineChart.addSeriesData(value_VDC);
 			    		mChartView.repaint();
@@ -741,7 +803,7 @@ public class NewMeasureActivity  extends Activity{
 						for(int i=0;i<data.length();i++)
 						{
 							//判断是数字
-							if(data.charAt(i)=='.'||(data.charAt(i)-'0'>=0&&data.charAt(i)-'0'<=9))
+							if(data.charAt(i)=='-'||data.charAt(i)=='.'||(data.charAt(i)-'0'>=0&&data.charAt(i)-'0'<=9))
 							{
 								val+=data.charAt(i);
 							}else
@@ -755,11 +817,29 @@ public class NewMeasureActivity  extends Activity{
 						BigDecimal b = new BigDecimal((double)value_VAC);  
 						value_VAC = (float)b.setScale(3,BigDecimal.ROUND_HALF_UP).doubleValue();  
 						//Log.d("ithinker", "value_VAC"+value_VAC);
-						myCircle.DrawVolumn(iv, value_VAC,"VAC");					
-						float error_f=(float) (value_VAC-12.000);
+						myCircle.DrawVolumn(iv, value_VAC,"VAC");	
+						
+						float error_f=(float) (value_VAC-Float.valueOf(stand));
 						BigDecimal b_error = new BigDecimal((double)error_f);
 						error_f = (float)b_error.setScale(3,BigDecimal.ROUND_HALF_UP).doubleValue();  
-						error.setText(error_f+"KV");
+						error_value.setText(error_f+"kV");
+						//特殊参数
+						if(sArray.length>16)
+						{
+							VWRTHD = sArray[16];
+							Freq = sArray[14];
+						}
+						else
+							VWRTHD = "--";
+					    //刷新界面
+						VWRTHD_text.setText("VWR");
+						VWRTHD_value.setText(VWRTHD);
+						f_value.setText(Freq);
+						
+						up_value.setText(up);
+						down_value.setText(down);
+						stand_value.setText(stand);
+						
 						myLineChart.addSeriesData(value_VAC);
 			    		mChartView.repaint();
 			    		commitdata("VAC",value_VAC);
@@ -771,7 +851,7 @@ public class NewMeasureActivity  extends Activity{
 						for(int i=0;i<data.length();i++)
 						{
 							//判断是数字
-							if(data.charAt(i)=='.'||(data.charAt(i)-'0'>=0&&data.charAt(i)-'0'<=9))
+							if(data.charAt(i)=='-'||data.charAt(i)=='.'||(data.charAt(i)-'0'>=0&&data.charAt(i)-'0'<=9))
 							{
 								val+=data.charAt(i);
 							}else
@@ -783,6 +863,25 @@ public class NewMeasureActivity  extends Activity{
 						
 						BigDecimal b = new BigDecimal((double)value_IDC);  
 						value_IDC = (float)b.setScale(4,BigDecimal.ROUND_HALF_UP).doubleValue();  
+						
+						//特殊参数
+						if(sArray.length>14)
+							VWRTHD = sArray[14];
+						else
+							VWRTHD = "--";
+					    //刷新界面
+						VWRTHD_value.setText(VWRTHD);
+						f_value.setText(Freq);
+						
+						float error_f=(float) (value_IDC-Float.valueOf(stand));
+						BigDecimal b_error = new BigDecimal((double)error_f);
+						error_f = (float)b_error.setScale(3,BigDecimal.ROUND_HALF_UP).doubleValue();  
+						error_value.setText(error_f+"kV");
+						up_value.setText(up);
+						down_value.setText(down);
+						stand_value.setText(stand);
+						
+						
 						myCircle.DrawVolumn(iv, value_IDC,"IDC");
 						myLineChart.addSeriesData(value_IDC);
 			    		mChartView.repaint();
@@ -796,7 +895,7 @@ public class NewMeasureActivity  extends Activity{
 						for(int i=0;i<data.length();i++)
 						{
 							//判断是数字
-							if(data.charAt(i)=='.'||(data.charAt(i)-'0'>=0&&data.charAt(i)-'0'<=9))
+							if(data.charAt(i)=='-'||data.charAt(i)=='.'||(data.charAt(i)-'0'>=0&&data.charAt(i)-'0'<=9))
 							{
 								val+=data.charAt(i);
 							}else
@@ -813,7 +912,8 @@ public class NewMeasureActivity  extends Activity{
 						myCircle.DrawVolumn(iv, value_IAC,"IAC");
 						myLineChart.addSeriesData(value_IAC);
 			    		mChartView.repaint();
-			    		commitdata("IAC",value_IAC);		
+			    		commitdata("IAC",value_IAC);
+			    		break;
 					}
 					case "VDC-T":
 					{
@@ -821,7 +921,7 @@ public class NewMeasureActivity  extends Activity{
 						for(int i=0;i<data.length();i++)
 						{
 							//判断是数字
-							if(data.charAt(i)=='.'||(data.charAt(i)-'0'>=0&&data.charAt(i)-'0'<=9))
+							if(data.charAt(i)=='-'||data.charAt(i)=='.'||(data.charAt(i)-'0'>=0&&data.charAt(i)-'0'<=9))
 							{
 								val+=data.charAt(i);
 							}else
@@ -836,8 +936,34 @@ public class NewMeasureActivity  extends Activity{
 						myCircle.DrawVolumn(iv, value_VDC_T,"VDC-T");
 						myLineChart.addSeriesData(value_VDC_T);
 			    		mChartView.repaint();
-			    		commitdata("VDC-T",value_VDC_T);	
-					}	
+			    		commitdata("VDC-T",value_VDC_T);
+			    		break;
+					}
+					
+					case "VAC-T":
+					{
+						val = "";
+						for(int i=0;i<data.length();i++)
+						{
+							//判断是数字
+							if(data.charAt(i)=='-'||data.charAt(i)=='.'||(data.charAt(i)-'0'>=0&&data.charAt(i)-'0'<=9))
+							{
+								val+=data.charAt(i);
+							}else
+							{
+								break;
+							}		
+						}
+						float value_T = (float) Float.parseFloat(val);						
+						BigDecimal b = new BigDecimal((double)value_T);  
+						value_T = (float)b.setScale(4,BigDecimal.ROUND_HALF_UP).doubleValue();  
+						//Log.d("ithinker", "value_VAC"+value_VAC);
+						myCircle.DrawVolumn(iv, value_T,"VAC-T");
+						myLineChart.addSeriesData(value_T);
+			    		mChartView.repaint();
+			    		commitdata("VAC-T",value_T);
+			    		break;
+					}
 				}
 				
 				
@@ -917,7 +1043,6 @@ public class NewMeasureActivity  extends Activity{
 				//Log.d("ithinker", "clear recFrame");
 			}
 			*/
-			recFrame = "";
 		}
 
 		// Demonstrates how to iterate through the supported GATT
@@ -968,12 +1093,12 @@ public class NewMeasureActivity  extends Activity{
 							byte[] value = new byte[20];
 							value[0] = (byte) 0x1;
 							value[1] = '\0';
-							WriteBytes = new byte[4];
-							WriteBytes[0] = 'O';
-							WriteBytes[1] = 'K';
-							WriteBytes[2] = '\0';
-							gattCharacteristic.setValue(WriteBytes);
-							mBluetoothLeService.writeCharacteristic(gattCharacteristic);
+							//WriteBytes = new byte[4];
+							//WriteBytes[0] = 'O';
+							//WriteBytes[1] = 'K';
+							//WriteBytes[2] = '#';
+							//gattCharacteristic.setValue(WriteBytes);
+							//mBluetoothLeService.writeCharacteristic(gattCharacteristic);
 						}
 					}
 				}

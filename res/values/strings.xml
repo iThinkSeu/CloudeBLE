@@ -49,4 +49,13 @@
     <string name="password_long_6">密码至少6位</string>
     <string name="password_not_equal">密码不一致</string>
     <string name="network_error">网络异常</string>
+    
+    
+    <array name="paralist1">
+        <item>VAC</item>
+        <item>VDC</item>
+        <item>IAC</item>
+        <item>IDC</item>
+    </array>
+    
 </resources>

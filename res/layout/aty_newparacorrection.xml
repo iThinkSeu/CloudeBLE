@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android">
     
     <include layout="@layout/title"/>
     
@@ -79,58 +78,75 @@
                   android:text="KV" 
                   android:padding="5dip"/>
            </LinearLayout>
-        <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-          <RadioButton
-            android:id="@+id/radioVDCV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="VDC" />
-
-          <RadioButton
-            android:id="@+id/radioVACV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="VAC" />
-	
-          <RadioButton
-            android:id="@+id/radioVACF"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="IDC" />
-          <RadioButton
-            android:id="@+id/radioIDCV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="IAC" />
-
-         <RadioButton
-            android:id="@+id/radioIACV"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="VDC-T" />
-
-         <RadioButton
-            android:id="@+id/radioIACF"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="VAC-T" />
-       </RadioGroup>
+        
+	     <LinearLayout
+		      android:layout_width="wrap_content"
+		      android:layout_height="wrap_content"
+		      android:orientation="horizontal">
+       		  <TextView 
+       		      android:layout_width="wrap_content" 
+       		      android:layout_height="40dp"
+                  android:text="模式选择"
+                  android:padding="5dip"/>      		  
+	          <Spinner
+	              android:id="@+id/spinnercal1"
+	              android:layout_width="wrap_content"
+	              android:layout_height="40dp"
+	              android:entries="@array/paralist1" >
+	          </Spinner>
+	          <Spinner
+	            android:id="@+id/spinnercal2"
+			    android:layout_width="60dp"
+			    android:layout_height="40dp">
+	          </Spinner>
+	          <Spinner
+	            android:id="@+id/spinnercal3"
+			    android:layout_width="60dp"
+			    android:layout_height="40dp">
+	          </Spinner>
+         </LinearLayout>
        <TextView
             android:id="@+id/save"
             android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:layout_margin="16dp"
+            android:layout_height="30dp"
+            android:layout_margin="10dp"
             android:background="@drawable/bg_green_btn"
             android:enabled="true"
             android:clickable="true" 
             android:gravity="center"
             android:text="保存"
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 	</LinearLayout>
+	
+	<LinearLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal">
+      <TextView 
+	      android:layout_width="wrap_content" 
+	      android:layout_height="34dp"
+          android:text="读取:"
+          android:padding="5dip"/>
+  	  <TextView 
+  	     android:id="@+id/settingreadstate"  
+         android:layout_width="wrap_content" 
+         android:layout_height="30dp"
+         android:text="正常"
+         android:padding="1dip"/>  
+	  <TextView 
+	      android:layout_width="wrap_content" 
+	      android:layout_height="34dp"
+          android:text="设置:"
+          android:padding="5dip"/>
+  	  <TextView 
+  	     android:id="@+id/settingstate"  
+         android:layout_width="wrap_content" 
+         android:layout_height="30dp"
+         android:text="正常"
+         android:padding="1dip"/>      		  
+    </LinearLayout>
+         
     <LinearLayout
 	       android:layout_width="wrap_content"
 	       android:layout_height="0dp"
@@ -154,17 +170,37 @@
 			    android:background="#e1e1e1"> 
 			</ListView>  
 	 </LinearLayout>
-     <TextView
-           android:id="@+id/setting_enter"
-           android:layout_width="match_parent"
-           android:layout_height="0dp"
-           android:layout_weight="1"
-           android:layout_margin="16dp"
-           android:background="@drawable/bg_login_btn"
-           android:enabled="true"
-           android:clickable="true" 
-           android:gravity="center"
-           android:text="设置校正"
-           android:textColor="@color/white"
-           android:textSize="20sp" />
+	 <LinearLayout
+      android:layout_width="fill_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:orientation="horizontal">
+	  <TextView
+		   android:id="@+id/cal_setting_get"
+		   android:layout_width="0dp"
+		   android:layout_weight="1"
+		   android:layout_height="fill_parent"
+		   android:layout_margin="6dp"
+		   android:background="@drawable/bg_login_btn"
+		   android:enabled="true"
+		   android:clickable="true" 
+		   android:gravity="center"
+		   android:text="读取"
+		   android:textColor="@color/white"
+		   android:textSize="20sp" />
+	  <TextView
+		   android:id="@+id/cal_setting_enter"
+		   android:layout_width="0dp"
+		   android:layout_weight="1"
+		   android:layout_height="fill_parent"
+		   android:layout_margin="6dp"
+		   android:background="@drawable/bg_login_btn"
+		   android:enabled="true"
+		   android:clickable="true" 
+		   android:gravity="center"
+		   android:text="设置"
+		   android:textColor="@color/white"
+		   android:textSize="20sp" />
+	 </LinearLayout>
+
 </LinearLayout>

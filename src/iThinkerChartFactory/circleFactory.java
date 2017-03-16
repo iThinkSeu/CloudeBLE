@@ -7,6 +7,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.example.learn.R;
@@ -78,6 +79,7 @@ public class circleFactory {
 		Typeface font = Typeface.create(familyName, Typeface.BOLD);
 		fontPaint.setColor(Color.WHITE);
 		fontPaint.setTextSize(52);
+		Log.d("ithinker", title+"title");
 		switch(title)
 		{
 			case "VDC":	canvas.drawText("Ö±Á÷µçÑ¹", 150, 200, fontPaint);break;
