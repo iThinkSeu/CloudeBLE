@@ -84,8 +84,8 @@
    		android:layout_marginLeft="5dp"
    		android:layout_toRightOf="@id/celiangxianshi"
 		android:layout_below="@id/celiangxianshi"
-   		android:layout_width="90dp"
-   		android:layout_height="90dp" 
+   		android:layout_width="0dp"
+   		android:layout_height="0dp" 
    		android:src="@mipmap/xitongshezhi"/>
    
 </RelativeLayout>
