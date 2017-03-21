@@ -4,386 +4,420 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
+
     <RelativeLayout
         android:id="@+id/aty_info_top"
         android:layout_width="match_parent"
-        android:layout_height="20dp">
+        android:layout_height="20dp" >
+
         <ImageView
             android:id="@+id/aty_info_more"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginTop="2dp"
-            android:src="@mipmap/more"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
+            android:src="@mipmap/more" />
     </RelativeLayout>
-    
-    <LinearLayout 
-      android:layout_width="match_parent"
-      android:layout_height="0dp"
-      android:orientation="horizontal"
-      android:layout_weight="1.6"
-      android:layout_centerInParent="true">
-      <LinearLayout
-	       android:layout_width="wrap_content"
-	       android:layout_height="fill_parent"
-	       android:layout_gravity="center"
-           android:gravity="center"
-           android:padding="50px"
-	       android:orientation="vertical">
-	       <LinearLayout
-		       android:layout_width="wrap_content"
-		       android:layout_height="0dp"
-		       android:layout_weight="1"
-		       android:orientation="vertical">
-		       <TextView
-				  	android:id="@+id/VWRTHD"
-		            android:text="THD"
-		            android:layout_gravity="center"
-		            android:gravity="center"
-		            android:layout_width="wrap_content"
-		       	  	android:layout_height="wrap_content"
-		       	  	android:textColor="@color/graywhite"
-		       	  	android:textSize="12dp"
-		            />
-		       <TextView
-				  	android:id="@+id/VWRTHD_value"
-		            android:text="0.05%"
-		            android:layout_gravity="center"
-		            android:gravity="center"
-		            android:layout_width="wrap_content"
-		       	  	android:layout_height="wrap_content"
-		       	  	android:textColor="@color/white"
-		            />
-	       </LinearLayout>
-	       <LinearLayout
-		       android:layout_width="wrap_content"
-		       android:layout_height="0dp"
-		       android:layout_weight="1"
-		       android:orientation="vertical">
-		       <TextView
-				  	android:id="@+id/f"
-		            android:text="f"
-		            android:layout_gravity="center"
-		            android:gravity="center"
-		            android:layout_width="wrap_content"
-		       	  	android:layout_height="wrap_content"
-		       	  	android:textColor="@color/graywhite"
-		       	  	android:textSize="12dp"
-		            />
-		       <TextView
-				  	android:id="@+id/f_value"
-		            android:text="50HZ"
-		            android:layout_gravity="center"
-		            android:gravity="center"
-		            android:layout_width="wrap_content"
-		       	  	android:layout_height="wrap_content"
-		       	  	android:textColor="@color/white"
-		            />
-	       </LinearLayout>
-	  	   <LinearLayout
-		       android:layout_width="wrap_content"
-		       android:layout_height="0dp"
-		       android:layout_weight="1"
-		       android:orientation="vertical">
-		       <TextView
-				  	android:id="@+id/error"
-		            android:text="Error"
-		            android:layout_gravity="center"
-		            android:gravity="center"
-		            android:layout_width="wrap_content"
-		       	  	android:layout_height="wrap_content"
-		       	  	android:textColor="@color/graywhite"
-		       	  	android:textSize="12dp"
-		            />
-		       <TextView
-				  	android:id="@+id/error_value"
-		            android:text="0.306KV"
-		            android:layout_gravity="center"
-		            android:gravity="center"
-		            android:layout_width="wrap_content"
-		       	  	android:layout_height="wrap_content"
-		       	  	android:textColor="@color/white"
-		            />
-	       </LinearLayout>
-	   </LinearLayout>
-	      
-       <ImageView
-             android:id="@+id/measureVolumn"
-             android:layout_gravity="center"
-             android:gravity="center"
-             android:layout_width="wrap_content"
-       	     android:layout_height="wrap_content"
-       	     android:layout_weight="2"
-        	 />
-       <LinearLayout
-	       android:layout_width="wrap_content"
-	       android:layout_height="fill_parent"
-	       android:layout_gravity="center"
-           android:gravity="center"
-           android:padding="50px"
-	       android:orientation="vertical">
-	       <LinearLayout
-		       android:layout_width="wrap_content"
-		       android:layout_height="0dp"
-		       android:layout_weight="1"
-		       android:orientation="vertical">
-		       <TextView
-				  	android:id="@+id/up"
-		            android:text="上限值"
-		            android:layout_gravity="center"
-		            android:gravity="center"
-		            android:layout_width="wrap_content"
-		       	  	android:layout_height="wrap_content"
-		       	  	android:textColor="@color/graywhite"
-		       	  	android:textSize="12dp"
-		            />
-		       <TextView
-				  	android:id="@+id/up_value"
-		            android:text="12.200KV"
-		            android:layout_gravity="center"
-		            android:gravity="center"
-		            android:layout_width="wrap_content"
-		       	  	android:layout_height="wrap_content"
-		       	  	android:textColor="@color/white"
-		            />
-	       </LinearLayout>
-	       <LinearLayout
-		       android:layout_width="wrap_content"
-		       android:layout_height="0dp"
-		       android:layout_weight="1"
-		       android:orientation="vertical">
-		       <TextView
-				  	android:id="@+id/down"
-		            android:text="下限值"
-		            android:layout_gravity="center"
-		            android:gravity="center"
-		            android:layout_width="wrap_content"
-		       	  	android:layout_height="wrap_content"
-		       	  	android:textColor="@color/graywhite"
-		       	  	android:textSize="12dp"
-		            />
-		       <TextView
-				  	android:id="@+id/down_value"
-		            android:text="11.800KV"
-		            android:layout_gravity="center"
-		            android:gravity="center"
-		            android:layout_width="wrap_content"
-		       	  	android:layout_height="wrap_content"
-		       	  	android:textColor="@color/white"
-		            />
-	       </LinearLayout>
-	  	   <LinearLayout
-		       android:layout_width="wrap_content"
-		       android:layout_height="0dp"
-		       android:layout_weight="1"
-		       android:orientation="vertical">
-		       <TextView
-				  	android:id="@+id/stand"
-		            android:text="标称值"
-		            android:layout_gravity="center"
-		            android:gravity="center"
-		            android:layout_width="wrap_content"
-		       	  	android:layout_height="wrap_content"
-		       	  	android:textColor="@color/graywhite"
-		       	  	android:textSize="12dp"
-		            />
-		       <TextView
-				  	android:id="@+id/stand_value"
-		            android:text="12.000KV"
-		            android:layout_gravity="center"
-		            android:gravity="center"
-		            android:layout_width="wrap_content"
-		       	  	android:layout_height="wrap_content"
-		       	  	android:textColor="@color/white"
-		            />
-	        </LinearLayout>
-	    </LinearLayout>
-       
-     </LinearLayout> 
-      
-    <ImageView 
-         android:id="@+id/ceshicurve"
-         android:layout_width="fill_parent"
-         android:layout_height="0dp"
-         android:layout_centerVertical="true"
-         android:layout_alignParentLeft="true"
-     	 android:layout_weight="0.5"
-         android:background="@mipmap/ceshicurve"/>
-     
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:layout_weight="1.6"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="50px" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/VWRTHD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="THD"
+                    android:textColor="@color/graywhite"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/VWRTHD_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="0.05%"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/f"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="f"
+                    android:textColor="@color/graywhite"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/f_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="50HZ"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="Error"
+                    android:textColor="@color/graywhite"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/error_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="0.306KV"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/measureVolumn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:gravity="center" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="50px" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="上限值"
+                    android:textColor="@color/graywhite"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/up_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="12.200KV"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="下限值"
+                    android:textColor="@color/graywhite"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/down_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="11.800KV"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/stand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="标称值"
+                    android:textColor="@color/graywhite"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/stand_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="12.000KV"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/ceshicurve"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_weight="0.5"
+        android:background="@mipmap/ceshicurve" />
+
     <LinearLayout
         android:id="@+id/chart"
         android:layout_width="fill_parent"
         android:layout_height="0dip"
         android:layout_weight="2.2"
-        android:padding="30px"
-        android:orientation="horizontal" />
-  
-     
-   <TableLayout
-       android:layout_width="match_parent"
-       android:padding="30px"
-       android:layout_height="150dp">
-       <TableRow
-           android:layout_weight="1">
-           <RelativeLayout
-               android:id="@+id/dcvoltage_relativelayout"
-               android:clickable="true" 
-               android:layout_weight="1"
-               android:layout_width="0dp"
-               android:layout_height="match_parent"
-               android:background="@drawable/grid_button_press">
-               <LinearLayout
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:orientation="vertical"
-                   android:layout_centerInParent="true">
-                   <Button
-                       android:id="@+id/dcvoltage_button"
-                       android:layout_width="@dimen/grid_button_width"
-                       android:layout_height="@dimen/grid_button_height"
-                       android:layout_gravity="center_horizontal"
-                       android:background="@mipmap/history"/>
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="@string/DCvoltage"
-                       android:textSize="14sp"/>
-               </LinearLayout>
-           </RelativeLayout>
+        android:orientation="horizontal"
+        android:padding="30px" />
 
-           <RelativeLayout
-               android:id="@+id/acvoltage_relativelayout"
-               android:clickable="true" 
-               android:layout_weight="1"
-               android:layout_width="0dp"
-               android:layout_height="match_parent"
-               android:background="@drawable/grid_button_press">
-               <LinearLayout
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:orientation="vertical"
-                   android:layout_centerInParent="true">
-                   <Button
-                       android:id="@+id/acvoltage_button"
-                       android:layout_width="@dimen/grid_button_width"
-                       android:layout_height="@dimen/grid_button_height"
-                       android:layout_gravity="center_horizontal"
-                       android:background="@mipmap/clock"/>
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="@string/ACvoltage"
-                       android:textSize="14sp"/>
-               </LinearLayout>
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:padding="30px" >
 
-           </RelativeLayout>
-           <RelativeLayout
-               android:id="@+id/dccurrent_relativelayout"
-               android:clickable="true" 
-               android:layout_weight="1"
-               android:layout_width="0dp"
-               android:layout_height="match_parent"
-               android:background="@drawable/grid_button_press">
-               <LinearLayout
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:orientation="vertical"
-                   android:layout_centerInParent="true">
-                   <Button
-                       android:id="@+id/dccurrent_button"
-                       android:layout_width="@dimen/grid_button_width"
-                       android:layout_height="@dimen/grid_button_height"
-                       android:layout_gravity="center_horizontal"
-                       android:background="@mipmap/info"/>
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="@string/DCcurrent"
-                       android:textSize="14sp"/>
-               </LinearLayout>
-           </RelativeLayout>
-       </TableRow>
-       <TableRow
-           android:layout_weight="1">
-           <RelativeLayout
-               android:id="@+id/accurrent_relativelayout"
-               android:clickable="true" 
-               android:layout_weight="1"
-               android:layout_width="0dp"
-               android:layout_height="match_parent"
-               android:background="@drawable/grid_button_press">
-               <LinearLayout
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:orientation="vertical"
-                   android:layout_centerInParent="true">
-                   <Button
-                       android:id="@+id/accurrent_button"
-                       android:layout_width="@dimen/grid_button_width"
-                       android:layout_height="@dimen/grid_button_height"
-                       android:layout_gravity="center_horizontal"
-                       android:background="@mipmap/delete"/>
-                   <TextView
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:text="@string/ACcurrent"
-                       android:layout_gravity="center_horizontal"
-                       android:textSize="14sp"/>
-               </LinearLayout>
-           </RelativeLayout>
+        <TableRow android:layout_weight="1" >
 
-           <RelativeLayout
-               android:id="@+id/dctime_relativelayout"
-               android:clickable="true" 
-               android:layout_weight="1"
-               android:layout_width="0dp"
-               android:layout_height="match_parent"
-               android:background="@drawable/grid_button_press">
-               <LinearLayout
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:orientation="vertical"
-                 android:layout_centerInParent="true">
-                 <Button
-                     android:id="@+id/dctime_button"
-                     android:layout_width="@dimen/grid_button_width"
-                     android:layout_height="@dimen/grid_button_height"
-                     android:layout_gravity="center_horizontal"
-                     android:background="@mipmap/info"/>
-                 <TextView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:text="@string/DCtime"
-                     android:textSize="14sp"/>
-           	</LinearLayout>
-           </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/dcvoltage_relativelayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/grid_button_press"
+                android:clickable="true" >
 
-           <RelativeLayout
-               android:id="@+id/actime_relativelayout"
-               android:clickable="true" 
-               android:layout_weight="1"
-               android:layout_width="0dp"
-               android:layout_height="match_parent"
-               android:background="@drawable/grid_button_press">
-               <LinearLayout
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:orientation="vertical"
-                 android:layout_centerInParent="true">
-                 <Button
-                     android:id="@+id/actime_button"
-                     android:layout_width="@dimen/grid_button_width"
-                     android:layout_height="@dimen/grid_button_height"
-                     android:layout_gravity="center_horizontal"
-                     android:background="@mipmap/history"/>
-                 <TextView
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:text="@string/ACtime"
-                     android:textSize="14sp"/>
-           	</LinearLayout>
-           </RelativeLayout>
-       </TableRow>
- </TableLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/dcvoltage_button"
+                        android:layout_width="@dimen/grid_button_width"
+                        android:layout_height="@dimen/grid_button_height"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@mipmap/vdc" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/DCvoltage"
+                        android:textColor="@color/white"                        
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/acvoltage_relativelayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/grid_button_press"
+                android:clickable="true" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/acvoltage_button"
+                        android:layout_width="@dimen/grid_button_width"
+                        android:layout_height="@dimen/grid_button_height"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@mipmap/vac" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ACvoltage"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/dccurrent_relativelayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/grid_button_press"
+                android:clickable="true" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/dccurrent_button"
+                        android:layout_width="@dimen/grid_button_width"
+                        android:layout_height="@dimen/grid_button_height"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@mipmap/idc" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/DCcurrent"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </RelativeLayout>
+        </TableRow>
+
+        <TableRow android:layout_weight="1" >
+
+            <RelativeLayout
+                android:id="@+id/accurrent_relativelayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/grid_button_press"
+                android:clickable="true" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/accurrent_button"
+                        android:layout_width="@dimen/grid_button_width"
+                        android:layout_height="@dimen/grid_button_height"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@mipmap/iac" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/ACcurrent"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/dctime_relativelayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/grid_button_press"
+                android:clickable="true" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/dctime_button"
+                        android:layout_width="@dimen/grid_button_width"
+                        android:layout_height="@dimen/grid_button_height"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@mipmap/vdct" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/DCtime"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/actime_relativelayout"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/grid_button_press"
+                android:clickable="true" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/actime_button"
+                        android:layout_width="@dimen/grid_button_width"
+                        android:layout_height="@dimen/grid_button_height"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@mipmap/vact" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ACtime"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </RelativeLayout>
+        </TableRow>
+    </TableLayout>
+
 </LinearLayout>

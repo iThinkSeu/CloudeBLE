@@ -438,7 +438,13 @@ public class paraCorrectionActivity extends Activity{
 				// TODO Auto-generated method stub
 		        String modetype = null; 
 		        if(spinnercal3.getSelectedItem()==null)
-		        	modetype = spinnercal1.getSelectedItem().toString()+spinnercal2.getSelectedItem().toString();
+		        {
+		        	if( spinnercal1.getSelectedItem().toString().equals("VAC")||spinnercal1.getSelectedItem().toString().equals("IAC"))
+		        		modetype = spinnercal1.getSelectedItem().toString()+spinnercal2.getSelectedItem().toString();
+		        	else
+		        		modetype = spinnercal1.getSelectedItem().toString()+" "+spinnercal2.getSelectedItem().toString();
+
+		        }
 		        else
 		        	modetype = spinnercal1.getSelectedItem().toString()+spinnercal2.getSelectedItem().toString()+" "+spinnercal3.getSelectedItem().toString();
 				
@@ -685,7 +691,7 @@ public class paraCorrectionActivity extends Activity{
 				return;
 			}
 			*/
-			if(sArray.length>3)
+			if(sArray.length>6)
 			{
 				switch(sArray[3])
 				{

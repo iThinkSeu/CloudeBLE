@@ -280,7 +280,7 @@ public class NewMeasureActivity  extends Activity{
 		myLineChart.addSeriesData(200);
 		mChartView.repaint();
 		iv = (ImageView) findViewById(R.id.measureVolumn);
-		myCircle.DrawVolumn(iv, (float) 0.000,"VAC");
+		myCircle.DrawVolumn(iv, "0.0000","VAC");
 		
 		//开启蓝牙服务
 		Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
@@ -398,6 +398,14 @@ public class NewMeasureActivity  extends Activity{
 		    acvoltage_gridbg = (RelativeLayout) findViewById(R.id.acvoltage_relativelayout);
 		    dcvoltage_gridbg = (RelativeLayout) findViewById(R.id.dcvoltage_relativelayout);	
 		    
+			//网格按键背景初始化
+		    actime_button = (Button) findViewById(R.id.actime_button);
+		    dctime_button = (Button) findViewById(R.id.dctime_button);
+		    accurrent_button = (Button) findViewById(R.id.accurrent_button);
+		    dccurrent_button = (Button) findViewById(R.id.dccurrent_button);
+		    acvoltage_button = (Button) findViewById(R.id.acvoltage_button);
+		    dcvoltage_button = (Button) findViewById(R.id.dcvoltage_button);	
+		    
 		    //按键设置
 		    moreSetting = (ImageView)findViewById(R.id.aty_info_more);
 		    
@@ -433,7 +441,7 @@ public class NewMeasureActivity  extends Activity{
 		    //按键绑定事件  
 		    //直流电压
 		    //dcvoltage_button = (Button) findViewById(R.id.dcvoltage_button);
-		    dcvoltage_gridbg.setOnClickListener(new OnClickListener(){
+		    dcvoltage_button.setOnClickListener(new OnClickListener(){
 		    	@Override
 		    	public void onClick(View v)
 		    	{
@@ -448,8 +456,12 @@ public class NewMeasureActivity  extends Activity{
 				    		
 				    		measure_mode = "VDC";
 				    		handler.removeCallbacks(runnable);
-				    		sleepTread(20);
+				    		sleepTread(10);
 				    		Senddata("CONF:VOLT DC#");
+				    		sleepTread(300);
+				    		Senddata("CONF:VOLT DC#");
+				    		sleepTread(300);
+				    		timerSenderToBLE();
 				    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.    	 	
 		                  }
 		            });
@@ -461,7 +473,7 @@ public class NewMeasureActivity  extends Activity{
 		    });
 		    //交流电压
 		    //acvoltage_button = (Button) findViewById(R.id.acvoltage_button);
-		    acvoltage_gridbg.setOnClickListener(new OnClickListener(){
+		    acvoltage_button.setOnClickListener(new OnClickListener(){
 		    	@Override
 		    	public void onClick(View v)
 		    	{
@@ -478,8 +490,10 @@ public class NewMeasureActivity  extends Activity{
 				    		handler.removeCallbacks(runnable);
 				    		sleepTread(20);
 				    		Senddata("CONF:VOLT AC#");
-				    		sleepTread(20);
+				    		sleepTread(300);
 				    		Senddata("CONF:VOLT AC#");
+				    		sleepTread(300);
+				    		timerSenderToBLE();
 				    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.          	 	
 		                  }
 		            });
@@ -490,7 +504,7 @@ public class NewMeasureActivity  extends Activity{
 		    });
 		    //直流电流
 		    //dccurrent_button = (Button) findViewById(R.id.dccurrent_button);
-		    dccurrent_gridbg.setOnClickListener(new OnClickListener(){
+		    dccurrent_button.setOnClickListener(new OnClickListener(){
 		    	@Override
 		    	public void onClick(View v)
 		    	{
@@ -505,10 +519,12 @@ public class NewMeasureActivity  extends Activity{
 				    		mChartView.repaint();
 				    		measure_mode = "IDC";
 				    		handler.removeCallbacks(runnable);
-				    		sleepTread(20);
+				    		sleepTread(10);
 				    		Senddata("CONF:CURR DC#");
-				    		sleepTread(20);
+				    		sleepTread(300);
 				    		Senddata("CONF:CURR DC#");
+				    		sleepTread(300);
+				    		timerSenderToBLE();
 				    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.            	 	
 		                  }
 		            });
@@ -520,7 +536,7 @@ public class NewMeasureActivity  extends Activity{
 		    });
 		    //交流电流
 		    //accurrent_button = (Button)findViewById(R.id.accurrent_button);
-		    accurrent_gridbg.setOnClickListener(new OnClickListener(){
+		    accurrent_button.setOnClickListener(new OnClickListener(){
 		    	@Override
 		    	public void onClick(View v)
 		    	{
@@ -534,10 +550,12 @@ public class NewMeasureActivity  extends Activity{
 				    		mChartView.repaint();
 				    		measure_mode = "IAC";
 				    		handler.removeCallbacks(runnable);
-				    		sleepTread(20);
+				    		sleepTread(10);
 				    		Senddata("CONF:CURR AC#");
-				    		sleepTread(20);
+				    		sleepTread(300);
 				    		Senddata("CONF:CURR AC#");
+				    		sleepTread(300);
+				    		timerSenderToBLE();
 				    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.
 		                	 	
 		                  }
@@ -552,7 +570,7 @@ public class NewMeasureActivity  extends Activity{
 		    
 		    //直流时间
 		    //dctime_button = (Button)findViewById(R.id.dctime_button);
-		    dctime_gridbg.setOnClickListener(new OnClickListener(){
+		    dctime_button.setOnClickListener(new OnClickListener(){
 		    	@Override
 		    	public void onClick(View v)
 		    	{
@@ -566,10 +584,12 @@ public class NewMeasureActivity  extends Activity{
 		 		    		mChartView.repaint();
 		 		    		measure_mode = "VDC-T";
 		 		    		handler.removeCallbacks(runnable);
-		 		    		sleepTread(20);
+		 		    		sleepTread(10);
 		 		    		Senddata("CONF:TIME DC#");
-		 		    		sleepTread(20);
+		 		    		sleepTread(300);
 		 		    		Senddata("CONF:TIME DC#");
+				    		sleepTread(300);
+				    		timerSenderToBLE();
 		 		    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.
 		                	 	
 		                  }
@@ -581,7 +601,7 @@ public class NewMeasureActivity  extends Activity{
 		    
 		    //交流时间
 		    //actime_button = (Button)findViewById(R.id.actime_button);
-		    actime_gridbg.setOnClickListener(new OnClickListener(){
+		    actime_button.setOnClickListener(new OnClickListener(){
 		    	@Override
 		    	public void onClick(View v)
 		    	{
@@ -599,10 +619,12 @@ public class NewMeasureActivity  extends Activity{
 		 		    		mChartView.repaint();
 		 		    		measure_mode = "VAC-T";
 		 		    		handler.removeCallbacks(runnable);
-		 		    		sleepTread(20);
+		 		    		sleepTread(10);
 		 		    		Senddata("CONF:TIME AC#");
-		 		    		sleepTread(20);
+		 		    		sleepTread(300);
 		 		    		Senddata("CONF:TIME AC#");
+				    		sleepTread(300);
+				    		timerSenderToBLE();
 		 		    		handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.
 		                	 	
 		                  }
@@ -697,7 +719,7 @@ public class NewMeasureActivity  extends Activity{
 					}
 					Log.d("ithinker","receive 温度 data" + convertData);
 					//mDataField.setText("高压表电流值 "+convertData);
-					myCircle.DrawVolumn(iv, (float) Integer.parseInt(convertData),"VDC");
+					myCircle.DrawVolumn(iv, convertData,"VDC");
 					myLineChart.addSeriesData((float) Integer.parseInt(convertData));
 		    		mChartView.repaint();
 				} 
@@ -718,7 +740,7 @@ public class NewMeasureActivity  extends Activity{
 			String sub;
 			String ID = "--";
 			String data = "0";
-			String datatype = "VAC";
+			String datatype = "--";
 			String separation = "--";
 			String up = "--";
 			String stand = "0";
@@ -726,17 +748,17 @@ public class NewMeasureActivity  extends Activity{
 			String Freq = "--";
 			String VWRTHD="--";
 			
-			Log.d("ithinker", "recFrame in "+recFrame+recFrame.contains("\n"));
+			Log.d("ithinker", "recFrame in enter = "+recFrame+recFrame.contains("\n"));
 			//recFrame+="\n";
 			
 			if(recFrame.contains("\n"))
 			{
-				Log.d("ithinker", "!!!!222"+recFrame);
+				Log.d("ithinker", "recFrame = "+recFrame);
 				recFrame = recFrame.trim();
 				//recFrame = "ID:001_MEA:VAC:2.0020kV_ErrorResult:Low_Up:12.2000_Stand:12.0000_Down:11.8000_Freq:0.0Hz_THD:0.00%";
 				String[] sArray = recFrame.split("[: _]");
 				recFrame = "";
-				Log.d("ithinker", "!!!!333"+sArray.length);
+				Log.d("ithinker", "sAarray.length="+sArray.length);
 				String val = "";
 				
 				if(sArray.length>12)
@@ -791,7 +813,7 @@ public class NewMeasureActivity  extends Activity{
 						up_value.setText(up);
 						down_value.setText(down);
 						stand_value.setText(stand);
-						myCircle.DrawVolumn(iv, value_VDC,"VDC");
+						myCircle.DrawVolumn(iv, val,"VDC");
 						myLineChart.addSeriesData(value_VDC);
 			    		mChartView.repaint();
 			    		commitdata("001","VDC",value_VDC,VWRTHD,separation,up,down,stand,Freq);
@@ -817,7 +839,7 @@ public class NewMeasureActivity  extends Activity{
 						BigDecimal b = new BigDecimal((double)value_VAC);  
 						value_VAC = (float)b.setScale(3,BigDecimal.ROUND_HALF_UP).doubleValue();  
 						//Log.d("ithinker", "value_VAC"+value_VAC);
-						myCircle.DrawVolumn(iv, value_VAC,"VAC");	
+						myCircle.DrawVolumn(iv, val,"VAC");	
 						
 						float error_f=(float) (value_VAC-Float.valueOf(stand));
 						BigDecimal b_error = new BigDecimal((double)error_f);
@@ -880,7 +902,7 @@ public class NewMeasureActivity  extends Activity{
 						stand_value.setText(stand);
 						
 						
-						myCircle.DrawVolumn(iv, value_IDC,"IDC");
+						myCircle.DrawVolumn(iv, val,"IDC");
 						myLineChart.addSeriesData(value_IDC);
 			    		mChartView.repaint();
 			    		commitdata("001","IDC",value_IDC,VWRTHD,separation,up,down,stand,Freq);
@@ -924,7 +946,7 @@ public class NewMeasureActivity  extends Activity{
 						down_value.setText(down);
 						stand_value.setText(stand);
 						
-						myCircle.DrawVolumn(iv, value_IAC,"IAC");
+						myCircle.DrawVolumn(iv, val,"IAC");
 						myLineChart.addSeriesData(value_IAC);
 			    		mChartView.repaint();
 			    		commitdata("001","IAC",value_IAC,VWRTHD,separation,up,down,stand,Freq);
@@ -965,7 +987,7 @@ public class NewMeasureActivity  extends Activity{
 						stand_value.setText(stand);
 						
 						//Log.d("ithinker", "value_VAC"+value_VAC);
-						myCircle.DrawVolumn(iv, value_VDC_T,"VDC-T");
+						myCircle.DrawVolumn(iv, val,"VDC-T");
 						myLineChart.addSeriesData(value_VDC_T);
 			    		mChartView.repaint();
 			    		commitdata("001","VDC-T",value_VDC_T,VWRTHD,separation,up,down,stand,Freq);
@@ -1006,7 +1028,7 @@ public class NewMeasureActivity  extends Activity{
 						stand_value.setText(stand);
 						
 						//Log.d("ithinker", "value_VAC"+value_VAC);
-						myCircle.DrawVolumn(iv, value_T,"VAC-T");
+						myCircle.DrawVolumn(iv, val,"VAC-T");
 						myLineChart.addSeriesData(value_T);
 			    		mChartView.repaint();
 			    		//commitdata(String ID,String datatype,float value,String VWRTHD,String separation,String up,String down,String stand)
@@ -1018,80 +1040,6 @@ public class NewMeasureActivity  extends Activity{
 				
 			}
 			
-			//Log.d("ithinker", "recTrue"+(recFrame.contains("<")&&recFrame.contains(">")));
-			/*
-			if(recFrame.contains("<")&&recFrame.contains(">"))
-			{
-				sub = recFrame.substring(recFrame.indexOf("<") + 1, recFrame.indexOf(">"));
-				String[] sArray = sub.split("#");
-				
-				//Log.d("ithinker", "recFrame NEW"+recFrame);
-				//Log.d("ithinker", "sub"+sub);
-				//Log.d("ithinker", "s0="+sArray[0]+" s1="+sArray[1]+ " s2="+sArray[2]);
-				
-				if(sArray[0].equals("data"))
-				{
-					
-					switch(sArray[1])
-					{
-						case "VDC":		
-						{
-							float value_VDC = (float) Float.parseFloat(sArray[2]);
-							value_VDC = value_VDC/1000;
-							BigDecimal b = new BigDecimal((double)value_VDC);  
-							value_VDC = (float)b.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();  
-							myCircle.DrawVolumn(iv, value_VDC,"VDC");
-							myLineChart.addSeriesData(value_VDC);
-				    		mChartView.repaint();
-				    		commitdata("VDC",value_VDC);
-				    		Log.d("ithinker", "commit"+value_VDC);
-				    		break;
-						}
-						case "VAC":
-						{
-							float value_VAC = (float) Float.parseFloat(sArray[2]);
-							value_VAC = value_VAC/1000;
-							BigDecimal b = new BigDecimal((double)value_VAC);  
-							value_VAC = (float)b.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();  
-							//Log.d("ithinker", "value_VAC"+value_VAC);
-							myCircle.DrawVolumn(iv, value_VAC,"VAC");
-							myLineChart.addSeriesData(value_VAC);
-				    		mChartView.repaint();
-				    		commitdata("VAC",value_VAC);					
-						}
-						case "IDC":		
-						{
-							float value_IDC = (float) Float.parseFloat(sArray[2]);
-							value_IDC = value_IDC/1000;
-							BigDecimal b = new BigDecimal((double)value_IDC);  
-							value_IDC = (float)b.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();  
-							myCircle.DrawVolumn(iv, value_IDC,"IDC");
-							myLineChart.addSeriesData(value_IDC);
-				    		mChartView.repaint();
-				    		commitdata("IDC",value_IDC);
-				    		Log.d("ithinker", "commit"+value_IDC);
-				    		break;
-						}
-						case "IAC":
-						{
-							float value_IAC = (float) Float.parseFloat(sArray[2]);
-							value_IAC = value_IAC/1000;
-							BigDecimal b = new BigDecimal((double)value_IAC);  
-							value_IAC = (float)b.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();  
-							//Log.d("ithinker", "value_VAC"+value_VAC);
-							myCircle.DrawVolumn(iv, value_IAC,"IAC");
-							myLineChart.addSeriesData(value_IAC);
-				    		mChartView.repaint();
-				    		commitdata("IAC",value_IAC);					
-						}
-					}
-				}
-				
-				//清空接收字符串
-				recFrame = "";
-				//Log.d("ithinker", "clear recFrame");
-			}
-			*/
 		}
 
 		// Demonstrates how to iterate through the supported GATT

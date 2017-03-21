@@ -1526,17 +1526,23 @@ containing a value of this type.
         public static final int cloude=0x7f030004;
         public static final int delete=0x7f030005;
         public static final int history=0x7f030006;
-        public static final int info=0x7f030007;
-        public static final int login_background=0x7f030008;
-        public static final int menu=0x7f030009;
-        public static final int mipmap=0x7f03000a;
-        public static final int more=0x7f03000b;
-        public static final int password=0x7f03000c;
-        public static final int search=0x7f03000d;
-        public static final int tongjitubiao=0x7f03000e;
-        public static final int user=0x7f03000f;
-        public static final int xitongshezhi=0x7f030010;
-        public static final int yunduandenglu=0x7f030011;
+        public static final int iac=0x7f030007;
+        public static final int idc=0x7f030008;
+        public static final int info=0x7f030009;
+        public static final int login_background=0x7f03000a;
+        public static final int menu=0x7f03000b;
+        public static final int mipmap=0x7f03000c;
+        public static final int more=0x7f03000d;
+        public static final int password=0x7f03000e;
+        public static final int search=0x7f03000f;
+        public static final int tongjitubiao=0x7f030010;
+        public static final int user=0x7f030011;
+        public static final int vac=0x7f030012;
+        public static final int vact=0x7f030013;
+        public static final int vdc=0x7f030014;
+        public static final int vdct=0x7f030015;
+        public static final int xitongshezhi=0x7f030016;
+        public static final int yunduandenglu=0x7f030017;
     }
     public static final class string {
         public static final int ACcurrent=0x7f0b002d;

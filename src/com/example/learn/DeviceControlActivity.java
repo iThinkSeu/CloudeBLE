@@ -47,6 +47,7 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * For a given BLE device, this Activity provides the user interface to connect,
@@ -96,11 +97,14 @@ public class DeviceControlActivity extends Activity {
 			Log.d(TAG,"in service connected");
 			//mBluetoothLeService.gattclose();
 			mBluetoothLeService.connect(mDeviceAddress);
+			Toast.makeText(DeviceControlActivity.this, "蓝牙已经连接",Toast.LENGTH_SHORT).show();
 		}
 
 		@Override
 		public void onServiceDisconnected(ComponentName componentName) {
 			mBluetoothLeService = null;
+			Toast.makeText(DeviceControlActivity.this, "蓝牙断开连接",Toast.LENGTH_SHORT).show();
+
 		}
 	};
 
@@ -118,13 +122,15 @@ public class DeviceControlActivity extends Activity {
 			if (BluetoothLeService.ACTION_GATT_CONNECTED.equals(action)) {
 				mConnected = true;
 				newMainActivity.BLEstate = "已连接";
+				Toast.makeText(DeviceControlActivity.this, "BLE已连接",Toast.LENGTH_SHORT).show();
 				updateConnectionState(R.string.connected);
 				invalidateOptionsMenu();
 			} else if (BluetoothLeService.ACTION_GATT_DISCONNECTED
 					.equals(action)) {
 				mConnected = false;
 				newMainActivity.BLEstate = "未连接";
-				updateConnectionState(R.string.connected);
+				Toast.makeText(DeviceControlActivity.this, "BLE未连接",Toast.LENGTH_SHORT).show();
+				updateConnectionState(R.string.disconnected);
 				invalidateOptionsMenu();
 				clearUI();
 			} else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED

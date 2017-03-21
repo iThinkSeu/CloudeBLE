@@ -193,7 +193,7 @@ public class testMeasureActivity  extends Activity{
 		meaLinear.addView(mChartView, new LayoutParams(LayoutParams.FILL_PARENT,LayoutParams.FILL_PARENT));
 		mChartView.repaint();
 		iv = (ImageView) findViewById(R.id.measureVolumn);
-		myCircle.DrawVolumn(iv, (float) 9.82,"VDC");
+		myCircle.DrawVolumn(iv, "9.82","VDC");
 		
 		//开启蓝牙服务
 		Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
@@ -422,7 +422,7 @@ public class testMeasureActivity  extends Activity{
 					}
 					Log.d("ithinker","receive 温度 data" + convertData);
 					//mDataField.setText("高压表电流值 "+convertData);
-					myCircle.DrawVolumn(iv, (float) Integer.parseInt(convertData),"VDC");
+					myCircle.DrawVolumn(iv, convertData,"VDC");
 				} 
 			}	
 	      

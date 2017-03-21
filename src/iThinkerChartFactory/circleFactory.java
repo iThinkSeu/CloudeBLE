@@ -1,5 +1,7 @@
 package iThinkerChartFactory;
 
+import java.math.BigDecimal;
+
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -18,7 +20,10 @@ public class circleFactory {
 	private float currentV;
 	private Paint mPaint;
 	private Paint paint;
-	public void DrawVolumn(ImageView iv,float volumn,String title) {
+	public void DrawVolumn(ImageView iv,String val,String title) {
+		float volumn = (float) Float.parseFloat(val);						
+		BigDecimal b = new BigDecimal((double)volumn);  
+		volumn = (float)b.setScale(4,BigDecimal.ROUND_HALF_UP).doubleValue();  
 		currentV = volumn;
 		int offset = 120;//50
 		int color = 0;
@@ -96,12 +101,12 @@ public class circleFactory {
 		fontPaint.setTypeface(font);
 		if (volumn >= 1000) {
 			fontPaint.setTextSize(90);
-			canvas.drawText(volumn+"", 110, 320, fontPaint);
+			canvas.drawText(val+"", 110, 320, fontPaint);
 			fontPaint.setTextSize(30);
 			canvas.drawText(danwei, 300, 350, fontPaint);
 		} else if (volumn < 1000) {
 			fontPaint.setTextSize(90);
-			canvas.drawText(volumn + "", 110, 300, fontPaint);
+			canvas.drawText(val + "", 110, 300, fontPaint);
 			fontPaint.setTextSize(30);
 			canvas.drawText(danwei, 300, 350, fontPaint);
 		} 
