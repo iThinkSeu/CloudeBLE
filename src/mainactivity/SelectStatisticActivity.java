@@ -3,6 +3,7 @@ package mainactivity;
 import iThinkerChartFactory.DatePickerFragment;
 import iThinkerChartFactory.createTableFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,6 +104,7 @@ public class SelectStatisticActivity extends Activity{
 	    mapTitle.put("value","结果");
 	    mapTitle.put("select","分选");
 		listTitle.add(mapTitle);
+		
 		/*
 		for(int i=1;i<6;i++)
 		{
@@ -338,7 +340,7 @@ public class SelectStatisticActivity extends Activity{
 				//Log.d("ithinker","history enter"+tx_enddate.getText().toString()+tx_endtime.getText().toString());
 				String starttime = tx_startdate.getText().toString()+" "+tx_starttime.getText().toString();
 				String endtime = tx_enddate.getText().toString()+" "+tx_endtime.getText().toString();
-				history_data(starttime,endtime);
+				history_data(getModeList(),starttime,endtime);
 				Log.d("ithinker","history starttime"+starttime);
 				list.clear();
 				//select_function();
@@ -385,14 +387,15 @@ public class SelectStatisticActivity extends Activity{
 		}
 	}
 
-	private void history_data(String starttime,String endtime){
+	private void history_data(String mList,String starttime,String endtime){
 
         ArrayMap<String,String> param = new ArrayMap<>();
         String token = StrUtils.token(SelectStatisticActivity.this);
         param.put("token", token);
         //param.put("token", "18d54ec8446d03451f5552033c64dbda");
 		//param.put("datatype", datatype);
-		//param.put("value", value+"");   
+		//param.put("value", value+"");
+        param.put("modelist", mList);
         param.put("starttime", starttime);
         param.put("endtime", endtime);
 	    OkHttpUtils.post(StrUtils.HISTORY_DATA, param, TAG, new OkHttpUtils.SimpleOkCallBack() {
@@ -422,6 +425,16 @@ public class SelectStatisticActivity extends Activity{
 		map.put("select","合格");
 	    list.add(map);
 	    
+	}
+	
+	private String getModeList()
+	{
+		String mList = "";
+		if(VDC_isSelect) mList+="VDC#";
+		if(VAC_isSelect) mList+="VAC#";
+		if(IAC_isSelect) mList+="IAC#";
+		if(IDC_isSelect) mList+="IDC#";
+		return mList;
 	}
 
 }
