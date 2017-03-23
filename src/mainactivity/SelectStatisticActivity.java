@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import util.OkHttpUtils;
 import util.StrUtils;
 
+import com.example.learn.DeviceControlActivity;
 import com.example.learn.DeviceScanActivity;
 import com.example.learn.MainActivity;
 import com.example.learn.R;
@@ -354,6 +355,9 @@ public class SelectStatisticActivity extends Activity{
 				// TODO Auto-generated method stub
 				System.out.println("probability_distribution_button click");
 				Intent intent = new Intent();
+				intent.putExtra("MLIST",getModeList());
+				intent.putExtra("START_TIME",tx_startdate.getText().toString()+" "+tx_starttime.getText().toString());
+				intent.putExtra("END_TIME",tx_enddate.getText().toString()+" "+tx_endtime.getText().toString());
 				intent.setClass(SelectStatisticActivity.this, proDistributionActivity.class);
 				startActivity(intent);
 			}

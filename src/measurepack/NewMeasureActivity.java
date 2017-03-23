@@ -90,6 +90,7 @@ public class NewMeasureActivity  extends Activity{
 	
 	//6个参数显示
 	TextView error_value,VWRTHD_text,VWRTHD_value,f_value,up_value,down_value,stand_value;
+	TextView up_text,down_text,stand_text;
 	
 	private String main_value="0.0000";
 	private String ID = "ABCDEF";
@@ -400,6 +401,9 @@ public class NewMeasureActivity  extends Activity{
 		    VWRTHD_value = (TextView)findViewById(R.id.VWRTHD_value);
 		    f_value = (TextView)findViewById(R.id.f_value);
 		    up_value = (TextView)findViewById(R.id.up_value);
+		    up_text = (TextView)findViewById(R.id.up);
+		    down_text = (TextView)findViewById(R.id.down);
+		    stand_text = (TextView)findViewById(R.id.stand);
 		    down_value = (TextView)findViewById(R.id.down_value);
 		    stand_value = (TextView)findViewById(R.id.stand_value);
 			//网格按键背景初始化
@@ -933,9 +937,7 @@ public class NewMeasureActivity  extends Activity{
 		{
 			recFrame += response;
 			String sub;
-			String data = "0";
-
-			
+			String data = "0";			
 			Log.d("ithinker", "recFrame in enter = "+recFrame+recFrame.contains("\n"));
 			//recFrame+="\n";
 			
@@ -1001,6 +1003,10 @@ public class NewMeasureActivity  extends Activity{
 						up_value.setText(up);
 						down_value.setText(down);
 						stand_value.setText(stand);
+						
+						up_text.setText("上限值");
+						down_text.setText("下限值");
+						stand_text.setText("标称值");
 						myCircle.DrawVolumn(iv, val,"VDC");
 						myLineChart.addSeriesData(value_VDC);
 			    		mChartView.repaint();
@@ -1050,6 +1056,9 @@ public class NewMeasureActivity  extends Activity{
 						down_value.setText(down);
 						stand_value.setText(stand);
 						
+						up_text.setText("上限值");
+						down_text.setText("下限值");
+						stand_text.setText("标称值");
 						myLineChart.addSeriesData(value_VAC);
 			    		mChartView.repaint();
 			    		commitdata(ID,"VAC",value_VAC,VWRTHD,separation,up,down,stand,Freq);
@@ -1089,7 +1098,9 @@ public class NewMeasureActivity  extends Activity{
 						down_value.setText(down);
 						stand_value.setText(stand);
 						
-						
+						up_text.setText("上限值");
+						down_text.setText("下限值");
+						stand_text.setText("标称值");
 						myCircle.DrawVolumn(iv, val,"IDC");
 						myLineChart.addSeriesData(value_IDC);
 			    		mChartView.repaint();
@@ -1134,6 +1145,9 @@ public class NewMeasureActivity  extends Activity{
 						down_value.setText(down);
 						stand_value.setText(stand);
 						
+						up_text.setText("上限值");
+						down_text.setText("下限值");
+						stand_text.setText("标称值");
 						myCircle.DrawVolumn(iv, val,"IAC");
 						myLineChart.addSeriesData(value_IAC);
 			    		mChartView.repaint();
@@ -1172,8 +1186,11 @@ public class NewMeasureActivity  extends Activity{
 						error_value.setText(error_f+"s");
 						up_value.setText(up);
 						down_value.setText(down);
-						stand_value.setText(stand);
+						stand_value.setText("--");
 						
+						up_text.setText("上升时间");
+						down_text.setText("下降时间");
+						stand_text.setText("--");
 						//Log.d("ithinker", "value_VAC"+value_VAC);
 						myCircle.DrawVolumn(iv, val,"VDC-T");
 						myLineChart.addSeriesData(value_VDC_T);
@@ -1213,8 +1230,11 @@ public class NewMeasureActivity  extends Activity{
 						error_value.setText(error_f+"s");
 						up_value.setText(up);
 						down_value.setText(down);
-						stand_value.setText(stand);
+						stand_value.setText("--");
 						
+						up_text.setText("上升时间");
+						down_text.setText("下降时间");
+						stand_text.setText("--");
 						//Log.d("ithinker", "value_VAC"+value_VAC);
 						myCircle.DrawVolumn(iv, val,"VAC-T");
 						myLineChart.addSeriesData(value_T);
