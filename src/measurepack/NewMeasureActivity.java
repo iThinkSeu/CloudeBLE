@@ -425,7 +425,7 @@ public class NewMeasureActivity  extends Activity{
 		    	@Override
 		    	public void onClick(View v)
 		    	{
-					Toast.makeText(NewMeasureActivity.this, error_value.getText(),Toast.LENGTH_SHORT).show();
+					Toast.makeText(NewMeasureActivity.this, main_value,Toast.LENGTH_SHORT).show();
 					//private void commitsavedata(String ID,String datatype,String value,String VWRTHD,String separation,String up,String down,String stand,String fre)
 					commitsavedata(ID,datatype,main_value,VWRTHD,separation,up,down,stand,Freq);
 	        		
@@ -440,10 +440,13 @@ public class NewMeasureActivity  extends Activity{
 	                View.OnClickListener listener = new View.OnClickListener() {
 	                    @Override
 	                    public void onClick(View v) {
+		 		    		handler.removeCallbacks(runnable);
+		                    Toast.makeText(NewMeasureActivity.this, "remove", Toast.LENGTH_SHORT).show();
+
 	                        if(v.getId() == R.id.aty_info_option_edit_info){
 	                            Intent i = new Intent(NewMeasureActivity.this, MeasureTestActivityNew.class);
 	                            startActivity(i);
-	                        	
+	                            handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.   
 	                        }else if(v.getId() == R.id.aty_info_option_stand)
 	                        {
 	        	        		AlertDialog.Builder dialog=new AlertDialog.Builder(NewMeasureActivity.this);
@@ -458,7 +461,7 @@ public class NewMeasureActivity  extends Activity{
 	        		                    	 feedEditText.getText().toString();
 	        		                    	 System.out.println(feedEditText.getText().toString());
 	        		                    	 String str1 = "CONF:FILT:CRIT ";
-	        		                    	 String str2 = feedEditText.getText().toString()+" kV#";
+	        		                    	 String str2 = feedEditText.getText().toString()+" "+getDanwei(datatype)+"#";
 	        		                    	 Senddata(str1);
 	        		                    	 sleepTread(100);
 	        		                    	 Senddata(str2);
@@ -468,17 +471,158 @@ public class NewMeasureActivity  extends Activity{
 	        		                      else{
 	        		                          Toast.makeText(NewMeasureActivity.this, "请输入参数", Toast.LENGTH_SHORT).show();
 	        		                      }
+	        		                     sleepTread(100);
+	        		                     timerSenderToBLE();
+	        					    	 handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.   
+
 	        		                  }
 	        		             });
-	        		             dialog.setNegativeButton("取消", null);
+	        		            
+	        		             dialog.setNegativeButton("取消", new DialogInterface.OnClickListener(){
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										// TODO Auto-generated method stub
+										timerSenderToBLE();
+										handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.   
+									}
+	        		             });
 	        		             dialog.show();
+	                        }else if(v.getId() == R.id.aty_info_option_uplimit)
+	                        {
+	        	        		AlertDialog.Builder dialog=new AlertDialog.Builder(NewMeasureActivity.this);
+	        	        		final EditText feedEditText = new EditText(NewMeasureActivity.this);
+	        	        		feedEditText.setText(up);
+	        		    		dialog.setTitle("上限值");
+	        		            dialog.setView(feedEditText);
+	        		            dialog.setPositiveButton("确定", new DialogInterface.OnClickListener(){
+	        		                 @Override
+	        		                 public void onClick(DialogInterface dialog,int which){
+	        		                      if(!feedEditText.getText().toString().isEmpty()){
+	        		                    	 feedEditText.getText().toString();
+	        		                    	 System.out.println(feedEditText.getText().toString());
+	        		                    	 String str1 = "CONF:FILT:ULIM ";
+	        		                    	 String str2 = feedEditText.getText().toString()+" "+getDanwei(datatype)+"#";
+	        		                    	 Senddata(str1);
+	        		                    	 sleepTread(100);
+	        		                    	 Senddata(str2);
+	        		                         Toast.makeText(NewMeasureActivity.this, "上限值设置为:"+feedEditText.getText().toString(), Toast.LENGTH_SHORT).show();
+
+	        		                      }
+	        		                      else{
+	        		                          Toast.makeText(NewMeasureActivity.this, "请输入参数", Toast.LENGTH_SHORT).show();
+	        		                      }
+	        		                      sleepTread(100);
+	        		                      timerSenderToBLE();
+	        		                      handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable. 
+	        		                  }
+	        		             });
+	        		            
+	        		             dialog.setNegativeButton("取消", new DialogInterface.OnClickListener(){
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										// TODO Auto-generated method stub
+										timerSenderToBLE();
+										handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.   
+									}
+	        		             });
+	        		             dialog.show();
+	                        }else if(v.getId() == R.id.aty_info_option_downlimit)
+	                        {
+	        	        		AlertDialog.Builder dialog=new AlertDialog.Builder(NewMeasureActivity.this);
+	        	        		final EditText feedEditText = new EditText(NewMeasureActivity.this);
+	        	        		feedEditText.setText(down);
+	        		    		dialog.setTitle("下限值");
+	        		            dialog.setView(feedEditText);
+	        		            dialog.setPositiveButton("确定", new DialogInterface.OnClickListener(){
+	        		                 @Override
+	        		                 public void onClick(DialogInterface dialog,int which){
+	        		                      if(!feedEditText.getText().toString().isEmpty()){
+	        		                    	 feedEditText.getText().toString();
+	        		                    	 System.out.println(feedEditText.getText().toString());
+	        		                    	 String str1 = "CONF:FILT:LLIM ";
+	        		                    	 String str2 = feedEditText.getText().toString()+" "+getDanwei(datatype)+"#";
+	        		                    	 Senddata(str1);
+	        		                    	 sleepTread(100);
+	        		                    	 Senddata(str2);
+	        		                         Toast.makeText(NewMeasureActivity.this, "下限值设置为:"+feedEditText.getText().toString(), Toast.LENGTH_SHORT).show();
+
+	        		                      }
+	        		                      else{
+	        		                          Toast.makeText(NewMeasureActivity.this, "请输入参数", Toast.LENGTH_SHORT).show();
+	        		                      }
+	        		                      sleepTread(100);
+	        		                      timerSenderToBLE();
+	        		                      handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable. 
+	        		                  }
+	        		             });
+	        		            
+	        		             dialog.setNegativeButton("取消", new DialogInterface.OnClickListener(){
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										// TODO Auto-generated method stub
+										timerSenderToBLE();
+										handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.   
+									}
+	        		             });
+	        		             dialog.show();
+	                        }else if(v.getId() == R.id.aty_info_option_time)
+	                        {
+	                        	
+	        	        		AlertDialog.Builder dialog=new AlertDialog.Builder(NewMeasureActivity.this);
+	        	        		final EditText feedEditText = new EditText(NewMeasureActivity.this);
+	        	        		feedEditText.setText(dalayms/1000+"");
+	        		    		dialog.setTitle("定时周期(单位s)");
+	        		            dialog.setView(feedEditText);
+	        		            dialog.setPositiveButton("确定", new DialogInterface.OnClickListener(){
+	        		                 @Override
+	        		                 public void onClick(DialogInterface dialog,int which){
+	        		                      if(!feedEditText.getText().toString().isEmpty()){
+	        		                    	 
+	        		                    	  try {
+	        		                    		     dalayms = Integer.parseInt(feedEditText.getText().toString())*1000;
+	        		                    		} catch (NumberFormatException e) {
+	        		                    		    e.printStackTrace();
+	        		                    		}
+	        		                         Toast.makeText(NewMeasureActivity.this, "定时周期为:"+dalayms/1000+"s", Toast.LENGTH_SHORT).show();
+
+	        		                      }
+	        		                      else{
+	        		                          Toast.makeText(NewMeasureActivity.this, "请输入参数", Toast.LENGTH_SHORT).show();
+	        		                      }
+	        		                      timerSenderToBLE();
+	        		                      handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable. 
+	        		                  }
+	        		             });
+	        		            
+	        		             dialog.setNegativeButton("取消", new DialogInterface.OnClickListener(){
+
+									@Override
+									public void onClick(DialogInterface dialog,
+											int which) {
+										// TODO Auto-generated method stub
+										timerSenderToBLE();
+										handler.postDelayed(runnable, dalayms);//每两秒执行一次runnable.   
+									}
+	        		             });
+	        		             dialog.show();
+	        		             
 	                        }
+		                  
 	                        dialog.dismiss();
 	                    }
 	                };
 	                content.findViewById(R.id.aty_info_option_cancel).setOnClickListener(listener);
 	                content.findViewById(R.id.aty_info_option_edit_info).setOnClickListener(listener);
 	                content.findViewById(R.id.aty_info_option_stand).setOnClickListener(listener);
+	                content.findViewById(R.id.aty_info_option_uplimit).setOnClickListener(listener);
+	                content.findViewById(R.id.aty_info_option_downlimit).setOnClickListener(listener);
+	                content.findViewById(R.id.aty_info_option_time).setOnClickListener(listener);
 	                dialog.setContentView(content);
 
 	                WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
@@ -1237,5 +1381,20 @@ public class NewMeasureActivity  extends Activity{
             dialog.setNegativeButton("取消", null);
             dialog.show();
 		}
+		
+		private  String getDanwei(String datatype)
+		{
+		  String danwei = "";
+  		  switch(datatype)
+  		  {
+  		  	case "VAC":danwei = "kV";break;
+  		  	case "VDC":danwei = "kV";break;
+  		  	case "IAC":danwei = "mA";break;
+  		  	case "IDC":danwei = "mA";break;
+  		  	default:danwei = "--";
+  		  }
+  		  return danwei;
+		}
+	 
 	 
 }

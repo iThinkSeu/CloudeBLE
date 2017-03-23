@@ -103,7 +103,8 @@ public class SelectStatisticActivity extends Activity{
 	    mapTitle.put("value","结果");
 	    mapTitle.put("select","分选");
 		listTitle.add(mapTitle);
-		for(int i=1;i<60;i++)
+		/*
+		for(int i=1;i<6;i++)
 		{
 			map = new HashMap<String, Object>();
 			map.put("id","+"+"2016-6-28 18:30:"+i);
@@ -117,6 +118,7 @@ public class SelectStatisticActivity extends Activity{
 		//list.removeAll(list);
 		//修改
 		 ((Map)list.get(0)).put("type","ithinker");//修改值
+		 */
 		 adapter.notifyDataSetChanged();//刷新列表
 		 
 		 lv.setOnItemClickListener(new OnItemClickListener(){

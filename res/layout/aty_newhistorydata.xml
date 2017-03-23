@@ -38,14 +38,14 @@
 		  <RelativeLayout 
 		      android:id="@+id/VDC_select_layout"
 		      android:layout_width="match_parent"
-		      android:layout_height="45dp">
+		      android:layout_height="30dp">
 		      <TextView
 				android:layout_width="match_parent"
 				android:layout_height="40dp"
 				android:gravity="center_vertical|left"
 				android:layout_marginLeft="15dp"
 				android:text="VDC"
-				android:textSize="20sp" />
+				android:textSize="15sp" />
 		      <ImageView 
 		        android:id="@+id/VDC_select_image"
 				android:layout_width="22dp"
@@ -65,14 +65,14 @@
 	  <RelativeLayout
 	      android:id="@+id/VAC_select_layout" 
 	      android:layout_width="match_parent"
-	      android:layout_height="45dp">
+	      android:layout_height="30dp">
 	      <TextView
 			android:layout_width="match_parent"
 			android:layout_height="40dp"
 			android:gravity="center_vertical|left"
 			android:layout_marginLeft="15dp"
 			android:text="VAC"
-			android:textSize="20sp" />
+			android:textSize="15sp" />
 	      <ImageView 
 	        android:id="@+id/VAC_select_image"
 			android:layout_width="22dp"
@@ -91,14 +91,14 @@
 	  <RelativeLayout
 	      android:id="@+id/IDC_select_layout" 
 	      android:layout_width="match_parent"
-	      android:layout_height="45dp">
+	      android:layout_height="30dp">
 	      <TextView
 			android:layout_width="match_parent"
 			android:layout_height="40dp"
 			android:gravity="center_vertical|left"
 			android:layout_marginLeft="15dp"
 			android:text="IDC"
-			android:textSize="20sp" />
+			android:textSize="15sp" />
 	      <ImageView 
 	        android:id="@+id/IDC_select_image"
 			android:layout_width="22dp"
@@ -118,14 +118,14 @@
 	  <RelativeLayout
 	      android:id="@+id/IAC_select_layout" 
 	      android:layout_width="match_parent"
-	      android:layout_height="45dp">
+	      android:layout_height="30dp">
 	      <TextView
 			android:layout_width="match_parent"
 			android:layout_height="40dp"
 			android:gravity="center_vertical|left"
 			android:layout_marginLeft="15dp"
 			android:text="IAC"
-			android:textSize="20sp" />
+			android:textSize="15sp" />
 	      <ImageView 
 	        android:id="@+id/IAC_select_image"
 			android:layout_width="22dp"
@@ -157,7 +157,7 @@
                 android:id="@+id/tx_startdate"
                 android:textSize="14sp"
                 android:background="@null"
-                android:text="2015-12-23"
+                android:text="2017-1-23"
                 android:layout_gravity="center_vertical"
                 android:gravity="center|center_vertical"
                 android:layout_width="0dp"
@@ -189,7 +189,7 @@
                 android:id="@+id/tx_enddate"
                 android:textSize="14sp"
                 android:background="@null"
-                android:text="2015-12-23"
+                android:text="2017-4-23"
                 android:layout_gravity="center_vertical"
                 android:gravity="center|center_vertical"
                 android:layout_width="0dp"
