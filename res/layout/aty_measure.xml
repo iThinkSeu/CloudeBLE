@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_centerInParent="true"
-        android:layout_weight="1.6"
+        android:layout_weight="1.4"
         android:orientation="horizontal" >
 
         <LinearLayout
@@ -83,7 +83,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="50HZ"
+                    android:text="50Hz"
                     android:textColor="@color/white" />
             </LinearLayout>
 
@@ -109,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="0.306KV"
+                    android:text="0.306kV"
                     android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>
@@ -152,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="12.200KV"
+                    android:text="12.200kV"
                     android:textColor="@color/white" />
             </LinearLayout>
 
@@ -178,7 +178,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="11.800KV"
+                    android:text="11.800kV"
                     android:textColor="@color/white" />
             </LinearLayout>
 
@@ -204,7 +204,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:text="12.000KV"
+                    android:text="12.000kV"
                     android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>
@@ -226,7 +226,16 @@
         android:layout_weight="2.2"
         android:orientation="horizontal"
         android:padding="30px" />
-
+    
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="30px"
+        android:layout_gravity="right"
+        android:textColor="@color/white"
+        android:text="保存"/>
+                        
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"

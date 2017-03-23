@@ -23,6 +23,7 @@ import util.OkHttpUtils;
 import util.StrUtils;
 
 import com.example.learn.BluetoothLeService;
+import com.example.learn.DeviceControlActivity;
 import com.example.learn.MeasureActivity;
 import com.example.learn.MeasureTestActivityNew;
 import com.example.learn.R;
@@ -65,6 +66,7 @@ import android.widget.RelativeLayout;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.AlertDialog;
 
 public class NewMeasureActivity  extends Activity{
 	
@@ -77,6 +79,7 @@ public class NewMeasureActivity  extends Activity{
 	private Button dccurrent_button;
 	private Button acvoltage_button;
 	private Button dcvoltage_button;
+	private Button save_button;
 	//网格按键背景
 	private RelativeLayout actime_gridbg;
 	private RelativeLayout dctime_gridbg;
@@ -88,6 +91,15 @@ public class NewMeasureActivity  extends Activity{
 	//6个参数显示
 	TextView error_value,VWRTHD_text,VWRTHD_value,f_value,up_value,down_value,stand_value;
 	
+	private String main_value="0.0000";
+	private String ID = "ABCDEF";
+	String datatype = "VAC";
+	String separation = "--";
+	String up = "--";
+	String stand = "12.000";
+	String down = "--";
+	String Freq = "--";
+	String VWRTHD="--";
 	//BLE
 	private final static String TAG = MeasureActivity.class.getSimpleName();
 
@@ -270,7 +282,7 @@ public class NewMeasureActivity  extends Activity{
 		mLinear = (LinearLayout) findViewById(R.id.MeasureLayout);
 		mLinear.setBackgroundResource(R.drawable.cup5);
 		bindview();
-		error_value.setText("0.223KV");
+		error_value.setText("0.223kV");
 		
 		LinearLayout meaLinear = (LinearLayout) findViewById(R.id.chart);
 	    
@@ -405,10 +417,20 @@ public class NewMeasureActivity  extends Activity{
 		    dccurrent_button = (Button) findViewById(R.id.dccurrent_button);
 		    acvoltage_button = (Button) findViewById(R.id.acvoltage_button);
 		    dcvoltage_button = (Button) findViewById(R.id.dcvoltage_button);	
-		    
+		    save_button = (Button) findViewById(R.id.save_button);
 		    //按键设置
 		    moreSetting = (ImageView)findViewById(R.id.aty_info_more);
 		    
+		    save_button.setOnClickListener(new OnClickListener(){
+		    	@Override
+		    	public void onClick(View v)
+		    	{
+					Toast.makeText(NewMeasureActivity.this, error_value.getText(),Toast.LENGTH_SHORT).show();
+					//private void commitsavedata(String ID,String datatype,String value,String VWRTHD,String separation,String up,String down,String stand,String fre)
+					commitsavedata(ID,datatype,main_value,VWRTHD,separation,up,down,stand,Freq);
+	        		
+		    	}
+		    });
 		    moreSetting.setOnClickListener(new OnClickListener(){
 		    	@Override
 		    	public void onClick(View v)
@@ -422,12 +444,41 @@ public class NewMeasureActivity  extends Activity{
 	                            Intent i = new Intent(NewMeasureActivity.this, MeasureTestActivityNew.class);
 	                            startActivity(i);
 	                        	
+	                        }else if(v.getId() == R.id.aty_info_option_stand)
+	                        {
+	        	        		AlertDialog.Builder dialog=new AlertDialog.Builder(NewMeasureActivity.this);
+	        	        		final EditText feedEditText = new EditText(NewMeasureActivity.this);
+	        	        		feedEditText.setText(stand);
+	        		    		dialog.setTitle("标称值");
+	        		            dialog.setView(feedEditText);
+	        		            dialog.setPositiveButton("确定", new DialogInterface.OnClickListener(){
+	        		                 @Override
+	        		                 public void onClick(DialogInterface dialog,int which){
+	        		                      if(!feedEditText.getText().toString().isEmpty()){
+	        		                    	 feedEditText.getText().toString();
+	        		                    	 System.out.println(feedEditText.getText().toString());
+	        		                    	 String str1 = "CONF:FILT:CRIT ";
+	        		                    	 String str2 = feedEditText.getText().toString()+" kV#";
+	        		                    	 Senddata(str1);
+	        		                    	 sleepTread(100);
+	        		                    	 Senddata(str2);
+	        		                         Toast.makeText(NewMeasureActivity.this, "设置标称值为:"+feedEditText.getText().toString(), Toast.LENGTH_SHORT).show();
+
+	        		                      }
+	        		                      else{
+	        		                          Toast.makeText(NewMeasureActivity.this, "请输入参数", Toast.LENGTH_SHORT).show();
+	        		                      }
+	        		                  }
+	        		             });
+	        		             dialog.setNegativeButton("取消", null);
+	        		             dialog.show();
 	                        }
 	                        dialog.dismiss();
 	                    }
 	                };
 	                content.findViewById(R.id.aty_info_option_cancel).setOnClickListener(listener);
 	                content.findViewById(R.id.aty_info_option_edit_info).setOnClickListener(listener);
+	                content.findViewById(R.id.aty_info_option_stand).setOnClickListener(listener);
 	                dialog.setContentView(content);
 
 	                WindowManager.LayoutParams wmlp = dialog.getWindow().getAttributes();
@@ -738,15 +789,8 @@ public class NewMeasureActivity  extends Activity{
 		{
 			recFrame += response;
 			String sub;
-			String ID = "--";
 			String data = "0";
-			String datatype = "--";
-			String separation = "--";
-			String up = "--";
-			String stand = "0";
-			String down = "--";
-			String Freq = "--";
-			String VWRTHD="--";
+
 			
 			Log.d("ithinker", "recFrame in enter = "+recFrame+recFrame.contains("\n"));
 			//recFrame+="\n";
@@ -816,7 +860,7 @@ public class NewMeasureActivity  extends Activity{
 						myCircle.DrawVolumn(iv, val,"VDC");
 						myLineChart.addSeriesData(value_VDC);
 			    		mChartView.repaint();
-			    		commitdata("001","VDC",value_VDC,VWRTHD,separation,up,down,stand,Freq);
+			    		commitdata(ID,"VDC",value_VDC,VWRTHD,separation,up,down,stand,Freq);
 			    		break;
 					}
 					case "VAC":
@@ -864,7 +908,7 @@ public class NewMeasureActivity  extends Activity{
 						
 						myLineChart.addSeriesData(value_VAC);
 			    		mChartView.repaint();
-			    		commitdata("001","VAC",value_VAC,VWRTHD,separation,up,down,stand,Freq);
+			    		commitdata(ID,"VAC",value_VAC,VWRTHD,separation,up,down,stand,Freq);
 			    		break;
 					}
 					case "IDC":
@@ -905,7 +949,7 @@ public class NewMeasureActivity  extends Activity{
 						myCircle.DrawVolumn(iv, val,"IDC");
 						myLineChart.addSeriesData(value_IDC);
 			    		mChartView.repaint();
-			    		commitdata("001","IDC",value_IDC,VWRTHD,separation,up,down,stand,Freq);
+			    		commitdata(ID,"IDC",value_IDC,VWRTHD,separation,up,down,stand,Freq);
 			    	
 			    		break;
 					}
@@ -949,7 +993,7 @@ public class NewMeasureActivity  extends Activity{
 						myCircle.DrawVolumn(iv, val,"IAC");
 						myLineChart.addSeriesData(value_IAC);
 			    		mChartView.repaint();
-			    		commitdata("001","IAC",value_IAC,VWRTHD,separation,up,down,stand,Freq);
+			    		commitdata(ID,"IAC",value_IAC,VWRTHD,separation,up,down,stand,Freq);
 			    		break;
 					}
 					case "VDC-T":
@@ -990,7 +1034,7 @@ public class NewMeasureActivity  extends Activity{
 						myCircle.DrawVolumn(iv, val,"VDC-T");
 						myLineChart.addSeriesData(value_VDC_T);
 			    		mChartView.repaint();
-			    		commitdata("001","VDC-T",value_VDC_T,VWRTHD,separation,up,down,stand,Freq);
+			    		commitdata(ID,"VDC-T",value_VDC_T,VWRTHD,separation,up,down,stand,Freq);
 			    		break;
 					}
 					
@@ -1032,11 +1076,11 @@ public class NewMeasureActivity  extends Activity{
 						myLineChart.addSeriesData(value_T);
 			    		mChartView.repaint();
 			    		//commitdata(String ID,String datatype,float value,String VWRTHD,String separation,String up,String down,String stand)
-			    		commitdata("001","VAC-T",value_T,VWRTHD,separation,up,down,stand,Freq);
+			    		commitdata(ID,"VAC-T",value_T,VWRTHD,separation,up,down,stand,Freq);
 			    		break;
 					}
 				}
-				
+				main_value = val;
 				
 			}
 			
@@ -1140,6 +1184,34 @@ public class NewMeasureActivity  extends Activity{
 			param.put("stand", stand);
 			param.put("fre", fre);
 		    OkHttpUtils.post(StrUtils.POST_MEASURE_DATA, param, TAG, new OkHttpUtils.SimpleOkCallBack() {
+		        @Override
+		        public void onResponse(String s) {
+		            //Log.d("ithinker", "post data"+s);
+		            JSONObject j = OkHttpUtils.parseJSON(NewMeasureActivity.this, s);
+		            if (j == null) {
+		                return;
+		            }
+		            Log.d("ithinker", "post successful"+s);
+		        }
+		    });
+		}
+		
+		private void commitsavedata(String ID,String datatype,String value,String VWRTHD,String separation,String up,String down,String stand,String fre){
+			Log.d("ithinker", "post data in");
+	        ArrayMap<String,String> param = new ArrayMap<>();
+	        String token = StrUtils.token(NewMeasureActivity.this);
+	    	Log.d("ithinker", token);
+	        param.put("token", token);
+	        //param.put("token", "18d54ec8446d03451f5552033c64dbda");
+			param.put("datatype", datatype);
+			param.put("value", value+"");
+			param.put("VWRTHD", VWRTHD);
+			param.put("separation", separation);
+			param.put("up", up);
+			param.put("down", down);
+			param.put("stand", stand);
+			param.put("fre", fre);
+		    OkHttpUtils.post(StrUtils.POST_SAVE_DATA, param, TAG, new OkHttpUtils.SimpleOkCallBack() {
 		        @Override
 		        public void onResponse(String s) {
 		            //Log.d("ithinker", "post data"+s);

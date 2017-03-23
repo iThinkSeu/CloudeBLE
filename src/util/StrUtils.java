@@ -29,6 +29,7 @@ public final class StrUtils {
     public static final String EDIT_PROFILE_URL = BASE_URL + "editprofileinfo";
 
     public static final String POST_MEASURE_DATA = BASE_URL + "postmeasuredata";
+    public static final String POST_SAVE_DATA = BASE_URL + "postsavedata";
     
     public static final String HISTORY_DATA = BASE_URL + "history_data";
     
